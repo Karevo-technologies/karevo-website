@@ -1,0 +1,1 @@
+- [x] Step 1: Edit SignUp.jsx to import ArrowRight icon
