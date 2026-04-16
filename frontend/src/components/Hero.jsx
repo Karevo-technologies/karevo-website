@@ -7,8 +7,8 @@ const Hero = () => {
     <section className="bg-gray-50 pt-45 pb-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Text Content */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-7xl mb-6 leading-tight font-raleway font-semibold">
+        <div className="md:text-center mb-16">
+          <h2 className="text-2xl md:text-7xl mb-6 leading-tight font-raleway font-semibold">
             Healthcare That Protects.
             <span className="block">Records That Follow You.</span>
           </h2>
@@ -16,7 +16,7 @@ const Hero = () => {
             Karevo delivers secure, portable medical records that empower
             patients and streamline healthcare delivery.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto">
+          <div className="flex flex-col sm:flex-row gap-4 md:justify-center md:items-center max-w-2xl mx-auto">
             <button className="group flex items-center gap-2 px-8 py-4 bg-[#254c53] text-white text-lg font-semibold rounded-[100px] hover:bg-[#1e3a40] transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 transform font-raleway">
               Get Started Free
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
