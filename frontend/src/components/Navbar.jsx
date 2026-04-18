@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import WaitlistModal from "./WaitlistModal";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const navigate = useNavigate();
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -12,13 +12,13 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white fixed w-full py-4 z-50 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <NavLink
               to="/"
-              className="text-3xl font-bold text-[#254c53]"
+              className="text-3xl font-bold text-[#25789e]"
               onClick={() => setIsOpen(false)}
             >
               Karevo
@@ -30,8 +30,8 @@ const Navbar = () => {
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `px-3 py-2 text-[#254c53] transition-colors font-medium ${
-                  isActive ? "text-[#254c53] border-b-2 border-[#254c53]" : ""
+                `px-3 py-2 text-[#25789e] transition-colors font-medium ${
+                  isActive ? "text-[#25789e] border-b-2 border-[#25789e]" : ""
                 }`
               }
             >
@@ -40,8 +40,8 @@ const Navbar = () => {
             <NavLink
               to="/why-karevo"
               className={({ isActive }) =>
-                `px-3 py-2 text-[#254c53] hover:text-[#254c53] transition-colors font-medium ${
-                  isActive ? "text-[#254c53] border-b-2 border-[#254c53]" : ""
+                `px-3 py-2 text-[#25789e] hover:text-[#25789e] transition-colors font-medium ${
+                  isActive ? "text-[#25789e] border-b-2 border-[#25789e]" : ""
                 }`
               }
             >
@@ -50,8 +50,8 @@ const Navbar = () => {
             <NavLink
               to="/features"
               className={({ isActive }) =>
-                `px-3 py-2 text-[#254c53] hover:text-[#1e3a40] transition-colors font-medium ${
-                  isActive ? "text-[#254c53] border-b-2 border-[#254c53]" : ""
+                `px-3 py-2 text-[#25789e] hover:text-[#1e3a40] transition-colors font-medium ${
+                  isActive ? "text-[#25789e] border-b-2 border-[#25789e]" : ""
                 }`
               }
             >
@@ -60,8 +60,8 @@ const Navbar = () => {
             <NavLink
               to="/faq"
               className={({ isActive }) =>
-                `px-3 py-2 text-[#254c53] hover:text-[#1e3a40] transition-colors font-medium ${
-                  isActive ? "text-[#254c53] border-b-2 border-[#254c53]" : ""
+                `px-3 py-2 text-[#25789e] hover:text-[#1e3a40] transition-colors font-medium ${
+                  isActive ? "text-[#25789e] border-b-2 border-[#25789e]" : ""
                 }`
               }
             >
@@ -70,8 +70,8 @@ const Navbar = () => {
             <NavLink
               to="/contact"
               className={({ isActive }) =>
-                `px-3 py-2 text-[#254c53] hover:text-[#1e3a40] transition-colors font-medium ${
-                  isActive ? "text-[#254c53] border-b-2 border-[#254c53]" : ""
+                `px-3 py-2 text-[#25789e] hover:text-[#1e3a40] transition-colors font-medium ${
+                  isActive ? "text-[#25789e] border-b-2 border-[#25789e]" : ""
                 }`
               }
             >
@@ -79,16 +79,13 @@ const Navbar = () => {
             </NavLink>
           </div>
 
-          {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button className="h-12 px-6 py-3 text-sm font-medium text-[#254c53] transform duration-300 hover:scale-90 bg-transparent border border-gray-300 rounded-[100px] hover:bg-gray-50 hover:border-gray-400 transition-all">
-              Sign In
-            </button>
+          {/* Desktop Waitlist Button */}
+          <div className="hidden md:flex items-center">
             <button
-              onClick={() => navigate("/signup")}
-              className="h-12 px-6 py-3 text-sm font-semibold text-white bg-[#254c53] transform duration-300 hover:scale-90 hover:bg-[#1e3a40] rounded-[100px] transition-all shadow-md"
+              onClick={() => setIsWaitlistOpen(true)}
+              className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#25789e] transform duration-300 hover:scale-105 hover:bg-[#1e5a7a] rounded-[100px] transition-all shadow-lg hover:shadow-xl"
             >
-              Sign Up
+              Join Waitlist
             </button>
           </div>
 
@@ -96,7 +93,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className="p-1 rounded-md text-[#254c53] hover:text-[#254c53] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#254c53] transition-all"
+              className="p-1 rounded-md text-[#25789e] hover:text-[#25789e] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#25789e] transition-all"
             >
               <svg
                 className={`h-6 w-6 transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -123,8 +120,8 @@ const Navbar = () => {
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `block px-3 py-2 text-2xl font-medium rounded-md text-[#254c53] hover:text-[#254c53] hover:bg-gray-50 ${
-                  isActive ? "text-[#254c53]" : ""
+                `block px-3 py-2 text-2xl font-medium rounded-md text-[#25789e] hover:text-[#25789e] hover:bg-gray-50 ${
+                  isActive ? "text-[#25789e]" : ""
                 }`
               }
               onClick={() => setIsOpen(false)}
@@ -134,8 +131,8 @@ const Navbar = () => {
             <NavLink
               to="/why-karevo"
               className={({ isActive }) =>
-                `block px-3 py-2 text-2xl font-medium rounded-md text-[#254c53] hover:text-[#254c53] hover:bg-gray-50 ${
-                  isActive ? "text-[#254c53]" : ""
+                `block px-3 py-2 text-2xl font-medium rounded-md text-[#25789e] hover:text-[#25789e] hover:bg-gray-50 ${
+                  isActive ? "text-[#25789e]" : ""
                 }`
               }
               onClick={() => setIsOpen(false)}
@@ -145,8 +142,8 @@ const Navbar = () => {
             <NavLink
               to="/features"
               className={({ isActive }) =>
-                `block px-3 py-2 text-2xl font-medium rounded-md text-[#254c53] hover:text-[#254c53] hover:bg-gray-50 ${
-                  isActive ? "text-[#254c53]" : ""
+                `block px-3 py-2 text-2xl font-medium rounded-md text-[#25789e] hover:text-[#25789e] hover:bg-gray-50 ${
+                  isActive ? "text-[#25789e]" : ""
                 }`
               }
               onClick={() => setIsOpen(false)}
@@ -156,8 +153,8 @@ const Navbar = () => {
             <NavLink
               to="/faq"
               className={({ isActive }) =>
-                `block px-3 py-2 text-2xl font-medium rounded-md text-[#254c53] hover:text-[#254c53] hover:bg-gray-50 ${
-                  isActive ? "text-[#254c53]" : ""
+                `block px-3 py-2 text-2xl font-medium rounded-md text-[#25789e] hover:text-[#25789e] hover:bg-gray-50 ${
+                  isActive ? "text-[#25789e]" : ""
                 }`
               }
               onClick={() => setIsOpen(false)}
@@ -167,8 +164,8 @@ const Navbar = () => {
             <NavLink
               to="/contact"
               className={({ isActive }) =>
-                `block px-3 py-2 text-2xl font-medium rounded-md text-[#254c53] hover:text-[#254c53] hover:bg-gray-50 ${
-                  isActive ? "text-[#254c53]" : ""
+                `block px-3 py-2 text-2xl font-medium rounded-md text-[#25789e] hover:text-[#25789e] hover:bg-gray-50 ${
+                  isActive ? "text-[#25789e]" : ""
                 }`
               }
               onClick={() => setIsOpen(false)}
@@ -176,22 +173,25 @@ const Navbar = () => {
               Contact Us
             </NavLink>
             <div className="pt-4 pb-2 border-t border-gray-200">
-              <button className="w-full px-4 py-2 text-base font-medium text-[#254c53] bg-transparent border border-gray-300 rounded-[100px] hover:bg-gray-50 hover:border-gray-400 mb-2 transition-all">
-                Sign In
-              </button>
               <button
                 onClick={() => {
                   setIsOpen(false);
-                  navigate("/signup");
+                  setIsWaitlistOpen(true);
                 }}
-                className="w-full px-4 py-2 text-base font-semibold text-white bg-[#254c53] rounded-[100px] hover:bg-[#1e3a40] transition-all shadow-md"
+                className="w-full px-4 py-2 text-base font-semibold text-white bg-[#25789e] rounded-[100px] hover:bg-[#1e5a7a] transition-all shadow-md"
               >
-                Sign Up
+                Join Waitlist
               </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* Waitlist Modal */}
+      <WaitlistModal
+        isOpen={isWaitlistOpen}
+        onClose={() => setIsWaitlistOpen(false)}
+      />
     </nav>
   );
 };
