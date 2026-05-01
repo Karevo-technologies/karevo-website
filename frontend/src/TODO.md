@@ -1,0 +1,1 @@
+# KarevoID Upgrade Plan\n\nPrevious complete. New:\n1. [x] Update TODO.md\n2. [ ] Upgrade KarevoID.jsx to step-by-step professional timeline with staggered animations and descriptive lucide icons\n3. [ ] Preview: cd frontend; npm run dev\n4. [ ] Complete

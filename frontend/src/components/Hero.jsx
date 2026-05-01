@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowRight, Info } from "lucide-react";
-import hero from "../assets/hero.png";
+import hero from "../assets/hero-image.png";
 
 const Hero = ({ onOpenWaitlist }) => {
   const bounceStyle = `

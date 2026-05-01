@@ -1,49 +1,12 @@
 import React from "react";
-import {
-  Lock,
-  Zap,
-  Users,
-  Shield,
-  FileText,
-  AlertTriangle,
-  Phone,
-  CheckCircle,
-  ArrowRight,
-} from "lucide-react";
-import HeroSection from "../components/HeroSection";
-import ProblemSection from "../components/ProblemSection";
-import SolutionSection from "../components/SolutionSection";
+import { Lock, Zap, Users, Shield } from "lucide-react";
+import ChallengeSolutionSection from "../components/ChallengeSolutionSection";
 import BenefitsSection from "../components/BenefitsSection";
-import StatsSection from "../components/StatsSection";
 import WorkflowSection from "../components/WorkflowSection";
 import SecuritySection from "../components/SecuritySection";
 import CTASection from "../components/CTASection";
 
 const WhyKarevo = () => {
-  const problems = [
-    {
-      title: "Fragmented Records",
-      description:
-        "Medical records scattered across multiple hospitals and clinics",
-      icon: FileText,
-    },
-    {
-      title: "Accessibility Issues",
-      description: "Difficult to access your health data when you need it most",
-      icon: Lock,
-    },
-    {
-      title: "Data Loss",
-      description: "Risk of losing important medical history during transfers",
-      icon: AlertTriangle,
-    },
-    {
-      title: "Communication Gaps",
-      description: "Poor coordination between different healthcare providers",
-      icon: Phone,
-    },
-  ];
-
   const solutions = [
     {
       title: "Centralized Records",
@@ -62,8 +25,7 @@ const WhyKarevo = () => {
     },
     {
       title: "HIPAA Compliant",
-      description:
-        "Enterprise-grade security protecting your sensitive health data",
+      description: "Enterprise-grade security protecting your sensitive health data",
       icon: Shield,
     },
   ];
@@ -96,13 +58,15 @@ const WhyKarevo = () => {
         "Competitive advantage",
       ],
     },
-  ];
-
-  const stats = [
-    { number: "95%", label: "Faster medical information retrieval" },
-    { number: "30%", label: "Reduction in duplicate tests" },
-    { number: "98%", label: "Data security and uptime" },
-    { number: "0", label: "Patients and providers trust Karevo" },
+    {
+      title: "For Organizations",
+      points: [
+        "Unified patient data platform",
+        "Interoperability across systems",
+        "Regulatory compliance automation",
+        "Enhanced data governance",
+      ],
+    },
   ];
 
   const workflow = [
@@ -134,30 +98,18 @@ const WhyKarevo = () => {
 
   return (
     <div className="min-h-screen py-20 bg-white">
-      <HeroSection
-        title="Why Karevo?"
-        subtitle="Transforming healthcare through secure, portable medical records that empower patients and streamline healthcare delivery across the continent."
-      />
-
-      <ProblemSection
-        title="The Problem We Solve"
-        subtitle="Healthcare in Africa faces critical challenges that impact patient care and provider efficiency"
-        problems={problems}
-      />
-
-      <SolutionSection
+      <ChallengeSolutionSection
         title="Our Solution"
         subtitle="Karevo reimagines healthcare data management with cutting-edge technology"
-        solutions={solutions}
+        items={solutions}
+        variant="solution"
       />
 
       <BenefitsSection
         title="Real Benefits for Everyone"
-        subtitle="Designed to benefit patients, providers, and entire healthcare systems"
+        subtitle="Designed to benefit patients, providers, healthcare systems, and organizations"
         benefits={benefits}
       />
-
-      <StatsSection stats={stats} />
 
       <WorkflowSection
         title="How Karevo Works"

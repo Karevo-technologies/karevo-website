@@ -26,7 +26,7 @@ const Features = () => {
   return (
     <>
       <style>{cardAnimationStyle}</style>
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-40 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-8xl mx-auto">
           <p className="uppercase text-center text-[#25789e] font-semibold py-3 text-xl">
             Feature

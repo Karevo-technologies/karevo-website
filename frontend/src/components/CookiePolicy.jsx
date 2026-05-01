@@ -29,7 +29,7 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
           <div className="flex flex-col gap-4">
             {/* Text Content */}
             <div>
-              <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+              <p className="text-sm text-gray-700 font-geist leading-relaxed">
                 Karevo uses cookies to support secure healthcare platform
                 functionality, analyze how patients interact with our services,
                 and continuously improve your healthcare experience. By
@@ -49,13 +49,13 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
             <div className="flex items-center gap-3 justify-end">
               <button
                 onClick={handleDismiss}
-                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-all duration-300 text-sm font-semibold font-raleway"
+                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-all duration-300 text-sm font-semibold font-geist"
               >
                 Decline
               </button>
               <button
                 onClick={handleDismiss}
-                className="px-5 py-2 bg-[#25789e] hover:bg-[#1e5a7a] text-white rounded-lg transition-all duration-300 text-sm font-semibold font-raleway hover:shadow-md"
+                className="px-5 py-2 bg-[#25789e] hover:bg-[#1e5a7a] text-white rounded-lg transition-all duration-300 text-sm font-semibold font-geist hover:shadow-md"
               >
                 Accept All
               </button>
@@ -79,10 +79,10 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
               >
                 <X className="h-5 w-5 text-gray-600" />
               </button>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2 font-raleway">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2 font-geist">
                 Cookie Policy
               </h2>
-              <p className="text-sm text-gray-500 font-raleway">
+              <p className="text-sm text-gray-500 font-geist">
                 Last updated: April 18, 2026
               </p>
             </div>
@@ -91,10 +91,10 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
             <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
               {/* Introduction */}
               <section>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
+                <h3 className="text-lg font-bold text-gray-900 mb-3 font-geist">
                   1. Introduction
                 </h3>
-                <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+                <p className="text-sm text-gray-700 font-geist leading-relaxed">
                   Karevo uses cookies and similar technologies to support the
                   secure functionality of our healthcare platform and improve
                   your experience as a patient or healthcare provider.
@@ -103,10 +103,10 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
 
               {/* Essential Cookies */}
               <section>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
+                <h3 className="text-lg font-bold text-gray-900 mb-3 font-geist">
                   2. Essential Cookies
                 </h3>
-                <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+                <p className="text-sm text-gray-700 font-geist leading-relaxed">
                   Essential cookies are required for Karevo to function
                   properly. They enable critical features such as user
                   authentication, session management, secure access to digital
@@ -118,10 +118,10 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
 
               {/* Analytics Cookies */}
               <section>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
+                <h3 className="text-lg font-bold text-gray-900 mb-3 font-geist">
                   3. Analytics Cookies
                 </h3>
-                <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+                <p className="text-sm text-gray-700 font-geist leading-relaxed">
                   Karevo uses analytics tools to understand how users interact
                   with the platform, including page visits, feature usage, and
                   time spent on different sections. This helps us identify
@@ -133,10 +133,10 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
 
               {/* Limited Tracking */}
               <section>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
+                <h3 className="text-lg font-bold text-gray-900 mb-3 font-geist">
                   4. Limited Tracking
                 </h3>
-                <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+                <p className="text-sm text-gray-700 font-geist leading-relaxed">
                   Karevo does not use cookies for aggressive tracking across
                   third-party websites. Any tracking implemented is minimal and
                   strictly focused on improving platform functionality,
@@ -147,14 +147,14 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
 
               {/* Third-Party Services */}
               <section>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
+                <h3 className="text-lg font-bold text-gray-900 mb-3 font-geist">
                   5. Third-Party Services
                 </h3>
-                <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+                <p className="text-sm text-gray-700 font-geist leading-relaxed">
                   Karevo may integrate trusted third-party services (such as
                   authentication providers, analytics tools, or communication
                   services) that may set their own cookies. These cookies are
-                  governed by the respective third parties’ privacy policies,
+                  governed by the respective third parties' privacy policies,
                   and we encourage users to review them when interacting with
                   such services.
                 </p>
@@ -162,10 +162,10 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
 
               {/* Managing Preferences */}
               <section>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
+                <h3 className="text-lg font-bold text-gray-900 mb-3 font-geist">
                   6. Managing Preferences
                 </h3>
-                <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+                <p className="text-sm text-gray-700 font-geist leading-relaxed">
                   Users can manage, restrict, or disable cookies at any time
                   through their browser settings. Please note that disabling
                   certain cookies may affect the functionality of key features,
@@ -176,10 +176,10 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
 
               {/* Your Privacy */}
               <section>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
+                <h3 className="text-lg font-bold text-gray-900 mb-3 font-geist">
                   7. Your Privacy
                 </h3>
-                <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+                <p className="text-sm text-gray-700 font-geist leading-relaxed">
                   Karevo is committed to protecting user data in line with
                   applicable data protection regulations. We do not sell
                   personal or health-related data. Cookies are used strictly to
@@ -190,10 +190,10 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
 
               {/* Contact */}
               <section>
-                <h3 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
+                <h3 className="text-lg font-bold text-gray-900 mb-3 font-geist">
                   Contact
                 </h3>
-                <p className="text-sm text-gray-700 font-raleway leading-relaxed">
+                <p className="text-sm text-gray-700 font-geist leading-relaxed">
                   Email:{" "}
                   <a
                     href="mailto:contact@karevo.health"
@@ -221,7 +221,7 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
                 onClick={() =>
                   onCookiePolicyClose && onCookiePolicyClose(false)
                 }
-                className="flex-1 px-4 py-2.5 border-2 border-gray-300 text-gray-700 hover:border-[#25789e] hover:text-[#25789e] rounded-lg transition-all duration-300 text-sm font-semibold font-raleway"
+                className="flex-1 px-4 py-2.5 border-2 border-gray-300 text-gray-700 hover:border-[#25789e] hover:text-[#25789e] rounded-lg transition-all duration-300 text-sm font-semibold font-geist"
               >
                 Close
               </button>
@@ -230,7 +230,7 @@ const CookiePolicy = ({ isCookiePolicyOpen, onCookiePolicyClose }) => {
                   onCookiePolicyClose && onCookiePolicyClose(false);
                   handleDismiss();
                 }}
-                className="flex-1 px-4 py-2.5 bg-[#25789e] hover:bg-[#1e5a7a] text-white rounded-lg transition-all duration-300 text-sm font-semibold font-raleway hover:shadow-lg"
+                className="flex-1 px-4 py-2.5 bg-[#25789e] hover:bg-[#1e5a7a] text-white rounded-lg transition-all duration-300 text-sm font-semibold font-geist hover:shadow-lg"
               >
                 Accept All
               </button>

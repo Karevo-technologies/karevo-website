@@ -32,7 +32,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     const waitlistData = {
       id: Date.now(),
       role,
-      ...(role === "patient"
+      ...(role === "user"
         ? { name: formData.name, email: formData.email }
         : {
             hospitalName: formData.hospitalName,
@@ -66,7 +66,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
   };
 
   const isFormValid = () => {
-    if (role === "patient") {
+    if (role === "user") {
       return formData.name && formData.email;
     } else if (role === "hospital") {
       return (
@@ -140,7 +140,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                 </label>
                 <div className="flex gap-3">
                   {[
-                    { value: "patient", label: "Patient" },
+                    { value: "user", label: "User" },
                     { value: "hospital", label: "Hospital" },
                   ].map((option) => (
                     <label
@@ -170,8 +170,8 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* Patient Form Fields */}
-              {role === "patient" && (
+{/* User Form Fields */}
+              {role === "user" && (
                 <>
                   {/* Name Input */}
                   <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
