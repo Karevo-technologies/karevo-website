@@ -19,7 +19,7 @@ const Hero = ({ onOpenWaitlist }) => {
   return (
     <>
       <style>{bounceStyle}</style>
-      <section className="bg-white pt-24 md:pt-40 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section className="bg-white pt-32 md:pt-40 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="max-w-8xl mx-auto">
           {/* Content Container - Side by Side */}
           <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-12 lg:gap-16">
