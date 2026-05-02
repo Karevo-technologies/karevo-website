@@ -136,6 +136,11 @@
     padding-bottom: 1.5rem !important;
   }
 
+  /* Hero section - Override to ensure proper spacing from fixed navbar */
+  .hero-section {
+    padding-top: 8rem !important;
+  }
+
   /* Grid adjustments for mobile */
   .grid-cols-5 {
     grid-template-columns: repeat(2, 1fr) !important;
