@@ -25,44 +25,50 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    try {
+      const payload = {
+        role,
+        ...(role === "user"
+          ? { name: formData.name, email: formData.email }
+          : {
+              hospitalName: formData.hospitalName,
+              location: formData.location,
+              organizationEmail: formData.organizationEmail,
+            }),
+      };
 
-    // Store in localStorage for now (will migrate to Supabase)
-    const waitlistData = {
-      id: Date.now(),
-      role,
-      ...(role === "user"
-        ? { name: formData.name, email: formData.email }
-        : {
-            hospitalName: formData.hospitalName,
-            location: formData.location,
-            organizationEmail: formData.organizationEmail,
-          }),
-      timestamp: new Date().toISOString(),
-    };
-
-    const existingData =
-      JSON.parse(localStorage.getItem("karevowaitlist")) || [];
-    existingData.push(waitlistData);
-    localStorage.setItem("karevowaitlist", JSON.stringify(existingData));
-
-    setLoading(false);
-    setSubmitted(true);
-
-    // Close modal after 3 seconds
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        hospitalName: "",
-        location: "",
-        organizationEmail: "",
+      const res = await fetch("http://localhost:4000/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
-      setRole("");
-      onClose();
-    }, 3000);
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.error || "Failed to join waitlist");
+      }
+
+      setSubmitted(true);
+
+      // Close modal after 3 seconds
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: "",
+          email: "",
+          hospitalName: "",
+          location: "",
+          organizationEmail: "",
+        });
+        setRole("");
+        onClose();
+      }, 3000);
+    } catch (err) {
+      console.error(err);
+      alert(err?.message || "Failed to join waitlist");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const isFormValid = () => {
