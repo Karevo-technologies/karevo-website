@@ -5,9 +5,9 @@ const SecuritySection = () => {
   return (
     <section className="py-20 px-4 bg-gray-50">
       <div className="max-w-5xl mx-auto">
-        <div className="bg-white rounded-2xl p-12 shadow-lg border-l-4 border-[#25789e]">
+        <div className="bg-white rounded-2xl p-12 shadow-lg border-l-4 border-[#3B00C5]">
           <div className="flex items-start gap-6">
-            <Shield className="h-12 w-12 text-[#25789e] flex-shrink-0" />
+            <Shield className="h-12 w-12 text-[#3B00C5] flex-shrink-0" />
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-4 font-raleway">
                 Your Data is Safe
@@ -20,7 +20,7 @@ const SecuritySection = () => {
               </p>
               <div className="flex gap-6 mt-6">
                 <div>
-                  <div className="text-sm font-semibold text-[#25789e] font-raleway mb-1">
+                  <div className="text-sm font-semibold text-[#3B00C5] font-raleway mb-1">
                     256-bit Encryption
                   </div>
                   <p className="text-sm text-gray-600 font-raleway">
@@ -28,7 +28,7 @@ const SecuritySection = () => {
                   </p>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-[#25789e] font-raleway mb-1">
+                  <div className="text-sm font-semibold text-[#3B00C5] font-raleway mb-1">
                     HIPAA Compliant
                   </div>
                   <p className="text-sm text-gray-600 font-raleway">
@@ -36,7 +36,7 @@ const SecuritySection = () => {
                   </p>
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-[#25789e] font-raleway mb-1">
+                  <div className="text-sm font-semibold text-[#3B00C5] font-raleway mb-1">
                     ISO 27001
                   </div>
                   <p className="text-sm text-gray-600 font-raleway">

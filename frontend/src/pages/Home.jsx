@@ -13,7 +13,7 @@ const Home = () => {
     <>
       <Hero onOpenWaitlist={() => setIsWaitlistOpen(true)} />
       <KarevoID />
-      <Features />
+      {/* <Features /> */}
       
       <CTASection
         title="Ready to Revolutionize Your Healthcare?"

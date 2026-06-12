@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 const CTASection = ({ title, subtitle, onCTAClick }) => {
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-[#25789e] to-[#1e5a7a] text-white">
+    <section className="py-20 px-4 bg-gradient-to-br from-[#3B00C5] to-[#2f00a0] text-white">
       <div className="max-w-3xl mx-auto text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-6 font-raleway">
           {title}
@@ -13,7 +13,7 @@ const CTASection = ({ title, subtitle, onCTAClick }) => {
         </p>
         <button
           onClick={onCTAClick}
-          className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#25789e] rounded-lg font-bold font-raleway hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+          className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#3B00C5] rounded-lg font-bold font-raleway hover:shadow-lg transform hover:scale-105 transition-all duration-300"
         >
           Join the Waitlist
           <ArrowRight className="h-5 w-5" />

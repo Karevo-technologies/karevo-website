@@ -14,7 +14,7 @@ const WorkflowSection = ({ title, subtitle, workflow }) => {
         <div className="grid md:grid-cols-4 gap-6">
           {workflow.map((item, index) => (
             <div key={index} className="relative">
-              <div className="bg-gradient-to-br from-[#25789e] to-[#1e5a7a] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gradient-to-br from-[#3B00C5] to-[#2f00a0] rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-white font-raleway">
                   {item.step}
                 </span>
@@ -26,7 +26,7 @@ const WorkflowSection = ({ title, subtitle, workflow }) => {
                 {item.description}
               </p>
               {index < workflow.length - 1 && (
-                <div className="hidden md:block absolute top-8 left-[60%] w-[40%] h-0.5 bg-gradient-to-r from-[#25789e]/50 to-transparent"></div>
+                <div className="hidden md:block absolute top-8 left-[60%] w-[40%] h-0.5 bg-gradient-to-r from-[#3B00C5] to-transparent"></div>
               )}
             </div>
           ))}

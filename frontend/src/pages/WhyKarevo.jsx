@@ -1,5 +1,5 @@
 import React from "react";
-import { Lock, Zap, Users, Shield } from "lucide-react";
+
 import ChallengeSolutionSection from "../components/ChallengeSolutionSection";
 import BenefitsSection from "../components/BenefitsSection";
 import WorkflowSection from "../components/WorkflowSection";
@@ -7,28 +7,7 @@ import SecuritySection from "../components/SecuritySection";
 import CTASection from "../components/CTASection";
 
 const WhyKarevo = () => {
-  const solutions = [
-    {
-      title: "Centralized Records",
-      description: "All your medical records in one secure, portable location",
-      icon: Lock,
-    },
-    {
-      title: "Instant Access",
-      description: "Retrieve your health data anytime, anywhere with one click",
-      icon: Zap,
-    },
-    {
-      title: "Seamless Sharing",
-      description: "Share your records securely with healthcare providers",
-      icon: Users,
-    },
-    {
-      title: "HIPAA Compliant",
-      description: "Enterprise-grade security protecting your sensitive health data",
-      icon: Shield,
-    },
-  ];
+  const solutions = [];
 
   const benefits = [
     {
@@ -99,8 +78,8 @@ const WhyKarevo = () => {
   return (
     <div className="min-h-screen py-20 bg-white">
       <ChallengeSolutionSection
-        title="Our Solution"
-        subtitle="Karevo reimagines healthcare data management with cutting-edge technology"
+        title=""
+        subtitle=""
         items={solutions}
         variant="solution"
       />

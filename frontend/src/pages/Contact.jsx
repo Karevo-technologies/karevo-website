@@ -1,62 +1,56 @@
 import React, { useState } from "react";
-import { Send, Mail, Phone, MapPin, Mail as MailIcon } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     name: "",
     email: "",
     message: "",
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: "" });
+  const validate = () => {
+    const nextErrors = {};
+
+    if (!form.name.trim()) nextErrors.name = "Name is required.";
+
+    if (!form.email.trim()) nextErrors.email = "Email is required.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      nextErrors.email = "Enter a valid email.";
     }
+
+    if (!form.message.trim()) nextErrors.message = "Message is required.";
+
+    setErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Email is invalid";
-    if (!formData.message.trim()) newErrors.message = "Message is required";
-    return newErrors;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      return;
-    }
+    if (!validate()) return;
 
     setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    console.log("Contact form submitted:", formData);
-
-    setSubmitStatus("success");
-    setFormData({ name: "", email: "", message: "" });
-    setErrors({});
-    setIsSubmitting(false);
+    try {
+      await new Promise((r) => setTimeout(r, 500));
+      setForm({ name: "", email: "", message: "" });
+      setErrors({});
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="min-h-screen py-40 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="pt-40 pb-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-20">
-          <h1 className="text-5xl md:text-6xl font-bold text-[#25789e] mb-6">
+          <h1 className="text-5xl md:text-6xl font-bold text-[#3B00C5] mb-6">
             Get In Touch
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -65,140 +59,105 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Contact Info */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold text-[#25789e] mb-4 flex items-center gap-3">
-                <Mail className="w-8 h-8 text-[#25789e]" />
-                Contact Information
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                  <MailIcon className="w-5 h-5 text-[#25789e]" />
-                  <div>
-                    <p className="font-medium text-gray-900">Email</p>
-                    <p className="text-gray-600">contact@karevo.health</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+          <div>
+            <h3 className="text-2xl font-bold text-[#3B00C5] mb-4 flex items-center gap-3">
+              <Mail className="w-8 h-8 text-[#3B00C5]" />
+              Contact Information
+            </h3>
+
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                <Mail className="w-5 h-5 text-[#3B00C5]" />
+                <div className="text-sm">
+                  <div className="text-gray-500">Email</div>
+                  <div className="font-medium text-gray-800">
+                    contact@karevo.health
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                  <Phone className="w-5 h-5 text-[#25789e]" />
-                  <div>
-                    <p className="font-medium text-gray-900">Phone</p>
-                    <p className="text-gray-600">+234 805-235-0516</p>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                <Phone className="w-5 h-5 text-[#3B00C5]" />
+                <div className="text-sm">
+                  <div className="text-gray-500">Phone</div>
+                  <div className="font-medium text-gray-800">
+                    +234 805-235-0516
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                  <MapPin className="w-5 h-5 text-[#25789e]" />
-                  <div>
-                    <p className="font-medium text-gray-900">Address</p>
-                    <p className="text-gray-600">
-                      Lagos, Nigeria
-                    </p>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                <MapPin className="w-5 h-5 text-[#3B00C5]" />
+                <div className="text-sm">
+                  <div className="text-gray-500">Location</div>
+                  <div className="font-medium text-gray-800">
+                    Lagos, Nigeria
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Contact Form */}
           <div>
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6 bg-white p-8 rounded-2xl shadow-xl border border-gray-100"
-            >
-              {submitStatus === "success" && (
-                <div className="p-4 bg-green-50 border border-green-200 rounded-xl text-green-800 text-center">
-                  Thank you! Your message has been sent. We'll get back to you
-                  soon.
-                </div>
-              )}
-
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-bold text-gray-800 mb-2">
                   Name
                 </label>
                 <input
-                  type="text"
-                  id="name"
                   name="name"
-                  value={formData.name}
+                  value={form.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#25789e] focus:border-[#25789e] transition-all ${errors.name ? "border-red-500" : "border-gray-200"}`}
+                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all ${errors.name ? "border-red-500" : "border-gray-200"}`}
                   placeholder="Your name"
+                  required
                 />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-                )}
               </div>
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-bold text-gray-800 mb-2">
                   Email
                 </label>
                 <input
-                  type="email"
-                  id="email"
                   name="email"
-                  value={formData.email}
+                  value={form.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#25789e] focus:border-[#25789e] transition-all ${errors.email ? "border-red-500" : "border-gray-200"}`}
+                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all ${errors.email ? "border-red-500" : "border-gray-200"}`}
                   placeholder="your@email.com"
+                  required
                 />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                )}
               </div>
 
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label className="block text-sm font-bold text-gray-800 mb-2">
                   Message
                 </label>
                 <textarea
-                  id="message"
                   name="message"
-                  rows={5}
-                  value={formData.message}
+                  value={form.message}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#25789e] focus:border-[#25789e] transition-all resize-vertical ${errors.message ? "border-red-500" : "border-gray-200"}`}
+                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all resize-vertical ${errors.message ? "border-red-500" : "border-gray-200"}`}
                   placeholder="Tell us about your inquiry..."
+                  rows={5}
+                  required
                 />
-                {errors.message && (
-                  <p className="mt-1 text-sm text-red-600">{errors.message}</p>
-                )}
               </div>
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-[#25789e] to-[#1e5f73] hover:from-[#1e5f73] hover:to-[#144954] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    Send Message
-                  </>
-                )}
-              </button>
+              <div className="text-center">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-[#3B00C5] to-[#2f00a0] hover:bg-[#5245E3] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </button>
+              </div>
             </form>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

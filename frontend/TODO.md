@@ -1,1 +1,7 @@
-# TODO: Completed Features.jsx fix and Contact page enhancement&#10;1. [x] Fixed duplicate import in Features.jsx&#10;2. [x] Enhanced Contact.jsx with full form (fields, validation, submission, contact info section)&#10;3. [x] Updated TODO progress
+## TODO
+
+- [x] Replace footer “Karevo” text logo with main logo image (frontend/src/assets/logo.png) linking to “/”.
+
+- [x] Ensure import path is correct in Footer.jsx.
+
+- [x] Run frontend lint/build (if available) to confirm no JSX/image import errors.

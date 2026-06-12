@@ -25,50 +25,44 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const payload = {
-        role,
-        ...(role === "user"
-          ? { name: formData.name, email: formData.email }
-          : {
-              hospitalName: formData.hospitalName,
-              location: formData.location,
-              organizationEmail: formData.organizationEmail,
-            }),
-      };
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const res = await fetch("http://localhost:4000/api/waitlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+    // Store in localStorage for now (will migrate to Supabase)
+    const waitlistData = {
+      id: Date.now(),
+      role,
+      ...(role === "user"
+        ? { name: formData.name, email: formData.email }
+        : {
+            hospitalName: formData.hospitalName,
+            location: formData.location,
+            organizationEmail: formData.organizationEmail,
+          }),
+      timestamp: new Date().toISOString(),
+    };
+
+    const existingData =
+      JSON.parse(localStorage.getItem("karevowaitlist")) || [];
+    existingData.push(waitlistData);
+    localStorage.setItem("karevowaitlist", JSON.stringify(existingData));
+
+    setLoading(false);
+    setSubmitted(true);
+
+    // Close modal after 3 seconds
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({
+        name: "",
+        email: "",
+        hospitalName: "",
+        location: "",
+        organizationEmail: "",
       });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data?.error || "Failed to join waitlist");
-      }
-
-      setSubmitted(true);
-
-      // Close modal after 3 seconds
-      setTimeout(() => {
-        setSubmitted(false);
-        setFormData({
-          name: "",
-          email: "",
-          hospitalName: "",
-          location: "",
-          organizationEmail: "",
-        });
-        setRole("");
-        onClose();
-      }, 3000);
-    } catch (err) {
-      console.error(err);
-      alert(err?.message || "Failed to join waitlist");
-    } finally {
-      setLoading(false);
-    }
+      setRole("");
+      onClose();
+    }, 3000);
   };
 
   const isFormValid = () => {
@@ -76,7 +70,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
       return formData.name && formData.email;
     } else if (role === "hospital") {
       return (
-        formData.hospitalName && formData.location && formData.organizationEmail
+        formData.hospitalName &&
+        formData.location &&
+        formData.organizationEmail
       );
     }
     return false;
@@ -109,22 +105,20 @@ const WaitlistModal = ({ isOpen, onClose }) => {
               Welcome to the waitlist!
             </h2>
             <p className="text-gray-600 font-raleway text-lg leading-relaxed">
-              We're excited to have you join us. Watch your inbox for updates on
+              We&apos;re excited to have you join us. Watch your inbox for updates on
               when Karevo launches.
             </p>
             <div className="mt-8 pt-6 border-t border-gray-100">
               <p className="text-lg text-gray-500 font-raleway">
                 Joining as:{" "}
-                <span className="font-semibold text-gray-700 capitalize">
-                  {role}
-                </span>
+                <span className="font-semibold text-gray-700 capitalize">{role}</span>
               </p>
             </div>
           </div>
         ) : (
           <>
             {/* Header with Gradient Background */}
-            <div className="relative bg-gradient-to-br from-[#25789e] to-[#1e5a7a] p-8 sm:p-10 text-white">
+            <div className="relative bg-gradient-to-br from-[#3B00C5] to-[#2f00a0] p-8 sm:p-10 text-white">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-3xl -z-0"></div>
               <div className="relative z-10">
                 <h1 className="text-4xl sm:text-4xl font-bold mb-3 font-raleway">
@@ -147,7 +141,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                 <div className="flex gap-3">
                   {[
                     { value: "user", label: "User" },
-                    { value: "hospital", label: "Hospital" },
+                    { value: "hospital", label: "Hospital / Lab" },
                   ].map((option) => (
                     <label
                       key={option.value}
@@ -165,8 +159,8 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       <div
                         className={`p-4 rounded-2xl border-2 transition-all duration-300 text-center font-semibold font-raleway ${
                           role === option.value
-                            ? "border-[#25789e] bg-gradient-to-br from-[#25789e]/10 to-[#25789e]/5 ring-2 ring-[#25789e]/20"
-                            : "border-gray-200 bg-white hover:border-[#25789e]/30 hover:bg-gray-50"
+                            ? "border-[#3B00C5] bg-gradient-to-br from-[#3B00C5]/10 to-[#3B00C5]/5 ring-2 ring-[#3B00C5]/20"
+                            : "border-gray-200 bg-white hover:border-[#3B00C5]/30 hover:bg-gray-50"
                         }`}
                       >
                         {option.label}
@@ -176,7 +170,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-{/* User Form Fields */}
+              {/* User Form Fields */}
               {role === "user" && (
                 <>
                   {/* Name Input */}
@@ -189,8 +183,8 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="Dev 404"
-                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#25789e]/50 focus:border-[#25789e] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                      placeholder="John Doe"
+                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
                       required
                     />
                   </div>
@@ -205,8 +199,8 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder="you@example.com"
-                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#25789e]/50 focus:border-[#25789e] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                      placeholder="johndoe@gmail.com"
+                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
                       required
                     />
                   </div>
@@ -227,7 +221,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       value={formData.hospitalName}
                       onChange={handleInputChange}
                       placeholder="LAUTECH Teaching Hospital"
-                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#25789e]/50 focus:border-[#25789e] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
                       required
                     />
                   </div>
@@ -243,7 +237,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       value={formData.location}
                       onChange={handleInputChange}
                       placeholder="Ogbomoso, Oyo State"
-                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#25789e]/50 focus:border-[#25789e] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
                       required
                     />
                   </div>
@@ -259,7 +253,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       value={formData.organizationEmail}
                       onChange={handleInputChange}
                       placeholder="contact@hospital.com"
-                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#25789e]/50 focus:border-[#25789e] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
                       required
                     />
                   </div>
@@ -271,7 +265,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                 <button
                   type="submit"
                   disabled={!isFormValid() || loading}
-                  className="w-full group flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#25789e] to-[#1e5a7a] text-white text-lg font-bold rounded-xl hover:from-[#1e5a7a] hover:to-[#15404d] transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-lg disabled:hover:translate-y-0 font-raleway disabled:from-[#25789e] disabled:to-[#1e5a7a] animate-in fade-in duration-300"
+                  className="w-full group flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#3B00C5] to-[#2f00a0] text-white text-lg font-bold rounded-xl hover:from-[#2f00a0] hover:to-[#2a008f] transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-0.5 transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-lg disabled:hover:translate-y-0 font-raleway disabled:from-[#3B00C5] disabled:to-[#2f00a0] animate-in fade-in duration-300"
                 >
                   {loading ? (
                     <>
@@ -289,7 +283,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
               {/* Terms */}
               <p className="text-xs text-gray-500 text-center font-raleway leading-relaxed">
-                We respect your privacy. We'll only email you about important
+                We respect your privacy. We&apos;ll only email you about important
                 Karevo updates and launch announcements.
               </p>
             </form>
@@ -301,3 +295,4 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 };
 
 export default WaitlistModal;
+

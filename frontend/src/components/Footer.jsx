@@ -1,6 +1,7 @@
 import React from "react";
-import { Mail, MapPin, Phone, Heart } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
   const currentYear = new Date().getFullYear();
@@ -53,18 +54,23 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
     <footer className="bg-gradient-to-b from-gray-50 to-white border-t border-gray-200">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-5 gap-12 lg:gap-16">
+        <div className="py-10 grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16">
           {/* Brand Section */}
           <div className="md:col-span-1 flex flex-col justify-between">
             <div>
-              <h3 className="text-3xl font-bold text-[#25789e] mb-3 font-raleway">
-                Karevo
-              </h3>
+              <NavLink
+                to="/"
+                aria-label="Karevo Home"
+                className="inline-flex items-center"
+              >
+                <img src={logo} alt="Karevo" className="h-14 md:h-16 w-auto" />
+              </NavLink>
               <p className="text-gray-600 text-sm leading-relaxed font-raleway mb-6">
                 Secure, portable medical records that empower patients and
                 streamline healthcare delivery.
               </p>
             </div>
+
             {/* Social Links */}
             <div className="flex gap-4 flex-wrap">
               {socialLinks.map((social) => (
@@ -73,7 +79,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-medium text-gray-600 hover:text-[#25789e] transition-colors duration-300 font-raleway"
+                  className="text-sm font-medium text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway"
                   title={social.label}
                 >
                   {social.label}
@@ -92,7 +98,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                 <li key={link.name}>
                   <NavLink
                     to={link.path}
-                    className="text-gray-600 hover:text-[#25789e] transition-colors duration-300 font-raleway text-sm font-medium"
+                    className="text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway text-sm font-medium"
                   >
                     {link.name}
                   </NavLink>
@@ -111,7 +117,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                 <li key={link.name}>
                   <a
                     href={link.path}
-                    className="text-gray-600 hover:text-[#25789e] transition-colors duration-300 font-raleway text-sm font-medium"
+                    className="text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway text-sm font-medium"
                   >
                     {link.name}
                   </a>
@@ -134,12 +140,12 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                       href={info.href}
                       className="flex items-start gap-3 group"
                     >
-                      <Icon className="h-5 w-5 text-[#25789e] flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                      <Icon className="h-5 w-5 text-[#3B00C5] flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                       <div className="flex flex-col">
                         <span className="text-xs text-gray-500 font-raleway">
                           {info.label}
                         </span>
-                        <span className="text-sm text-gray-700 font-raleway font-medium group-hover:text-[#25789e] transition-colors">
+                        <span className="text-sm text-gray-700 font-raleway font-medium group-hover:text-[#3B00C5] transition-colors">
                           {info.value}
                         </span>
                       </div>
@@ -151,7 +157,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
           </div>
 
           {/* Newsletter/CTA */}
-          <div className="md:col-span-1 bg-gradient-to-br from-[#25789e]/5 to-[#25789e]/10 rounded-2xl p-6 border border-[#25789e]/20">
+          {/* <div className="md:col-span-1 bg-gradient-to-br from-[#3B00C5]/5 to-[#3B00C5]/10 rounded-2xl p-6 border border-[#3B00C5]/20">
             <h4 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
               Stay Updated
             </h4>
@@ -161,11 +167,12 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
             </p>
             <button
               onClick={onWaitlistClick}
-              className="w-full px-4 py-2.5 bg-[#25789e] hover:bg-[#1e5a7a] text-white text-sm font-semibold rounded-lg transition-all duration-300 text-center font-raleway hover:shadow-lg transform hover:scale-105 cursor-pointer border-none"
+              className="px-4 py-2.5 bg-[#3B00C5] hover:bg-[#5245E3] text-white rounded-lg transition-all duration-300 text-sm font-semibold font-geist"
+              type="button"
             >
               Join Waitlist
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Divider */}
@@ -185,14 +192,14 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                 {link.name === "Cookie Policy" ? (
                   <button
                     onClick={onCookiePolicyClick}
-                    className="text-sm text-gray-600 hover:text-[#25789e] transition-colors duration-300 font-raleway font-medium bg-none border-none cursor-pointer p-0"
+                    className="text-sm text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway font-medium bg-none border-none cursor-pointer p-0"
                   >
                     {link.name}
                   </button>
                 ) : (
                   <a
                     href={link.path}
-                    className="text-sm text-gray-600 hover:text-[#25789e] transition-colors duration-300 font-raleway font-medium"
+                    className="text-sm text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway font-medium"
                   >
                     {link.name}
                   </a>
@@ -207,8 +214,8 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
       </div>
 
       {/* Background Gradient Elements */}
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#25789e]/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute bottom-32 left-0 w-72 h-72 bg-[#25789e]/5 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#3B00C5]/5 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute bottom-32 left-0 w-72 h-72 bg-[#3B00C5]/5 rounded-full blur-3xl -z-10"></div>
     </footer>
   );
 };

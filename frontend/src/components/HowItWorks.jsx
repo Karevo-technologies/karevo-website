@@ -1,71 +1,36 @@
 import React from "react";
+import { CheckCircle2 } from "lucide-react";
 
-const HowItWorks = ({ title, subtitle }) => {
-  const animationStyle = `
-    @keyframes slide-down {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-    .slide-down {
-      animation: slide-down 0.8s ease-out forwards;
-    }
-    .fade-in-delayed {
-      animation: fade-in 0.8s ease-out forwards;
-    }
-    .fade-in-delayed-1 { animation-delay: 0.2s; opacity: 0; }
-    .fade-in-delayed-2 { animation-delay: 0.4s; opacity: 0; }
-  `;
-
+const HowItWorks = () => {
   return (
-    <>
-      <style>{animationStyle}</style>
-      <section className="bg-gradient-to-br from-[#25789e] via-[#1e5a7a] to-[#1a4a6a] text-white py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl -z-10"></div>
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-4xl font-bold text-center text-[#3B00C5] font-raleway mb-10">
+          How It Works
+        </h2>
 
-        <div className="max-w-5xl mx-auto">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h4 className="slide-down inline-block text-sm md:text-base font-semibold uppercase tracking-widest mb-6 bg-white/10 px-6 py-2 rounded-full border border-white/20 backdrop-blur-sm hover:bg-white/15 transition-all duration-300">
-              ✨ How It Works
-            </h4>
-
-            <h2 className="fade-in-delayed fade-in-delayed-1 text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-raleway leading-tight">
-              {title}
-            </h2>
-
-            <p className="fade-in-delayed fade-in-delayed-2 text-lg md:text-xl font-raleway mb-8 text-blue-100 leading-relaxed max-w-2xl mx-auto">
-              {subtitle}
-            </p>
-
-            {/* Decorative divider */}
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <div className="h-1 w-12 bg-gradient-to-r from-transparent to-white/40 rounded-full"></div>
-              <div className="h-1.5 w-1.5 bg-white/60 rounded-full"></div>
-              <div className="h-1 w-12 bg-gradient-to-l from-transparent to-white/40 rounded-full"></div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[1, 2, 3].map((n) => (
+            <div
+              key={n}
+              className="bg-gradient-to-br from-slate-50 to-white border border-gray-100 rounded-2xl p-8 shadow-sm hover:shadow-lg transition-shadow"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <CheckCircle2 className="h-6 w-6 text-[#3B00C5]" />
+                <h3 className="text-xl font-semibold font-raleway">Step {n}</h3>
+              </div>
+              <p className="text-gray-600 font-raleway">
+                {n === 1
+                  ? "Create your secure Karevo account"
+                  : n === 2
+                    ? "Verify your information safely"
+                    : "Get started with healthcare services in minutes"}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
-
-        {/* Floating accent element */}
-        <div className="absolute top-1/2 right-10 w-64 h-64 bg-white/3 rounded-full blur-2xl -z-10 animate-pulse"></div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

@@ -66,13 +66,13 @@ const FAQ = () => {
             >
               <button
                 onClick={() => toggleItem(faq.id)}
-                className="w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#25789e] focus:ring-offset-2 transition-colors duration-200"
+                className="w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#3B00C5] focus:ring-offset-2 transition-colors duration-200"
               >
                 <h3 className="text-xl font-semibold text-gray-900">
                   {faq.question}
                 </h3>
                 <svg
-                  className="w-8 h-8 text-[#25789e] transition-all duration-200"
+                  className="w-8 h-8 text-[#3B00C5] transition-all duration-200"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

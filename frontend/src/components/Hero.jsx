@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowRight, Info } from "lucide-react";
-import hero from "../assets/hero-image.png";
+import hero from "../assets/hero_side_image.png";
 
 const Hero = ({ onOpenWaitlist }) => {
   const bounceStyle = `
@@ -16,6 +16,7 @@ const Hero = ({ onOpenWaitlist }) => {
       animation: bounce-slow 3s ease-in-out infinite;
     }
   `;
+
   return (
     <>
       <style>{bounceStyle}</style>
@@ -27,24 +28,27 @@ const Hero = ({ onOpenWaitlist }) => {
             <div className="flex-1 text-left">
               <h2 className="text-3xl md:text-5xl lg:text-6xl mb-4 md:mb-6 leading-tight font-raleway font-bold text-[#111]">
                 Healthcare that
-                <span className="block text-[#25789e]">
+                <span className="block text-[#3B00C5]">
                   protects you <br />
                   everywhere
                 </span>
               </h2>
+
               <p className="text-lg md:text-lg text-gray-600 mb-10 leading-relaxed font-raleway max-w-xl">
                 Karevo delivers secure, portable medical records that empower
                 patients and streamline healthcare delivery.
               </p>
+
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={onOpenWaitlist}
-                  className="group flex items-center justify-center gap-2 px-8 py-4 bg-[#25789e] text-white text-lg font-semibold rounded-[100px] hover:bg-[#1e3a40] transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1 transform font-raleway"
+                  className="group flex items-center justify-center gap-2 px-8 py-4 bg-[#3B00C5] text-white text-lg font-semibold rounded-[100px] hover:bg-[#5245E3] transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1 transform font-raleway"
                 >
                   Join Waitlist
                   <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button className="group flex items-center justify-center gap-2 px-8 py-4 border-2 border-[#25789e] text-[#25789e] text-lg font-semibold rounded-[100px] hover:bg-[#25789e]/5 hover:border-[#1e3a40] hover:text-[#1e3a40] transition-all duration-300 hover:shadow-lg font-raleway">
+
+                <button className="group flex items-center justify-center gap-2 px-8 py-4 border-2 border-[#3B00C5] text-[#3B00C5] text-lg font-semibold rounded-[100px] hover:bg-[#3B00C5]/5 hover:border-[#1e3a40] hover:text-[#1e3a40] transition-all duration-300 hover:shadow-lg font-raleway">
                   Learn More
                   <Info className="h-5 w-5" />
                 </button>
@@ -65,11 +69,12 @@ const Hero = ({ onOpenWaitlist }) => {
         </div>
 
         {/* Background elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#25789e]/5 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#25789e]/5 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#3B00C5]/5 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#3B00C5]/5 rounded-full blur-3xl -z-10"></div>
       </section>
     </>
   );
 };
 
 export default Hero;
+

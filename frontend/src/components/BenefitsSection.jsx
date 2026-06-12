@@ -18,13 +18,13 @@ const BenefitsSection = ({ title, subtitle, benefits }) => {
               key={index}
               className="bg-white rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow duration-300"
             >
-              <h3 className="text-xl font-bold text-[#25789e] mb-6 font-geist border-b-2 border-[#25789e] pb-3">
+              <h3 className="text-xl font-bold text-[#3B00C5] mb-6 font-geist border-b-2 border-[#3B00C5] pb-3">
                 {benefit.title}
               </h3>
               <ul className="space-y-3">
                 {benefit.points.map((point, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-[#25789e] flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="h-5 w-5 text-[#3B00C5] flex-shrink-0 mt-0.5" />
                     <span className="text-gray-700 font-geist text-sm leading-relaxed">
                       {point}
                     </span>
