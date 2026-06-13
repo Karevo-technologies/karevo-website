@@ -6,8 +6,13 @@ const WaitlistModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    // For User role phone input
+    phoneCountryCode: "+234",
+    phone: "",
+    // For Hospital/Lab role phone input
     hospitalName: "",
     location: "",
+    phoneNumber: "",
     organizationEmail: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -33,10 +38,16 @@ const WaitlistModal = ({ isOpen, onClose }) => {
       id: Date.now(),
       role,
       ...(role === "user"
-        ? { name: formData.name, email: formData.email }
+        ? {
+            name: formData.name,
+            email: formData.email,
+            phone: `${formData.phoneCountryCode}${formData.phone}`,
+            location: formData.location,
+          }
         : {
             hospitalName: formData.hospitalName,
             location: formData.location,
+            phoneNumber: formData.phoneNumber,
             organizationEmail: formData.organizationEmail,
           }),
       timestamp: new Date().toISOString(),
@@ -67,11 +78,18 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
   const isFormValid = () => {
     if (role === "user") {
-      return formData.name && formData.email;
+      return (
+        formData.name &&
+        formData.email &&
+        formData.location &&
+        formData.phoneCountryCode &&
+        formData.phone
+      );
     } else if (role === "hospital") {
       return (
         formData.hospitalName &&
         formData.location &&
+        formData.phoneNumber &&
         formData.organizationEmail
       );
     }
@@ -105,13 +123,15 @@ const WaitlistModal = ({ isOpen, onClose }) => {
               Welcome to the waitlist!
             </h2>
             <p className="text-gray-600 font-raleway text-lg leading-relaxed">
-              We&apos;re excited to have you join us. Watch your inbox for updates on
-              when Karevo launches.
+              We&apos;re excited to have you join us. Watch your inbox for
+              updates on when Karevo launches.
             </p>
             <div className="mt-8 pt-6 border-t border-gray-100">
               <p className="text-lg text-gray-500 font-raleway">
                 Joining as:{" "}
-                <span className="font-semibold text-gray-700 capitalize">{role}</span>
+                <span className="font-semibold text-gray-700 capitalize">
+                  {role}
+                </span>
               </p>
             </div>
           </div>
@@ -204,6 +224,57 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       required
                     />
                   </div>
+
+                  {/* Location Input */}
+                  <div className="animate-in fade-in slide-in-from-bottom-2 duration-300 delay-100">
+                    <label className="block text-sm font-semibold text-gray-800 mb-2 font-raleway">
+                      Location
+                    </label>
+                    <input
+                      type="text"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleInputChange}
+                      placeholder="Lagos, Nigeria"
+                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                      required
+                    />
+                  </div>
+
+                  {/* Phone Input with Country Code Dropdown */}
+                  <div className="animate-in fade-in slide-in-from-bottom-2 duration-300 delay-200">
+                    <label className="block text-sm font-semibold text-gray-800 mb-2 font-raleway">
+                      Phone
+                    </label>
+
+                    <div className="flex gap-2">
+                      <select
+                        name="phoneCountryCode"
+                        value={formData.phoneCountryCode}
+                        onChange={handleInputChange}
+                        className="w-28 px-3 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                        required
+                      >
+                        <option value="+234">+234</option>
+                        <option value="+1">+1</option>
+                        <option value="+44">+44</option>
+                        <option value="+49">+49</option>
+                        <option value="+91">+91</option>
+                        <option value="+233">+233</option>
+                        <option value="+254">+254</option>
+                      </select>
+
+                      <input
+                        type="text"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="805-000-0000"
+                        className="flex-1 px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                        required
+                      />
+                    </div>
+                  </div>
                 </>
               )}
 
@@ -237,6 +308,22 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       value={formData.location}
                       onChange={handleInputChange}
                       placeholder="Ogbomoso, Oyo State"
+                      className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
+                      required
+                    />
+                  </div>
+
+                  {/* Phone Number Input */}
+                  <div className="animate-in fade-in slide-in-from-bottom-2 duration-300 delay-200">
+                    <label className="block text-sm font-semibold text-gray-800 mb-2 font-raleway">
+                      Phone Number
+                    </label>
+                    <input
+                      type="text"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleInputChange}
+                      placeholder="+234 805-000-0000"
                       className="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/50 focus:border-[#3B00C5] focus:outline-none transition-all duration-300 shadow-sm font-raleway bg-gray-50 hover:bg-white"
                       required
                     />
@@ -283,8 +370,8 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
               {/* Terms */}
               <p className="text-xs text-gray-500 text-center font-raleway leading-relaxed">
-                We respect your privacy. We&apos;ll only email you about important
-                Karevo updates and launch announcements.
+                We respect your privacy. We&apos;ll only email you about
+                important Karevo updates and launch announcements.
               </p>
             </form>
           </>
@@ -295,4 +382,3 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 };
 
 export default WaitlistModal;
-

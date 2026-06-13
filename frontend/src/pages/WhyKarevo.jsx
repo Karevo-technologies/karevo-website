@@ -2,6 +2,7 @@ import React from "react";
 
 import ChallengeSolutionSection from "../components/ChallengeSolutionSection";
 import BenefitsSection from "../components/BenefitsSection";
+import BenefitsCarousel from "../components/BenefitsCarousel";
 import WorkflowSection from "../components/WorkflowSection";
 import SecuritySection from "../components/SecuritySection";
 import CTASection from "../components/CTASection";
@@ -84,11 +85,23 @@ const WhyKarevo = () => {
         variant="solution"
       />
 
-      <BenefitsSection
-        title="Real Benefits for Everyone"
-        subtitle="Designed to benefit patients, providers, healthcare systems, and organizations"
-        benefits={benefits}
-      />
+      {/* Desktop/tablet: keep existing grid */}
+      <div className="hidden md:block">
+        <BenefitsSection
+          title="Real Benefits for Everyone"
+          subtitle="Designed to benefit patients, providers, healthcare systems, and organizations"
+          benefits={benefits}
+        />
+      </div>
+
+      {/* Mobile: carousel (auto every 3s and loops back to start after first cycle) */}
+      <div className="md:hidden">
+        <BenefitsCarousel
+          title="Real Benefits for Everyone"
+          subtitle="Designed to benefit patients, providers, healthcare systems, and organizations"
+          benefits={benefits}
+        />
+      </div>
 
       <WorkflowSection
         title="How Karevo Works"

@@ -1,3 +1,6 @@
-# TODO
-
-- [ ] Update frontend favicon to use `favicon.png` instead of `favicon.svg`.
+- [x] Update Footer.jsx redesign (unique, professional layout)
+- [x] Enlarge Karevo logo visibility
+- [x] Add phone numbers 08076041327 and 08052350516 to footer contact section
+- [x] Import and display Twitter, LinkedIn, Instagram, TikTok icons in footer
+- [x] Add “Join our community” button in footer linking to WhatsApp group
+- [x] Run frontend lint/build to ensure no errors

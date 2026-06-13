@@ -30,23 +30,23 @@ const KarevoID = () => {
   ];
 
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50/70 via-white to-slate-50 rounded-2xl mt-12 relative overflow-hidden">
+    <div className="py-25 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50/70 via-white to-slate-50 rounded-2xl mt-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-[#3B00C5]/3 to-[#1e5a7a]/3" />
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 animate-in fade-in duration-1000">
-          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 font-raleway">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12 animate-in fade-in duration-1000">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 font-raleway">
             Karevo ID - Step by Step
           </h3>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto">
             Simple process to get your digital health passport
           </p>
         </div>
 
         {/* Compact Vertical Steps */}
-        <div className="relative space-y-8">
+        <div className="relative space-y-6 sm:space-y-8">
           {/* Line */}
-          <div className="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-[#3B00C5]/30 to-[#1e5a7a]/30 -translate-x-1/2 z-0" />
+          <div className="absolute left-5 sm:left-6 top-8 bottom-8 w-px bg-gradient-to-b from-[#3B00C5]/30 to-[#1e5a7a]/30 -translate-x-1/2 z-0" />
 
           {steps.map((step, index) => {
             const Icon = step.icon;
@@ -58,19 +58,19 @@ const KarevoID = () => {
                 className="flex items-start group relative z-10 animate-in fade-in slide-in-from-bottom duration-800 delay-100"
               >
                 {/* Step Number */}
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-r from-[#3B00C5] to-[#1e5a7a] flex items-center justify-center text-white font-bold text-lg font-raleway shadow-lg border-4 border-white/50 mr-6 group-hover:scale-110 transition-transform duration-300">
+                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-[#3B00C5] to-[#1e5a7a] flex items-center justify-center text-white font-bold text-base sm:text-lg font-raleway shadow-lg border-4 border-white/50 mr-4 sm:mr-6 group-hover:scale-110 transition-transform duration-300">
                   {step.number}
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 shadow-md hover:shadow-xl hover:border-[#3B00C5]/30 transition-all duration-400 group-hover:-translate-y-1">
+                <div className="flex-1 p-4 sm:p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 shadow-md hover:shadow-xl hover:border-[#3B00C5]/30 transition-all duration-400 group-hover:-translate-y-1">
                   <div className="flex items-center mb-2">
-                    <div className="w-10 h-10 bg-gradient-to-r from-[#3B00C5]/90 to-[#1e5a7a]/90 rounded-xl flex items-center justify-center shadow-md mr-3 group-hover:rotate-6 transition-transform duration-300">
-                      <Icon className="w-6 h-6 text-white" />
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-[#3B00C5]/90 to-[#1e5a7a]/90 rounded-xl flex items-center justify-center shadow-md mr-3 group-hover:rotate-6 transition-transform duration-300">
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
                   </div>
 
-                  <h4 className="text-xl font-bold text-slate-900 mb-1 font-raleway group-hover:text-[#3B00C5] transition-colors">
+                  <h4 className="text-lg sm:text-xl font-bold text-slate-900 mb-1 font-raleway group-hover:text-[#3B00C5] transition-colors">
                     {step.title}
                   </h4>
                   <p className="text-sm text-gray-600 font-medium leading-relaxed font-raleway">
@@ -80,7 +80,7 @@ const KarevoID = () => {
 
                 {/* Connecting line */}
                 {!isLast && (
-                  <div className="flex-shrink-0 w-px h-16 bg-gradient-to-b from-[#3B00C5]/40 to-[#1e5a7a]/40 mx-6 self-center" />
+                  <div className="flex-shrink-0 w-px h-14 sm:h-16 bg-gradient-to-b from-[#3B00C5]/40 to-[#1e5a7a]/40 mx-4 sm:mx-6 self-center" />
                 )}
               </div>
             );
@@ -92,4 +92,3 @@ const KarevoID = () => {
 };
 
 export default KarevoID;
-

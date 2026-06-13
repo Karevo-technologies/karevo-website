@@ -5,6 +5,7 @@ import KarevoID from "../components/KarevoID";
 import SecuritySection from "../components/SecuritySection";
 import CTASection from "../components/CTASection";
 import WaitlistModal from "../components/WaitlistModal";
+import AboutKarevoSection from "../components/AboutKarevoSection";
 
 const Home = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -12,9 +13,10 @@ const Home = () => {
   return (
     <>
       <Hero onOpenWaitlist={() => setIsWaitlistOpen(true)} />
+      <AboutKarevoSection />
       <KarevoID />
       {/* <Features /> */}
-      
+
       <CTASection
         title="Ready to Revolutionize Your Healthcare?"
         subtitle="Join thousands of patients and providers already using Karevo"

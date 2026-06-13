@@ -49,111 +49,147 @@ const Contact = () => {
   return (
     <section className="pt-40 pb-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-20">
-          <h1 className="text-5xl md:text-6xl font-bold text-[#3B00C5] mb-6">
+        <div className="text-center pt-25 sm:pt-0 mb-16 sm:mb-20 px-2">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3B00C5]/10 text-[#3B00C5] font-semibold text-sm sm:text-base mb-5">
+            Contact Karevo
+          </div>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#3B00C5] mb-5 sm:mb-6">
             Get In Touch
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto">
             We'd love to hear from you. Send us a message and we'll respond as
             soon as possible.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-start">
           <div>
-            <h3 className="text-2xl font-bold text-[#3B00C5] mb-4 flex items-center gap-3">
-              <Mail className="w-8 h-8 text-[#3B00C5]" />
-              Contact Information
-            </h3>
+            <div className="relative overflow-hidden rounded-3xl border border-gray-100 bg-gradient-to-b from-white to-gray-50 shadow-sm p-6 sm:p-8">
+              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#3B00C5]/10 blur-3xl" />
+              <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-[#2f00a0]/10 blur-3xl" />
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                <Mail className="w-5 h-5 text-[#3B00C5]" />
-                <div className="text-sm">
-                  <div className="text-gray-500">Email</div>
-                  <div className="font-medium text-gray-800">
-                    contact@karevo.health
+              <div className="relative">
+                <h3 className="text-2xl sm:text-3xl font-bold text-[#3B00C5] mb-6 flex items-center gap-3">
+                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[#3B00C5]/10">
+                    <Mail className="w-7 h-7 text-[#3B00C5]" />
+                  </span>
+                  Contact Information
+                </h3>
+
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+                    <span className="mt-0.5 inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#3B00C5]/10">
+                      <Mail className="w-5 h-5 text-[#3B00C5]" />
+                    </span>
+                    <div className="text-sm">
+                      <div className="text-gray-500">Email</div>
+                      <div className="font-semibold text-gray-900">
+                        contact@karevo.health
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+                    <span className="mt-0.5 inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#3B00C5]/10">
+                      <Phone className="w-5 h-5 text-[#3B00C5]" />
+                    </span>
+                    <div className="text-sm">
+                      <div className="text-gray-500">Phone</div>
+                      <div className="font-semibold text-gray-900">
+                        +234 805-235-0516
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+                    <span className="mt-0.5 inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#3B00C5]/10">
+                      <MapPin className="w-5 h-5 text-[#3B00C5]" />
+                    </span>
+                    <div className="text-sm">
+                      <div className="text-gray-500">Location</div>
+                      <div className="font-semibold text-gray-900">
+                        Lagos, Nigeria
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                <Phone className="w-5 h-5 text-[#3B00C5]" />
-                <div className="text-sm">
-                  <div className="text-gray-500">Phone</div>
-                  <div className="font-medium text-gray-800">
-                    +234 805-235-0516
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm border border-gray-100">
-                <MapPin className="w-5 h-5 text-[#3B00C5]" />
-                <div className="text-sm">
-                  <div className="text-gray-500">Location</div>
-                  <div className="font-medium text-gray-800">
-                    Lagos, Nigeria
-                  </div>
+                <div className="mt-6 flex items-center gap-3 text-sm text-gray-600">
+                  <span className="w-2 h-2 rounded-full bg-[#3B00C5]" />
+                  Usually responds within 1–2 business days.
                 </div>
               </div>
             </div>
           </div>
 
           <div>
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2">
-                  Name
-                </label>
-                <input
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all ${errors.name ? "border-red-500" : "border-gray-200"}`}
-                  placeholder="Your name"
-                  required
-                />
-              </div>
+            <div className="relative overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm p-6 sm:p-8">
+              <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full bg-[#3B00C5]/10 blur-3xl" />
+              <div className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full bg-[#2f00a0]/10 blur-3xl" />
 
-              <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2">
-                  Email
-                </label>
-                <input
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all ${errors.email ? "border-red-500" : "border-gray-200"}`}
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
+              <div className="relative">
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-800 mb-2">
+                      Name
+                    </label>
+                    <input
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all ${
+                        errors.name ? "border-red-500" : "border-gray-200"
+                      }`}
+                      placeholder="Your name"
+                      required
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2">
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  value={form.message}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all resize-vertical ${errors.message ? "border-red-500" : "border-gray-200"}`}
-                  placeholder="Tell us about your inquiry..."
-                  rows={5}
-                  required
-                />
-              </div>
+                  <div>
+                    <label className="block text-sm font-bold text-gray-800 mb-2">
+                      Email
+                    </label>
+                    <input
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all ${
+                        errors.email ? "border-red-500" : "border-gray-200"
+                      }`}
+                      placeholder="your@email.com"
+                      required
+                    />
+                  </div>
 
-              <div className="text-center">
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-[#3B00C5] to-[#2f00a0] hover:bg-[#5245E3] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-                >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </button>
+                  <div>
+                    <label className="block text-sm font-bold text-gray-800 mb-2">
+                      Message
+                    </label>
+                    <textarea
+                      name="message"
+                      value={form.message}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all resize-vertical ${
+                        errors.message ? "border-red-500" : "border-gray-200"
+                      }`}
+                      placeholder="Tell us about your inquiry..."
+                      rows={5}
+                      required
+                    />
+                  </div>
+
+                  <div className="text-center">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-gradient-to-r from-[#3B00C5] to-[#2f00a0] hover:bg-[#5245E3] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                    >
+                      {isSubmitting ? "Sending..." : "Send Message"}
+                    </button>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

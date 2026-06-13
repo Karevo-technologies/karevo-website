@@ -1,9 +1,10 @@
 import React from "react";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
+  void onWaitlistClick;
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
@@ -34,8 +35,14 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
     {
       icon: Phone,
       label: "Phone",
-      value: "+234 805-235-0516",
-      href: "tel:+2341234567890",
+      value: "08076041327",
+      href: "tel:+2348076041327",
+    },
+    {
+      icon: Phone,
+      label: "Phone 2",
+      value: "08052350516",
+      href: "tel:+2348052350516",
     },
     {
       icon: MapPin,
@@ -48,10 +55,19 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
   const socialLinks = [
     { label: "Twitter", href: "#" },
     { label: "LinkedIn", href: "#" },
+    { label: "Instagram", href: "#" },
+    { label: "TikTok", href: "#" },
   ];
 
+  const groupLink =
+    "https://chat.whatsapp.com/JXtPVDJgNI7EalIMnTmbX9?s=cl&p=i&ilr=0";
+
   return (
-    <footer className="bg-gradient-to-b from-gray-50 to-white border-t border-gray-200">
+    <footer className="relative bg-gradient-to-b from-gray-50 to-white border-t border-gray-200 overflow-hidden">
+      {/* Background Gradient Elements */}
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#3B00C5]/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-24 left-0 w-72 h-72 bg-[#3B00C5]/10 rounded-full blur-3xl -z-10" />
+
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="py-10 grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16">
@@ -63,7 +79,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                 aria-label="Karevo Home"
                 className="inline-flex items-center"
               >
-                <img src={logo} alt="Karevo" className="h-14 md:h-16 w-auto" />
+                <img src={logo} alt="Karevo" className="h-20 md:h-24 w-auto" />
               </NavLink>
               <p className="text-gray-600 text-sm leading-relaxed font-raleway mb-6">
                 Secure, portable medical records that empower patients and
@@ -156,23 +172,23 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
             </ul>
           </div>
 
-          {/* Newsletter/CTA */}
-          {/* <div className="md:col-span-1 bg-gradient-to-br from-[#3B00C5]/5 to-[#3B00C5]/10 rounded-2xl p-6 border border-[#3B00C5]/20">
+          {/* Community CTA */}
+          <div className="md:col-span-1 bg-gradient-to-br from-[#3B00C5]/10 to-[#3B00C5]/5 rounded-2xl p-6 border border-[#3B00C5]/20">
             <h4 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
-              Stay Updated
+              Join our community
             </h4>
-            <p className="text-sm text-gray-600 mb-4 font-raleway leading-relaxed">
-              Be the first to know about Karevo launches and healthcare
-              innovations.
+            <p className="text-sm text-gray-600 mb-5 font-raleway leading-relaxed">
+              Connect with us and stay updated with Karevo news.
             </p>
-            <button
-              onClick={onWaitlistClick}
-              className="px-4 py-2.5 bg-[#3B00C5] hover:bg-[#5245E3] text-white rounded-lg transition-all duration-300 text-sm font-semibold font-geist"
-              type="button"
+            <a
+              href={groupLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-[#3B00C5] hover:bg-[#5245E3] text-white rounded-lg transition-all duration-300 text-sm font-semibold font-geist"
             >
-              Join Waitlist
-            </button>
-          </div> */}
+              Join our community
+            </a>
+          </div>
         </div>
 
         {/* Divider */}
