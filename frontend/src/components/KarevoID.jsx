@@ -1,94 +1,360 @@
-import React from "react";
-import { User, Link, MapPin, DownloadCloud } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { DownloadCloud, Link, MapPin, ShieldCheck, User } from "lucide-react";
 
 const KarevoID = () => {
-  const steps = [
-    {
-      number: "01",
-      icon: User,
-      title: "Create KID Profile",
-      desc: "Sign up and get unique Health ID for lookups & updates.",
-    },
-    {
-      number: "02",
-      icon: Link,
-      title: "Link Health Records",
-      desc: "Hospitals sync medical history to your KID profile.",
-    },
-    {
-      number: "03",
-      icon: MapPin,
-      title: "Access Anywhere",
-      desc: "Use KID at any hospital - instant record access.",
-    },
-    {
-      number: "04",
-      icon: DownloadCloud,
-      title: "Hospital Pulls Data",
-      desc: "Staff retrieve full file instantly, no paperwork.",
-    },
-  ];
+  const steps = useMemo(
+    () => [
+      {
+        number: "01",
+        icon: User,
+        title: "Create KID Profile",
+        desc: "Sign up and get unique Health ID for lookups & updates.",
+        subTitle: "Your digital health passport starts here",
+      },
+      {
+        number: "02",
+        icon: Link,
+        title: "Link Health Records",
+        desc: "Hospitals sync medical history to your KID profile.",
+        subTitle: "Bring your history into one secure place",
+      },
+      {
+        number: "03",
+        icon: MapPin,
+        title: "Access Anywhere",
+        desc: "Use KID at any hospital - instant record access.",
+        subTitle: "Care wherever you are, without the paperwork",
+      },
+      {
+        number: "04",
+        icon: DownloadCloud,
+        title: "Hospital Pulls Data",
+        desc: "Staff retrieve full file instantly, no paperwork.",
+        subTitle: "Faster decisions for better outcomes",
+      },
+    ],
+    []
+  );
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const Active = steps[activeIndex];
+  const ActiveIcon = Active?.icon || ShieldCheck;
+
+  const prefersReducedMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const clamp = (n) => Math.max(0, Math.min(steps.length - 1, n));
+
+  const goTo = (next) => {
+    const target = clamp(next);
+    if (target === activeIndex) return;
+
+    if (!prefersReducedMotion) {
+      setIsAnimating(true);
+      window.setTimeout(() => {
+        setActiveIndex(target);
+        setIsAnimating(false);
+      }, 380);
+    } else {
+      setActiveIndex(target);
+    }
+  };
+
+  const goNext = () => goTo(activeIndex + 1);
+  const goPrev = () => goTo(activeIndex - 1);
+
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") goNext();
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") goPrev();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
+
+  const styles = `
+    @keyframes kspin { 
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes kfadeUp {
+      0% { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+
+    @keyframes ksoftGlow {
+      0%, 100% { opacity: .55; }
+      50% { opacity: 1; }
+    }
+
+    .kid-reduce * { animation: none !important; transition: none !important; }
+
+    /* Spinner overlay */
+    .kid-spinner {
+      animation: kspin 900ms linear infinite;
+    }
+
+    .kid-in {
+      animation: kfadeUp 420ms cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .kid-cardShadow {
+      box-shadow: 0 20px 80px rgba(0,0,0,0.10);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .kid-spinner { animation: none !important; }
+      .kid-in { animation: none !important; }
+    }
+  `;
 
   return (
-    <div className="py-25 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50/70 via-white to-slate-50 rounded-2xl mt-12 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#3B00C5]/3 to-[#1e5a7a]/3" />
-      <div className="max-w-4xl mx-auto relative z-10">
-        {/* Header */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12 animate-in fade-in duration-1000">
-          <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-3 sm:mb-4 font-raleway">
-            Karevo ID - Step by Step
+    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <style>{styles}</style>
+
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-10">
+          <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3B00C5]/10 text-[#3B00C5] font-semibold text-sm font-raleway">
+            Karevo ID
+            <span className="w-1.5 h-1.5 rounded-full bg-[#3B00C5]" />
+            Step by Step
+          </p>
+          <h3 className="mt-5 text-3xl sm:text-4xl md:text-[46px] font-bold font-raleway text-slate-900">
+            A secure Health ID that unlocks care
           </h3>
-          <p className="text-base sm:text-lg text-gray-700 max-w-2xl mx-auto">
-            Simple process to get your digital health passport
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto font-raleway">
+            Move through the steps with the buttons. Each step reveals more detail and animates in a premium way.
           </p>
         </div>
 
-        {/* Compact Vertical Steps */}
-        <div className="relative space-y-6 sm:space-y-8">
-          {/* Line */}
-          <div className="absolute left-5 sm:left-6 top-8 bottom-8 w-px bg-gradient-to-b from-[#3B00C5]/30 to-[#1e5a7a]/30 -translate-x-1/2 z-0" />
+        <div
+          className={
+            "relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/70 backdrop-blur-sm"
+          }
+        >
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-gradient-to-r from-[#3B00C5]/10 via-transparent to-[#1e5a7a]/10" />
+            <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-[#3B00C5]/10 blur-3xl" />
+            <div className="absolute -bottom-20 -left-24 w-72 h-72 rounded-full bg-[#1e5a7a]/10 blur-3xl" />
+          </div>
 
-          {steps.map((step, index) => {
-            const Icon = step.icon;
-            const isLast = index === steps.length - 1;
-
-            return (
-              <div
-                key={step.number}
-                className="flex items-start group relative z-10 animate-in fade-in slide-in-from-bottom duration-800 delay-100"
-              >
-                {/* Step Number */}
-                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-[#3B00C5] to-[#1e5a7a] flex items-center justify-center text-white font-bold text-base sm:text-lg font-raleway shadow-lg border-4 border-white/50 mr-4 sm:mr-6 group-hover:scale-110 transition-transform duration-300">
-                  {step.number}
+          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-10 p-5 sm:p-8 md:p-10">
+            {/* Left: big step card */}
+            <div className="relative">
+              {/* Spinner overlay for transition */}
+              {!prefersReducedMotion && isAnimating && (
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/30 rounded-3xl">
+                  <div className="relative">
+                    <div className="w-14 h-14 rounded-full border-2 border-[#3B00C5]/30 border-t-[#3B00C5] kid-spinner" />
+                    <div className="absolute inset-0 rounded-full animate-[ksoftGlow_900ms_ease-in-out_infinite]" />
+                  </div>
                 </div>
+              )}
 
-                {/* Content */}
-                <div className="flex-1 p-4 sm:p-6 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200/50 shadow-md hover:shadow-xl hover:border-[#3B00C5]/30 transition-all duration-400 group-hover:-translate-y-1">
-                  <div className="flex items-center mb-2">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-[#3B00C5]/90 to-[#1e5a7a]/90 rounded-xl flex items-center justify-center shadow-md mr-3 group-hover:rotate-6 transition-transform duration-300">
-                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              <div className="rounded-3xl kid-cardShadow bg-white/60 border border-slate-200/60">
+                <div className="p-6 sm:p-7 md:p-8">
+                  <div className="flex items-start justify-between gap-5">
+                    <div className="flex items-center gap-4">
+                      <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-r from-[#3B00C5] to-[#1e5a7a] flex items-center justify-center shadow-lg">
+                        <ActiveIcon className="w-7 h-7 text-white" />
+                        <span className="absolute -bottom-2 -right-2 w-5 h-5 rounded-full bg-white/90" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                          Step {activeIndex + 1} / {steps.length}
+                        </div>
+                        <h4 className="text-2xl sm:text-3xl font-bold font-raleway text-slate-900">
+                          {Active.title}
+                        </h4>
+                      </div>
+                    </div>
+
+                    <div className="hidden sm:flex flex-col items-end">
+                      <div className="text-xs font-semibold text-[#3B00C5] bg-[#3B00C5]/10 px-3 py-1 rounded-full">
+                        KID-{Active.number}
+                      </div>
+                      <div className="mt-2 text-sm text-gray-500 font-raleway">Patient-first security</div>
                     </div>
                   </div>
 
-                  <h4 className="text-lg sm:text-xl font-bold text-slate-900 mb-1 font-raleway group-hover:text-[#3B00C5] transition-colors">
-                    {step.title}
-                  </h4>
-                  <p className="text-sm text-gray-600 font-medium leading-relaxed font-raleway">
-                    {step.desc}
-                  </p>
-                </div>
+                  <div
+                    className={!prefersReducedMotion ? (isAnimating ? "opacity-0" : "kid-in") : undefined}
+                  >
+                    <p className="mt-4 text-gray-700 font-raleway leading-relaxed text-base sm:text-lg">
+                      {Active.desc}
+                    </p>
 
-                {/* Connecting line */}
-                {!isLast && (
-                  <div className="flex-shrink-0 w-px h-14 sm:h-16 bg-gradient-to-b from-[#3B00C5]/40 to-[#1e5a7a]/40 mx-4 sm:mx-6 self-center" />
-                )}
+                    <p className="mt-3 text-slate-900 font-semibold font-raleway">
+                      {Active.subTitle}
+                    </p>
+
+                    {/* Extra clarity for this step (still option A: more detail, not bullets) */}
+                    <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="rounded-2xl border border-slate-200/70 bg-white/70 p-4">
+                        <div className="text-sm font-semibold text-slate-900 font-raleway">What you get</div>
+                        <div className="mt-1 text-sm text-gray-600 font-raleway">
+                          {activeIndex === 0
+                            ? "A verified KID profile you can use anywhere."
+                            : activeIndex === 1
+                            ? "A complete record history attached to your KID."
+                            : activeIndex === 2
+                            ? "Fast access to records when you need care."
+                            : "Instant hospital pulls—fewer delays, better decisions."}
+                        </div>
+                      </div>
+                      <div className="rounded-2xl border border-slate-200/70 bg-white/70 p-4">
+                        <div className="text-sm font-semibold text-slate-900 font-raleway">Why it matters</div>
+                        <div className="mt-1 text-sm text-gray-600 font-raleway">
+                          {activeIndex === 0
+                            ? "Start secure: patient control from day one."
+                            : activeIndex === 1
+                            ? "No more missing files—your history stays current."
+                            : activeIndex === 2
+                            ? "Care teams get context instantly, even on the move."
+                            : "Less paperwork. More time for clinical work."}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-7 flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[#3B00C5] shadow-[0_0_18px_rgba(59,0,197,0.45)]" />
+                        <span className="text-sm text-gray-600 font-raleway">Verified • Encrypted • Portable</span>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={goPrev}
+                          disabled={activeIndex === 0}
+                          className="px-4 py-2 rounded-xl text-sm font-semibold font-raleway transition-all"
+                          style={{
+                            background:
+                              activeIndex === 0 ? "rgba(15,23,42,0.05)" : "rgba(59,0,197,0.08)",
+                            color:
+                              activeIndex === 0 ? "rgba(15,23,42,0.35)" : "#3B00C5",
+                            cursor: activeIndex === 0 ? "not-allowed" : "pointer",
+                          }}
+                        >
+                          Previous
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={goNext}
+                          disabled={activeIndex === steps.length - 1}
+                          className="px-4 py-2 rounded-xl text-sm font-semibold font-raleway transition-all"
+                          style={{
+                            background:
+                              activeIndex === steps.length - 1
+                                ? "rgba(15,23,42,0.05)"
+                                : "#3B00C5",
+                            color:
+                              activeIndex === steps.length - 1 ? "rgba(15,23,42,0.35)" : "#fff",
+                            cursor:
+                              activeIndex === steps.length - 1 ? "not-allowed" : "pointer",
+                            boxShadow:
+                              activeIndex === steps.length - 1 ? "none" : "0 12px 40px rgba(59,0,197,0.25)",
+                          }}
+                        >
+                          Next
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            );
-          })}
+            </div>
+
+            {/* Right: step selector */}
+            <div className="relative">
+              <div className="rounded-3xl border border-slate-200/60 bg-white/60 backdrop-blur-sm">
+                <div className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
+                        Steps
+                      </div>
+                      <div className="text-xl font-bold font-raleway text-slate-900">
+                        Choose your next action
+                      </div>
+                    </div>
+                    <div className="hidden md:block w-11 h-11 rounded-2xl bg-gradient-to-r from-[#3B00C5]/10 to-[#1e5a7a]/10" />
+                  </div>
+
+                  <div className="mt-6 space-y-4">
+                    {steps.map((s, i) => {
+                      const isActive = i === activeIndex;
+                      const Icon = s.icon;
+                      return (
+                        <button
+                          key={s.number}
+                          type="button"
+                          onClick={() => goTo(i)}
+                          className="w-full text-left rounded-2xl border transition-all"
+                          style={{
+                            background: isActive ? "rgba(59,0,197,0.10)" : "rgba(255,255,255,0.65)",
+                            borderColor: isActive ? "rgba(59,0,197,0.35)" : "rgba(148,163,184,0.45)",
+                          }}
+                          aria-current={isActive}
+                        >
+                          <div className="p-4 flex items-start gap-3">
+                            <div
+                              className="w-10 h-10 rounded-xl flex items-center justify-center"
+                              style={{
+                                background: isActive
+                                  ? "linear-gradient(90deg, rgba(59,0,197,0.95), rgba(30,90,122,0.95))"
+                                  : "rgba(15,23,42,0.04)",
+                              }}
+                            >
+                              <Icon className="w-5 h-5" style={{ color: isActive ? "#fff" : "#3B00C5" }} />
+                            </div>
+
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-3">
+                                <div className="text-sm font-semibold font-raleway text-slate-900">
+                                  {s.title}
+                                </div>
+                                <div
+                                  className="text-xs font-semibold"
+                                  style={{ color: isActive ? "#3B00C5" : "rgba(51,65,85,0.7)" }}
+                                >
+                                  {s.number}
+                                </div>
+                              </div>
+                              <div className="mt-1 text-xs text-gray-600 font-raleway">
+                                {isActive ? s.desc : "Tap to view details"}
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="mt-6 text-sm text-gray-600 font-raleway">
+                    Tip: Use keyboard arrows to navigate steps.
+                  </div>
+
+                  {/* <div className="mt-3 flex items-center gap-2 text-sm text-gray-600 font-raleway">
+                    <span className="w-2 h-2 rounded-full bg-[#1e5a7a]" />
+                    Reduced-motion users get the same content without animations.
+                  </div> */}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
 export default KarevoID;
+

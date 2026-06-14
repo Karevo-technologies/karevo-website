@@ -6,108 +6,145 @@ const FAQ = () => {
   const faqs = [
     {
       id: "1",
-      question: "What is Karevo?",
+      question: "What is K-ID?",
       answer:
-        "Karevo is a comprehensive healthcare platform that provides drug verification, electronic health records (EHR), appointment scheduling, and more to ensure safe and efficient medical services.",
+        "K-ID is your personal digital health identity. It is a secure platform where your medical records, test results, and health history are stored and controlled by you. Anytime you need to share your records with a doctor, hospital, or organisation, you do it instantly from your phone.",
     },
-    // {
-    //   id: "2",
-    //   question: "How does drug verification work?",
-    //   answer:
-    //     "Our advanced drug verification system scans medication barcodes and cross-references them with verified pharmaceutical databases to prevent medication errors and ensure patient safety.",
-    // },
+    {
+      id: "2",
+      question: "Who puts my records on K-ID?",
+      answer:
+        "Only verified labs, hospitals, and clinics can send records to your K-ID profile. You cannot upload or edit your own records. This is intentional. It means every record on your profile is verified and trusted by whoever receives it.",
+    },
     {
       id: "3",
-      question: "Is my health data secure?",
+      question: "How do I share my records with a doctor?",
       answer:
-        "Yes, all data is encrypted using industry-standard AES-256 encryption and stored in HIPAA-compliant servers with regular security audits.",
+        "You generate a one-time QR code for the specific record you want to share. The doctor scans it. The record opens on their screen. The QR code expires immediately after one scan. Nobody else can use it.",
     },
     {
       id: "4",
-      question: "Can I schedule appointments online?",
+      question: "Is my health data safe?",
       answer:
-        "Absolutely! Use our intuitive scheduling system to book, reschedule, or cancel appointments 24/7. Get instant confirmations and reminders.",
+        "Yes. You control every share. No record leaves your profile without your approval. Every action on your account is permanently logged with a timestamp so you always know who accessed what and when.",
     },
     {
       id: "5",
-      question: "What is Electronic Health Records (EHR)?",
+      question: "What if I do not have internet at the hospital?",
       answer:
-        "EHR is a digital version of a patient's paper chart. Karevo's EHR allows seamless access to medical history, test results, and prescriptions across providers.",
+        "QR codes remain valid for 10 minutes after you generate them. So even if your connection drops during the consultation, your doctor can still scan and access the record you approved.",
     },
     {
       id: "6",
-      question: "How do I get started with Karevo?",
+      question: "Do I have to pay to use K-ID?",
       answer:
-        "Sign up for free, verify your account, and start exploring features. Premium plans unlock advanced tools like unlimited scheduling and detailed analytics.",
+        "Creating your K-ID account is free. A small monthly fee unlocks full record sharing features. Pricing is set specifically for Nigeria and will be confirmed at launch.",
+    },
+    {
+      id: "7",
+      question: "My previous hospital is not on K-ID yet. What happens to my old records?",
+      answer:
+        "K-ID captures all records going forward from the day you join. For existing paper records, we offer a manual verification service on the LAUTECH campus where a trained team member digitises your documents securely. Full historical import from hospitals is coming post-launch.",
     },
   ];
 
   const toggleItem = (id) => {
-    const newOpenItems = new Set(openItems);
-    if (openItems.has(id)) {
-      newOpenItems.delete(id);
+    // Compulsory single-open accordion behavior:
+    // clicking one item closes all others.
+    const isCurrentlyOpen = openItems.has(id);
+    if (isCurrentlyOpen) {
+      setOpenItems(new Set());
     } else {
-      newOpenItems.add(id);
+      setOpenItems(new Set([id]));
     }
-    setOpenItems(newOpenItems);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-40 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl sm:text-4xl font-bold text-gray-900 mb-8 text-center">
-          Have Questions? We’ve got Answers
-        </h1>
+    <div className="min-h-screen bg-gray-50 py-24 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-3xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-16 pt-10">
+          <p className="inline-flex items-center gap-2 px-4 py-2 uppercase text-center rounded-full bg-[#3B00C5]/10 text-[#3B00C5] font-semibold text-sm sm:text-base">
+            FAQ
+          </p>
+          <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+            Have Questions? We’ve got Answers
+          </h1>
+          <p className="mt-4 text-lg text-gray-500">
+            Can't find what you're looking for? Reach out to our support team.
+          </p>
+        </div>
+
+        {/* Accordion Container */}
         <div className="space-y-4">
-          {faqs.map((faq) => (
-            <div
-              key={faq.id}
-              className="bg-white rounded-[45px] shadow-sm border border-gray-200 overflow-hidden"
-            >
-              <button
-                onClick={() => toggleItem(faq.id)}
-                className="w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#3B00C5] focus:ring-offset-2 transition-colors duration-200"
-              >
-                <h3 className="text-xl font-semibold text-gray-900">
-                  {faq.question}
-                </h3>
-                <svg
-                  className="w-8 h-8 text-[#3B00C5] transition-all duration-200"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  {/* Horizontal line always */}
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M4 12h16"
-                  />
-                  {/* Vertical line - hide when open */}
-                  {!openItems.has(faq.id) && (
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={3}
-                      d="M12 4v16"
-                    />
-                  )}
-                </svg>
-              </button>
+          {faqs.map((faq) => {
+            const isOpen = openItems.has(faq.id);
+            return (
               <div
-                className={`overflow-hidden transition-all duration-500 ease-out ${
-                  openItems.has(faq.id)
-                    ? "max-h-[500px] opacity-100 py-6"
-                    : "max-h-0 opacity-0 py-0"
+                key={faq.id}
+                className={`bg-white rounded-2xl border transition-all duration-300 ease-in-out ${
+                  isOpen
+                    ? "border-[#3B00C5] shadow-md ring-1 ring-[#3B00C5]/10"
+                    : "border-gray-200 shadow-sm hover:border-gray-300"
                 }`}
               >
-                <div className="px-6">
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                {/* Trigger Button */}
+                <button
+                  onClick={() => toggleItem(faq.id)}
+                  aria-expanded={isOpen}
+                  className="w-full flex justify-between items-center p-6 text-left group focus:outline-none focus:ring-[#3B00C5] focus:ring-offset-2 rounded-2xl"
+                >
+                  <span className="text-lg font-medium text-gray-900 group-hover:text-[#3B00C5] transition-colors duration-200">
+                    {faq.question}
+                  </span>
+
+                  {/* Smooth Rotating Chevron/Plus Icon */}
+                  <span className="ml-4 flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-[#3B00C5] group-hover:bg-[#3B00C5]/5 transition-colors duration-200">
+                    <svg
+                      className={`w-5 h-5 transition-transform duration-300 ease-in-out ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                    >
+                      {isOpen ? (
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M18 12H6"
+                        />
+                      ) : (
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6v12M6 12h12"
+                        />
+                      )}
+                    </svg>
+                  </span>
+                </button>
+
+                {/* Smooth Heights Transition Content */}
+                <div
+                  className={`grid transition-all duration-300 ease-in-out ${
+                    isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    {/* Divider Line */}
+                    <div className="mx-6 border-t border-gray-100" />
+                    <div className="p-6 text-base text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

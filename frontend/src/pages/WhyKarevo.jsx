@@ -109,13 +109,13 @@ const WhyKarevo = () => {
         workflow={workflow}
       />
 
-      <SecuritySection />
-
       <CTASection
         title="Ready to Take Control of Your Health Data?"
         subtitle="Join thousands of patients and healthcare providers who trust Karevo"
         onCTAClick={handleCTAClick}
       />
+
+      <SecuritySection />      
     </div>
   );
 };

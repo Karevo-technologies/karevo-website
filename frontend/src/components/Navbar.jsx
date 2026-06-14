@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+
 import { NavLink } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+
 import WaitlistModal from "./WaitlistModal";
+
 import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -16,6 +21,7 @@ const Navbar = () => {
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo */}
+
           <div className="flex items-center">
             <NavLink
               to="/"
@@ -23,11 +29,16 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
               aria-label="Karevo Home"
             >
-              <img src={logo} alt="Karevo" className="h-55 w-auto pt-5 md:h-50" />
+              <img
+                src={logo}
+                alt="Karevo"
+                className="h-55 w-auto pt-5 md:h-50"
+              />
             </NavLink>
           </div>
 
           {/* Desktop Menu */}
+
           <div className="hidden md:flex items-center space-x-8">
             <NavLink
               to="/"
@@ -39,6 +50,7 @@ const Navbar = () => {
             >
               Home
             </NavLink>
+
             <NavLink
               to="/why-karevo"
               className={({ isActive }) =>
@@ -49,6 +61,7 @@ const Navbar = () => {
             >
               Why Karevo
             </NavLink>
+
             <NavLink
               to="/features"
               className={({ isActive }) =>
@@ -59,6 +72,7 @@ const Navbar = () => {
             >
               Features
             </NavLink>
+
             <NavLink
               to="/faq"
               className={({ isActive }) =>
@@ -69,6 +83,7 @@ const Navbar = () => {
             >
               FAQ
             </NavLink>
+
             <NavLink
               to="/contact"
               className={({ isActive }) =>
@@ -82,16 +97,22 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Waitlist Button */}
+
           <div className="hidden md:flex items-center">
             <button
               onClick={() => setIsWaitlistOpen(true)}
-className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transform duration-300 hover:scale-105 hover:bg-[#5245E3] rounded-[100px] transition-all shadow-lg hover:shadow-xl"
+              className="group btn-sheen relative overflow-hidden h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transform duration-300 hover:scale-105 hover:bg-[#5245E3] rounded-[100px] transition-all shadow-lg hover:shadow-xl"
             >
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 top-0 h-full w-1/2 -translate-x-full skew-x-[-20deg] bg-white/25 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-[200%]"
+              />
               Join Waitlist
             </button>
           </div>
 
           {/* Mobile Menu Button */}
+
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
@@ -116,6 +137,7 @@ className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transfor
       </div>
 
       {/* Mobile Menu */}
+
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-7 pb-3 space-y-1 sm:px-3">
@@ -130,6 +152,7 @@ className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transfor
             >
               Home
             </NavLink>
+
             <NavLink
               to="/why-karevo"
               className={({ isActive }) =>
@@ -141,6 +164,7 @@ className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transfor
             >
               Why Karevo
             </NavLink>
+
             <NavLink
               to="/features"
               className={({ isActive }) =>
@@ -152,6 +176,7 @@ className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transfor
             >
               Features
             </NavLink>
+
             <NavLink
               to="/faq"
               className={({ isActive }) =>
@@ -163,6 +188,7 @@ className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transfor
             >
               FAQ
             </NavLink>
+
             <NavLink
               to="/contact"
               className={({ isActive }) =>
@@ -174,10 +200,12 @@ className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transfor
             >
               Contact Us
             </NavLink>
+
             <div className="pt-4 pb-2 border-t border-gray-200">
               <button
                 onClick={() => {
                   setIsOpen(false);
+
                   setIsWaitlistOpen(true);
                 }}
                 className="w-full px-4 py-2 text-base font-semibold text-white bg-[#3B00C5] rounded-[100px] hover:bg-[#1e5a7a] transition-all shadow-md"
@@ -190,6 +218,7 @@ className="h-12 px-8 py-3 text-sm font-semibold text-white bg-[#3B00C5] transfor
       )}
 
       {/* Waitlist Modal */}
+
       <WaitlistModal
         isOpen={isWaitlistOpen}
         onClose={() => setIsWaitlistOpen(false)}

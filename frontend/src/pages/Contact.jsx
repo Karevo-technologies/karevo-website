@@ -182,8 +182,12 @@ const Contact = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-[#3B00C5] to-[#2f00a0] hover:bg-[#5245E3] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                      className="group relative overflow-hidden w-full bg-gradient-to-r from-[#3B00C5] to-[#2f00a0] hover:bg-[#5245E3] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
                     >
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute left-0 top-0 h-full w-1/2 -translate-x-full skew-x-[-20deg] bg-white/25 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-[200%]"
+                      />
                       {isSubmitting ? "Sending..." : "Send Message"}
                     </button>
                   </div>

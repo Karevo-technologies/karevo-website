@@ -13,10 +13,16 @@ const CTASection = ({ title, subtitle, onCTAClick }) => {
         </p>
         <button
           onClick={onCTAClick}
-          className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#3B00C5] rounded-lg font-bold font-raleway hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+          className="group relative overflow-hidden inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#3B00C5] rounded-lg font-bold font-raleway hover:shadow-lg transform hover:scale-105 transition-all duration-300"
         >
-          Join the Waitlist
-          <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-0 h-full w-1/2 -translate-x-full skew-x-[-20deg] bg-[#3B00C5]/20 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-[200%]"
+          />
+          <span className="relative inline-flex items-center gap-2">
+            Join the Waitlist
+            <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+          </span>
         </button>
       </div>
     </section>

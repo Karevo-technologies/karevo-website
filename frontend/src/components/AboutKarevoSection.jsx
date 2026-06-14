@@ -2,7 +2,10 @@ import React from "react";
 
 const AboutKarevoSection = () => {
   return (
-    <section className="px-4 py-14 sm:py-18 md:py-20 bg-white">
+    <section
+      id="about-karevo"
+      className="px-4 py-14 sm:py-18 md:py-20 bg-white"
+    >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">

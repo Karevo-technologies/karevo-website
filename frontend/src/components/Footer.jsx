@@ -1,5 +1,5 @@
 import React from "react";
-import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 
@@ -14,39 +14,35 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
     { name: "Contact", path: "/contact" },
   ];
 
-  const companyLinks = [
+  const legalLinks = [
     { name: "Terms and conditions", path: "#" },
     { name: "Privacy policy", path: "#" },
   ];
 
-  const legalLinks = [
+  const bottomLegalLinks = [
     { name: "Privacy Policy", path: "#" },
     { name: "Terms of Service", path: "#" },
-    { name: "Cookie Policy", path: "#" },
+    { name: "Cookie Policy", path: "#", isCookie: true },
   ];
 
   const contactInfo = [
     {
       icon: Mail,
-      label: "Email",
       value: "contact@karevo.health",
       href: "mailto:contact@karevo.health",
     },
     {
       icon: Phone,
-      label: "Phone",
-      value: "08076041327",
+      value: "+234 807 604 1327",
       href: "tel:+2348076041327",
     },
     {
       icon: Phone,
-      label: "Phone 2",
-      value: "08052350516",
+      value: "+234 805 235 0516",
       href: "tel:+2348052350516",
     },
     {
       icon: MapPin,
-      label: "Location",
       value: "Lagos, Nigeria",
       href: "#",
     },
@@ -63,58 +59,54 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
     "https://chat.whatsapp.com/JXtPVDJgNI7EalIMnTmbX9?s=cl&p=i&ilr=0";
 
   return (
-    <footer className="relative bg-gradient-to-b from-gray-50 to-white border-t border-gray-200 overflow-hidden">
-      {/* Background Gradient Elements */}
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#3B00C5]/10 rounded-full blur-3xl -z-10" />
-      <div className="absolute bottom-24 left-0 w-72 h-72 bg-[#3B00C5]/10 rounded-full blur-3xl -z-10" />
+    <footer className="bg-[#0A0118] text-white relative overflow-hidden">
 
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="py-10 grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16">
-          {/* Brand Section */}
-          <div className="md:col-span-1 flex flex-col justify-between">
-            <div>
-              <NavLink
-                to="/"
-                aria-label="Karevo Home"
-                className="inline-flex items-center"
-              >
-                <img src={logo} alt="Karevo" className="h-20 md:h-24 w-auto" />
-              </NavLink>
-              <p className="text-gray-600 text-sm leading-relaxed font-raleway mb-6">
-                Secure, portable medical records that empower patients and
-                streamline healthcare delivery.
-              </p>
-            </div>
+      {/* Subtle top border accent */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-[#3B00C5] to-transparent" />
 
-            {/* Social Links */}
-            <div className="flex gap-4 flex-wrap">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway"
-                  title={social.label}
-                >
-                  {social.label}
-                </a>
-              ))}
-            </div>
+      {/* Main content */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
+        {/* Upper section — brand + CTA strip */}
+        <div className="pt-16 pb-12 border-b border-white/10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="max-w-sm">
+            <NavLink to="/" aria-label="Karevo Home" className="inline-block mb-5">
+              <img src={logo} alt="Karevo" className="h-50 w-auto brightness-0 invert" />
+            </NavLink>
+            <p className="text-sm text-white/50 leading-relaxed font-raleway">
+              Secure, portable medical records that empower patients and streamline healthcare delivery across Nigeria.
+            </p>
           </div>
 
-          {/* Quick Links */}
-          <div className="md:col-span-1">
-            <h4 className="text-lg uppercase font-bold text-gray-900 mb-6 font-raleway">
+          {/* Community CTA */}
+          <a
+            href={groupLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-xl border border-[#3B00C5]/60 bg-[#3B00C5]/10 hover:bg-[#3B00C5] transition-all duration-300 text-sm font-semibold font-raleway text-white self-start md:self-auto"
+          >
+            Join the Karevo community
+            <ArrowUpRight
+              size={16}
+              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200"
+            />
+          </a>
+        </div>
+
+        {/* Link columns */}
+        <div className="py-12 grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10">
+
+          {/* Navigation */}
+          <div>
+            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5 font-raleway">
               Navigation
-            </h4>
+            </p>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <NavLink
                     to={link.path}
-                    className="text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway text-sm font-medium"
+                    className="text-sm text-white/60 hover:text-white transition-colors duration-200 font-raleway"
                   >
                     {link.name}
                   </NavLink>
@@ -123,17 +115,17 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
             </ul>
           </div>
 
-          {/* Company */}
-          <div className="md:col-span-1">
-            <h4 className="text-lg uppercase font-bold text-gray-900 mb-6 font-raleway">
+          {/* Legal */}
+          <div>
+            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5 font-raleway">
               Legal
-            </h4>
+            </p>
             <ul className="space-y-3">
-              {companyLinks.map((link) => (
+              {legalLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.path}
-                    className="text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway text-sm font-medium"
+                    className="text-sm text-white/60 hover:text-white transition-colors duration-200 font-raleway"
                   >
                     {link.name}
                   </a>
@@ -142,96 +134,83 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div className="md:col-span-1">
-            <h4 className="text-lg uppercase font-bold text-gray-900 mb-6 font-raleway">
+          {/* Contact */}
+          <div className="col-span-2 md:col-span-2">
+            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5 font-raleway">
               Contact
-            </h4>
-            <ul className="space-y-4">
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {contactInfo.map((info) => {
                 const Icon = info.icon;
                 return (
-                  <li key={info.label}>
+                  <li key={info.value}>
                     <a
                       href={info.href}
-                      className="flex items-start gap-3 group"
+                      className="group flex items-center gap-3 text-sm text-white/60 hover:text-white transition-colors duration-200 font-raleway"
                     >
-                      <Icon className="h-5 w-5 text-[#3B00C5] flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
-                      <div className="flex flex-col">
-                        <span className="text-xs text-gray-500 font-raleway">
-                          {info.label}
-                        </span>
-                        <span className="text-sm text-gray-700 font-raleway font-medium group-hover:text-[#3B00C5] transition-colors">
-                          {info.value}
-                        </span>
-                      </div>
+                      <span className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-[#3B00C5]/50 group-hover:bg-[#3B00C5]/10 transition-all duration-200">
+                        <Icon size={14} className="text-[#7B5FE8]" />
+                      </span>
+                      {info.value}
                     </a>
                   </li>
                 );
               })}
             </ul>
           </div>
-
-          {/* Community CTA */}
-          <div className="md:col-span-1 bg-gradient-to-br from-[#3B00C5]/10 to-[#3B00C5]/5 rounded-2xl p-6 border border-[#3B00C5]/20">
-            <h4 className="text-lg font-bold text-gray-900 mb-3 font-raleway">
-              Join our community
-            </h4>
-            <p className="text-sm text-gray-600 mb-5 font-raleway leading-relaxed">
-              Connect with us and stay updated with Karevo news.
-            </p>
-            <a
-              href={groupLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center px-4 py-2.5 bg-[#3B00C5] hover:bg-[#5245E3] text-white rounded-lg transition-all duration-300 text-sm font-semibold font-geist"
-            >
-              Join our community
-            </a>
-          </div>
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+        {/* Bottom bar */}
+        <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
 
-        {/* Bottom Section */}
-        <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Copyright */}
-          <div className="text-center md:text-left text-sm text-gray-600 font-raleway flex items-center gap-1">
-            <span>© {currentYear} Karevo. All rights reserved.</span>
+          {/* Copyright + socials */}
+          <div className="flex flex-wrap items-center gap-5">
+            <span className="text-xs text-white/30 font-raleway">
+              © {currentYear} Karevo. All rights reserved.
+            </span>
+            <span className="hidden sm:block h-3 w-px bg-white/15" />
+            <div className="flex items-center gap-4">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-white/35 hover:text-white transition-colors duration-200 font-raleway"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Legal Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {legalLinks.map((link, index) => (
+          {/* Bottom legal links */}
+          <div className="flex items-center gap-5">
+            {bottomLegalLinks.map((link, i) => (
               <React.Fragment key={link.name}>
-                {link.name === "Cookie Policy" ? (
+                {link.isCookie ? (
                   <button
                     onClick={onCookiePolicyClick}
-                    className="text-sm text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway font-medium bg-none border-none cursor-pointer p-0"
+                    className="text-xs text-white/35 hover:text-white transition-colors duration-200 font-raleway bg-transparent border-none cursor-pointer p-0"
                   >
                     {link.name}
                   </button>
                 ) : (
                   <a
                     href={link.path}
-                    className="text-sm text-gray-600 hover:text-[#3B00C5] transition-colors duration-300 font-raleway font-medium"
+                    className="text-xs text-white/35 hover:text-white transition-colors duration-200 font-raleway"
                   >
                     {link.name}
                   </a>
                 )}
-                {index < legalLinks.length - 1 && (
-                  <span className="text-gray-300">•</span>
+                {i < bottomLegalLinks.length - 1 && (
+                  <span className="text-white/15 text-xs">·</span>
                 )}
               </React.Fragment>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Background Gradient Elements */}
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#3B00C5]/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute bottom-32 left-0 w-72 h-72 bg-[#3B00C5]/5 rounded-full blur-3xl -z-10"></div>
     </footer>
   );
 };
