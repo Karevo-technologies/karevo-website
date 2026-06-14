@@ -56,7 +56,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
             name: formData.name,
             email: formData.email,
             location: formData.location,
-            phone: `${formData.phoneCountryCode}${formData.phone}`,
+            phoneNumber: `${formData.phoneCountryCode}${formData.phone}`,
           }
         : {
             role,
