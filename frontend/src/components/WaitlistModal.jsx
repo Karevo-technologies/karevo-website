@@ -1,8 +1,26 @@
 import React, { useState } from "react";
-import { X, CheckCircle, ArrowRight, User, Building2, MapPin, Mail, Phone } from "lucide-react";
+import { createClient } from "@supabase/supabase-js";
+import {
+  X,
+  CheckCircle,
+  ArrowRight,
+  User,
+  Building2,
+  MapPin,
+  Mail,
+  Phone,
+} from "lucide-react";
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabase =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
 
 const WaitlistModal = ({ isOpen, onClose }) => {
   const [role, setRole] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,28 +49,43 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 800));
 
-    const waitlistData = {
-      id: Date.now(),
-      role,
-      ...(role === "user"
+    const payload =
+      role === "user"
         ? {
+            role,
             name: formData.name,
             email: formData.email,
-            phone: `${formData.phoneCountryCode}${formData.phone}`,
             location: formData.location,
+            phone: `${formData.phoneCountryCode}${formData.phone}`,
           }
         : {
+            role,
             hospitalName: formData.hospitalName,
             location: formData.location,
             phoneNumber: formData.phoneNumber,
             organizationEmail: formData.organizationEmail,
-          }),
-      timestamp: new Date().toISOString(),
-    };
+          };
 
-    const existingData = JSON.parse(localStorage.getItem("karevowaitlist")) || [];
-    existingData.push(waitlistData);
-    localStorage.setItem("karevowaitlist", JSON.stringify(existingData));
+    if (!supabase) {
+      throw new Error("Supabase is not configured");
+    }
+
+    const { data, error } = await supabase
+      .from("waitlist_entries")
+      .insert(payload)
+      .select();
+
+    if (error) {
+      // Keep modal open on failure so user can retry.
+      // eslint-disable-next-line no-console
+      console.error("Waitlist insert failed:", error);
+      alert(error.message || "Failed to join waitlist");
+      setLoading(false);
+      return;
+    }
+
+    // eslint-disable-next-line no-console
+    console.log("Waitlist inserted:", data);
 
     setLoading(false);
     setSubmitted(true);
@@ -76,9 +109,16 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
   const isFormValid = () => {
     if (role === "user") {
-      return formData.name && formData.email && formData.location && formData.phone;
+      return (
+        formData.name && formData.email && formData.location && formData.phone
+      );
     } else if (role === "hospital") {
-      return formData.hospitalName && formData.location && formData.phoneNumber && formData.organizationEmail;
+      return (
+        formData.hospitalName &&
+        formData.location &&
+        formData.phoneNumber &&
+        formData.organizationEmail
+      );
     }
     return false;
   };
@@ -88,7 +128,6 @@ const WaitlistModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-gray-950/40 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-all duration-300">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto relative border border-gray-100 flex flex-col transform transition-all duration-300">
-        
         {/* Absolute Close Button - Enhanced visibility glass style */}
         <button
           onClick={onClose}
@@ -108,7 +147,8 @@ const WaitlistModal = ({ isOpen, onClose }) => {
               You're on the list!
             </h2>
             <p className="text-gray-600 max-w-sm text-base leading-relaxed">
-              We've saved your spot. Keep an eye on your inbox for early beta access choices and Karevo launch details.
+              We've saved your spot. Keep an eye on your inbox for early beta
+              access choices and Karevo launch details.
             </p>
 
             <a
@@ -121,7 +161,10 @@ const WaitlistModal = ({ isOpen, onClose }) => {
             </a>
 
             <div className="mt-8 px-6 py-2.5 bg-gray-50 border border-gray-100 rounded-full text-sm text-gray-500 font-medium">
-              Joining as: <span className="text-[#3B00C5] font-semibold capitalize">{role}</span>
+              Joining as:{" "}
+              <span className="text-[#3B00C5] font-semibold capitalize">
+                {role}
+              </span>
             </div>
           </div>
         ) : (
@@ -137,13 +180,17 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                   Join the Waitlist
                 </h1>
                 <p className="text-white/80 mt-2 text-sm sm:text-base leading-relaxed max-w-sm">
-                  Be among the first to experience secure, lightning-fast portable health metrics and records storage.
+                  Be among the first to experience secure, lightning-fast
+                  portable health metrics and records storage.
                 </p>
               </div>
             </div>
 
             {/* Main Form Fields Container */}
-            <form onSubmit={handleSubmit} className="p-6 sm:p-10 space-y-6 flex-1">
+            <form
+              onSubmit={handleSubmit}
+              className="p-6 sm:p-10 space-y-6 flex-1"
+            >
               {/* Custom Role Radio Buttons */}
               <div>
                 <label className="block text-sm font-bold text-gray-800 mb-3 uppercase tracking-wider">
@@ -152,12 +199,19 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                 <div className="grid grid-cols-2 gap-3">
                   {[
                     { value: "user", label: "Individual User", icon: User },
-                    { value: "hospital", label: "Hospital / Lab", icon: Building2 },
+                    {
+                      value: "hospital",
+                      label: "Hospital / Lab",
+                      icon: Building2,
+                    },
                   ].map((option) => {
                     const Icon = option.icon;
                     const isSelected = role === option.value;
                     return (
-                      <label key={option.value} className="relative cursor-pointer group">
+                      <label
+                        key={option.value}
+                        className="relative cursor-pointer group"
+                      >
                         <input
                           type="radio"
                           name="role"
@@ -174,8 +228,12 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                               : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:text-gray-900"
                           }`}
                         >
-                          <Icon className={`h-5 w-5 ${isSelected ? "text-[#3B00C5]" : "text-gray-400 group-hover:text-gray-500"}`} />
-                          <span className="text-sm tracking-wide">{option.label}</span>
+                          <Icon
+                            className={`h-5 w-5 ${isSelected ? "text-[#3B00C5]" : "text-gray-400 group-hover:text-gray-500"}`}
+                          />
+                          <span className="text-sm tracking-wide">
+                            {option.label}
+                          </span>
                         </div>
                       </label>
                     );
@@ -190,7 +248,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                     <>
                       {/* Individual User Layout Fields */}
                       <div>
-                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Full Name</label>
+                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                          Full Name
+                        </label>
                         <div className="relative">
                           <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <input
@@ -206,7 +266,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Email Address</label>
+                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                          Email Address
+                        </label>
                         <div className="relative">
                           <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <input
@@ -223,7 +285,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Location</label>
+                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                            Location
+                          </label>
                           <div className="relative">
                             <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                             <input
@@ -239,7 +303,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Phone Number</label>
+                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                            Phone Number
+                          </label>
                           <div className="flex border border-gray-200 rounded-xl bg-gray-50/50 overflow-hidden focus-within:ring-2 focus-within:ring-[#3B00C5]/20 focus-within:border-[#3B00C5] transition-all">
                             <select
                               name="phoneCountryCode"
@@ -269,7 +335,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                     <>
                       {/* Hospital & Institutional Fields */}
                       <div>
-                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Hospital / Lab Title</label>
+                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                          Hospital / Lab Title
+                        </label>
                         <div className="relative">
                           <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <input
@@ -285,7 +353,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Official Entity Email</label>
+                        <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                          Official Entity Email
+                        </label>
                         <div className="relative">
                           <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <input
@@ -302,7 +372,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Facility Location</label>
+                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                            Facility Location
+                          </label>
                           <div className="relative">
                             <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                             <input
@@ -318,7 +390,9 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">Contact Hotline</label>
+                          <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
+                            Contact Hotline
+                          </label>
                           <div className="relative">
                             <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                             <input
@@ -361,7 +435,8 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
               {/* Dynamic subtle notice footer */}
               <p className="text-xs text-gray-400 text-center leading-relaxed px-4">
-                We respect your privacy. We'll only email you about important Karevo updates and launch announcements.
+                We respect your privacy. We'll only email you about important
+                Karevo updates and launch announcements.
               </p>
             </form>
           </>
