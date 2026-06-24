@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
+// 1. Import your central supabase client config
+import { supabase } from "../supabaseClient"; // Adjust this path to match your file setup
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -9,6 +11,7 @@ const Contact = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: null, text: "" }); // Form alert state
   const [errors, setErrors] = useState({});
 
   const validate = () => {
@@ -37,24 +40,32 @@ const Contact = () => {
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setSubmitStatus({ type: null, text: "" });
+
     try {
-      const apiBaseUrl =
-        import.meta.env.VITE_API_BASE_URL?.trim() || "http://localhost:4000";
+      // 2. Direct database entry into your contact_messages table
+      const { error } = await supabase
+        .from("contact_messages")
+        .insert([
+          {
+            name: form.name.trim(),
+            email: form.email.trim(),
+            message: form.message.trim(),
+          },
+        ]);
 
-      const base = apiBaseUrl.replace(/\/$/, "");
-      const res = await fetch(`${base}/api/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      if (error) throw error;
 
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new Error(text || `Request failed (${res.status})`);
-      }
-
+      // Reset form on success
       setForm({ name: "", email: "", message: "" });
       setErrors({});
+      setSubmitStatus({ type: "success", text: "Message sent successfully! Talk to you soon." });
+    } catch (err) {
+      console.error("Submission error:", err);
+      setSubmitStatus({
+        type: "error",
+        text: err.message || "Something went wrong. Please try again.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -143,6 +154,19 @@ const Contact = () => {
 
               <div className="relative">
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Status Banner UI */}
+                  {submitStatus.text && (
+                    <div
+                      className={`p-4 rounded-xl text-sm font-medium ${
+                        submitStatus.type === "success"
+                          ? "bg-emerald-50 text-emerald-800 border border-emerald-100"
+                          : "bg-rose-50 text-rose-800 border border-rose-100"
+                      }`}
+                    >
+                      {submitStatus.text}
+                    </div>
+                  )}
+
                   <div>
                     <label className="block text-sm font-bold text-gray-800 mb-2">
                       Name
