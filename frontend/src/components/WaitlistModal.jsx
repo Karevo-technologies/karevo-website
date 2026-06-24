@@ -114,7 +114,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
         organizationEmail: "",
       });
       onClose();
-    }, 6500);
+    }, 10000);
   };
 
   if (!isOpen) return null;
