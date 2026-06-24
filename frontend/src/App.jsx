@@ -9,8 +9,8 @@ import WhyKarevo from "./pages/WhyKarevo";
 import Features from "./pages/Features";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
+import AboutUs from "./pages/AboutUs";
 import WaitlistDashboard from "./admin/WaitlistDashboard";
-
 
 const App = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -28,6 +28,7 @@ const App = () => {
         <Route path="/features" element={<Features />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/about-us" element={<AboutUs />} />
       </Routes>
 
       <Footer
