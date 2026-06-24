@@ -12,6 +12,11 @@ const Navbar = () => {
 
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -39,7 +44,7 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8" onClick={scrollToTop}>
             <NavLink
               to="/"
               className={({ isActive }) =>

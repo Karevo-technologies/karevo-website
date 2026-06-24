@@ -1,1 +1,0 @@
-- [x] Update BenefitsSection “Core Architecture” pill styling to match provided Tailwind snippet

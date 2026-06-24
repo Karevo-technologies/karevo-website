@@ -38,7 +38,21 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      await new Promise((r) => setTimeout(r, 500));
+      const apiBaseUrl =
+        import.meta.env.VITE_API_BASE_URL?.trim() || "http://localhost:4000";
+
+      const base = apiBaseUrl.replace(/\/$/, "");
+      const res = await fetch(`${base}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(text || `Request failed (${res.status})`);
+      }
+
       setForm({ name: "", email: "", message: "" });
       setErrors({});
     } finally {

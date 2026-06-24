@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import {
   X,
   CheckCircle,
@@ -9,17 +8,15 @@ import {
   MapPin,
   Mail,
   Phone,
+  XCircle,
 } from "lucide-react";
+// 1. Import your supabase client instance
+import { supabase } from "../supabaseClient";
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase =
-  supabaseUrl && supabaseAnonKey
-    ? createClient(supabaseUrl, supabaseAnonKey)
-    : null;
-
-const WaitlistModal = ({ isOpen, onClose }) => {
+export default function WaitlistModal({ isOpen, onClose }) {
   const [role, setRole] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,8 +28,6 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     phoneNumber: "",
     organizationEmail: "",
   });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,77 +37,13 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
-    const payload =
-      role === "user"
-        ? {
-            role,
-            name: formData.name,
-            email: formData.email,
-            location: formData.location,
-            phoneNumber: `${formData.phoneCountryCode}${formData.phone}`,
-          }
-        : {
-            role,
-            hospitalName: formData.hospitalName,
-            location: formData.location,
-            phoneNumber: formData.phoneNumber,
-            organizationEmail: formData.organizationEmail,
-          };
-
-    if (!supabase) {
-      throw new Error("Supabase is not configured");
-    }
-
-    const { data, error } = await supabase
-      .from("waitlist_entries")
-      .insert(payload)
-      .select();
-
-    if (error) {
-      // Keep modal open on failure so user can retry.
-      // eslint-disable-next-line no-console
-      console.error("Waitlist insert failed:", error);
-      alert(error.message || "Failed to join waitlist");
-      setLoading(false);
-      return;
-    }
-
-    // eslint-disable-next-line no-console
-    console.log("Waitlist inserted:", data);
-
-    setLoading(false);
-    setSubmitted(true);
-
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        phoneCountryCode: "+234",
-        phone: "",
-        hospitalName: "",
-        location: "",
-        phoneNumber: "",
-        organizationEmail: "",
-      });
-      setRole("");
-      onClose();
-    }, 3500);
-  };
-
   const isFormValid = () => {
     if (role === "user") {
       return (
         formData.name && formData.email && formData.location && formData.phone
       );
-    } else if (role === "hospital") {
+    }
+    if (role === "hospital") {
       return (
         formData.hospitalName &&
         formData.location &&
@@ -123,24 +54,95 @@ const WaitlistModal = ({ isOpen, onClose }) => {
     return false;
   };
 
+  // 2. Real database submission logic
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Format the payload based on the selected role to match your Supabase column names
+    let dbPayload = {
+      role: role,
+      location: formData.location,
+    };
+
+    if (role === "user") {
+      dbPayload = {
+        ...dbPayload,
+        name: formData.name,
+        email: formData.email.trim().toLowerCase(),
+        // Combine country code and phone number into a single text column
+        phone: `${formData.phoneCountryCode}${formData.phone.trim()}`,
+      };
+    } else if (role === "hospital") {
+      dbPayload = {
+        ...dbPayload,
+        hospital_name: formData.hospitalName,
+        org_email: formData.organizationEmail.trim().toLowerCase(),
+        phone_number: formData.phoneNumber.trim(),
+      };
+    }
+
+    // Insert row into your Supabase table
+    const { error } = await supabase.from("waitlist").insert([dbPayload]);
+
+    setLoading(false);
+
+    if (error) {
+      // Catch duplicate submission errors (Postgres unique violation code)
+      if (error.code === "23505") {
+        alert("This email is already registered on our waitlist!");
+      } else {
+        alert(`Something went wrong: ${error.message}`);
+      }
+      return;
+    }
+
+    // Success flow
+    setSubmitted(true);
+
+    setTimeout(() => {
+      setSubmitted(false);
+      setRole("");
+      setFormData({
+        name: "",
+        email: "",
+        phoneCountryCode: "+234",
+        phone: "",
+        hospitalName: "",
+        location: "",
+        phoneNumber: "",
+        organizationEmail: "",
+      });
+      onClose();
+    }, 6500);
+  };
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-gray-950/40 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-all duration-300">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto relative border border-gray-100 flex flex-col transform transition-all duration-300">
-        {/* Absolute Close Button - Enhanced visibility glass style */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all duration-200 z-50 group"
           title="Close"
         >
-          <X className="h-5 w-5 text-white sm:text-white group-hover:scale-110 transition-transform" />
+          <X className="h-5 w-5 text-white group-hover:scale-110 transition-transform" />
         </button>
 
         {submitted ? (
-          /* Success Screen Layout */
           <div className="p-8 sm:p-12 flex flex-col items-center justify-center min-h-[480px] text-center bg-gradient-to-b from-emerald-50/30 to-white rounded-2xl">
+            <button
+              type="button"
+              onClick={onClose}
+              className="absolute top-4 right-4 inline-flex items-center justify-center p-2 rounded-full border border-gray-200 bg-white/70 hover:bg-white shadow-sm transition-all duration-200"
+              title="Close"
+              aria-label="Close"
+            >
+              <XCircle className="h-5 w-5 text-gray-500 hover:text-gray-900" />
+            </button>
             <div className="mb-6 p-4 bg-emerald-50 text-emerald-600 rounded-full scale-110 animate-bounce">
+              <div className="sr-only">Success</div>
               <CheckCircle className="h-12 w-12" strokeWidth={2} />
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">
@@ -169,8 +171,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
           </div>
         ) : (
           <>
-            {/* Top Brand Banner */}
-            <div className="relative bg-gradient-to-br from-[#3B00C5] via-[#2f00a0] to-[#1e0066] p-8 sm:p-10 text-white overflow-hidden">
+            <div className="relative bg-gradient-to-br from-[#3B00C5] via-[#2f00a0] to-[#1e0066] p-8 sm:p-10 text-white overflow-hidden rounded-2xl">
               <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
               <div className="relative z-10">
                 <span className="text-xs font-bold uppercase tracking-widest text-white/60 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
@@ -186,12 +187,10 @@ const WaitlistModal = ({ isOpen, onClose }) => {
               </div>
             </div>
 
-            {/* Main Form Fields Container */}
             <form
               onSubmit={handleSubmit}
               className="p-6 sm:p-10 space-y-6 flex-1"
             >
-              {/* Custom Role Radio Buttons */}
               <div>
                 <label className="block text-sm font-bold text-gray-800 mb-3 uppercase tracking-wider">
                   Select your profile type
@@ -229,7 +228,11 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                           }`}
                         >
                           <Icon
-                            className={`h-5 w-5 ${isSelected ? "text-[#3B00C5]" : "text-gray-400 group-hover:text-gray-500"}`}
+                            className={`h-5 w-5 ${
+                              isSelected
+                                ? "text-[#3B00C5]"
+                                : "text-gray-400 group-hover:text-gray-500"
+                            }`}
                           />
                           <span className="text-sm tracking-wide">
                             {option.label}
@@ -241,12 +244,10 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                 </div>
               </div>
 
-              {/* Dynamic Inputs Wrapper with smooth mount simulation styles */}
               {role && (
                 <div className="space-y-4 transition-all duration-300 ease-out">
                   {role === "user" ? (
                     <>
-                      {/* Individual User Layout Fields */}
                       <div>
                         <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
                           Full Name
@@ -258,7 +259,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                             name="name"
                             value={formData.name}
                             onChange={handleInputChange}
-                            placeholder="Alex Morgan"
+                            placeholder="Enter full name"
                             className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                             required
                           />
@@ -276,7 +277,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="alex@example.com"
+                            placeholder="Enter email"
                             className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                             required
                           />
@@ -295,7 +296,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                               name="location"
                               value={formData.location}
                               onChange={handleInputChange}
-                              placeholder="Lagos, Nigeria"
+                              placeholder="Enter location"
                               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                               required
                             />
@@ -323,7 +324,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                               name="phone"
                               value={formData.phone}
                               onChange={handleInputChange}
-                              placeholder="805 000 0000"
+                              placeholder=""
                               className="flex-1 px-3 py-3 bg-transparent text-sm focus:outline-none text-gray-900 placeholder:text-gray-400"
                               required
                             />
@@ -333,7 +334,6 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                     </>
                   ) : (
                     <>
-                      {/* Hospital & Institutional Fields */}
                       <div>
                         <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
                           Hospital / Lab Title
@@ -345,7 +345,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                             name="hospitalName"
                             value={formData.hospitalName}
                             onChange={handleInputChange}
-                            placeholder="St. Jude Clinic Network"
+                            placeholder="Enter hospital/lab name"
                             className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                             required
                           />
@@ -354,7 +354,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
                       <div>
                         <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
-                          Official Entity Email
+                          Official Email
                         </label>
                         <div className="relative">
                           <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -363,7 +363,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                             name="organizationEmail"
                             value={formData.organizationEmail}
                             onChange={handleInputChange}
-                            placeholder="intake@stjudehq.org"
+                            placeholder="Enter organization mail"
                             className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                             required
                           />
@@ -382,7 +382,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                               name="location"
                               value={formData.location}
                               onChange={handleInputChange}
-                              placeholder="Oyo State, Nigeria"
+                              placeholder="Enter location"
                               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                               required
                             />
@@ -391,7 +391,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
 
                         <div>
                           <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
-                            Contact Hotline
+                            Contact
                           </label>
                           <div className="relative">
                             <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -400,7 +400,7 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                               name="phoneNumber"
                               value={formData.phoneNumber}
                               onChange={handleInputChange}
-                              placeholder="+234 805 111 2222"
+                              placeholder="Enter phone number"
                               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                               required
                             />
@@ -410,7 +410,6 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                     </>
                   )}
 
-                  {/* Submission Action Button */}
                   <div className="pt-2">
                     <button
                       type="submit"
@@ -433,7 +432,6 @@ const WaitlistModal = ({ isOpen, onClose }) => {
                 </div>
               )}
 
-              {/* Dynamic subtle notice footer */}
               <p className="text-xs text-gray-400 text-center leading-relaxed px-4">
                 We respect your privacy. We'll only email you about important
                 Karevo updates and launch announcements.
@@ -444,6 +442,4 @@ const WaitlistModal = ({ isOpen, onClose }) => {
       </div>
     </div>
   );
-};
-
-export default WaitlistModal;
+}

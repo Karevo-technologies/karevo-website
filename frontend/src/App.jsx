@@ -9,7 +9,8 @@ import WhyKarevo from "./pages/WhyKarevo";
 import Features from "./pages/Features";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
-import SignUp from "./pages/SignUp";
+import WaitlistDashboard from "./admin/WaitlistDashboard";
+
 
 const App = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -21,11 +22,12 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/admin/waitlist" element={<WaitlistDashboard />} />
+
         <Route path="/why-karevo" element={<WhyKarevo />} />
         <Route path="/features" element={<Features />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/signup" element={<SignUp />} />
       </Routes>
 
       <Footer
