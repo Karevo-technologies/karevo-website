@@ -17,6 +17,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
   const [role, setRole] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [focusedField, setFocusedField] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -37,18 +38,45 @@ export default function WaitlistModal({ isOpen, onClose }) {
     }));
   };
 
+  // Helper to append email domains instantly
+  const handleDomainSelect = (field, domain) => {
+    const currentVal = formData[field].split("@")[0];
+    setFormData((prev) => ({
+      ...prev,
+      [field]: `${currentVal}${domain}`,
+    }));
+  };
+
+  // Stricter Regex Evaluation Blocks
+  const validateEmailStr = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  };
+
+  const validatePhoneStr = (phone) => {
+    const cleanNum = phone.replace(/\D/g, "");
+    return cleanNum.length >= 7 && cleanNum.length <= 15;
+  };
+
+  const validateNameStr = (name) => {
+    // Requires a minimum of 2 separate words/names to block single-character dummy typing
+    return name.trim().split(/\s+/).length >= 2 && name.trim().length >= 4;
+  };
+
   const isFormValid = () => {
     if (role === "user") {
       return (
-        formData.name && formData.email && formData.location && formData.phone
+        validateNameStr(formData.name) &&
+        validateEmailStr(formData.email) &&
+        formData.location.trim().length >= 3 &&
+        validatePhoneStr(formData.phone)
       );
     }
     if (role === "hospital") {
       return (
-        formData.hospitalName &&
-        formData.location &&
-        formData.phoneNumber &&
-        formData.organizationEmail
+        formData.hospitalName.trim().length >= 3 &&
+        formData.location.trim().length >= 3 &&
+        validatePhoneStr(formData.phoneNumber) &&
+        validateEmailStr(formData.organizationEmail)
       );
     }
     return false;
@@ -57,38 +85,38 @@ export default function WaitlistModal({ isOpen, onClose }) {
   // 2. Real database submission logic
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Safety Double-Check: Enforce absolute block if conditions aren't perfectly met
+    if (!isFormValid()) return;
+
     setLoading(true);
 
-    // Format the payload based on the selected role to match your Supabase column names
     let dbPayload = {
       role: role,
-      location: formData.location,
+      location: formData.location.trim(),
     };
 
     if (role === "user") {
       dbPayload = {
         ...dbPayload,
-        name: formData.name,
+        name: formData.name.trim(),
         email: formData.email.trim().toLowerCase(),
-        // Combine country code and phone number into a single text column
-        phone: `${formData.phoneCountryCode}${formData.phone.trim()}`,
+        phone: `${formData.phoneCountryCode}${formData.phone.trim().replace(/\D/g, "")}`,
       };
     } else if (role === "hospital") {
       dbPayload = {
         ...dbPayload,
-        hospital_name: formData.hospitalName,
+        hospital_name: formData.hospitalName.trim(),
         org_email: formData.organizationEmail.trim().toLowerCase(),
-        phone_number: formData.phoneNumber.trim(),
+        phone_number: formData.phoneNumber.trim().replace(/\D/g, ""),
       };
     }
 
-    // Insert row into your Supabase table
     const { error } = await supabase.from("waitlist").insert([dbPayload]);
 
     setLoading(false);
 
     if (error) {
-      // Catch duplicate submission errors (Postgres unique violation code)
       if (error.code === "23505") {
         alert("This email is already registered on our waitlist!");
       } else {
@@ -97,7 +125,6 @@ export default function WaitlistModal({ isOpen, onClose }) {
       return;
     }
 
-    // Success flow
     setSubmitted(true);
 
     setTimeout(() => {
@@ -114,7 +141,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
         organizationEmail: "",
       });
       onClose();
-    }, 20000);
+    }, 2000); // Reduced timeout flag delay from 20s to 2s for smoother production flow
   };
 
   if (!isOpen) return null;
@@ -248,24 +275,28 @@ export default function WaitlistModal({ isOpen, onClose }) {
                 <div className="space-y-4 transition-all duration-300 ease-out">
                   {role === "user" ? (
                     <>
+                      {/* Name input - optimized for text alphabets */}
                       <div>
                         <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
-                          Full Name
+                          Full Name (First & Last)
                         </label>
                         <div className="relative">
                           <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <input
                             type="text"
                             name="name"
+                            autoComplete="name"
+                            inputMode="text"
                             value={formData.name}
                             onChange={handleInputChange}
-                            placeholder="Enter full name"
+                            placeholder="e.g. John Doe"
                             className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                             required
                           />
                         </div>
                       </div>
 
+                      {/* Email input - includes keyboard hooks and smart suggestions */}
                       <div>
                         <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
                           Email Address
@@ -275,13 +306,31 @@ export default function WaitlistModal({ isOpen, onClose }) {
                           <input
                             type="email"
                             name="email"
+                            autoComplete="email"
+                            inputMode="email"
                             value={formData.email}
+                            onFocus={() => setFocusedField("email")}
+                            onBlur={() => setTimeout(() => setFocusedField(""), 200)}
                             onChange={handleInputChange}
-                            placeholder="Enter email"
+                            placeholder="Enter your email"
                             className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                             required
                           />
                         </div>
+                        {focusedField === "email" && formData.email && !formData.email.includes("@") && (
+                          <div className="mt-1.5 flex gap-2 overflow-x-auto pb-1 text-xs">
+                            {["@gmail.com", "@yahoo.com", "@outlook.com"].map((d) => (
+                              <button
+                                key={d}
+                                type="button"
+                                onMouseDown={() => handleDomainSelect("email", d)}
+                                className="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-[#3B00C5] rounded-lg font-medium text-slate-600 border border-slate-200 transition-colors"
+                              >
+                                {d}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -294,37 +343,30 @@ export default function WaitlistModal({ isOpen, onClose }) {
                             <input
                               type="text"
                               name="location"
+                              inputMode="text"
                               value={formData.location}
                               onChange={handleInputChange}
-                              placeholder="Enter location"
+                              placeholder="City, Country"
                               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                               required
                             />
                           </div>
                         </div>
 
+                        {/* Phone field - forces numeric dial pad directly */}
                         <div>
                           <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
                             Phone Number
                           </label>
                           <div className="flex border border-gray-200 rounded-xl bg-gray-50/50 overflow-hidden focus-within:ring-2 focus-within:ring-[#3B00C5]/20 focus-within:border-[#3B00C5] transition-all">
-                            {/* <select
-                              name="phoneCountryCode"
-                              value={formData.phoneCountryCode}
-                              onChange={handleInputChange}
-                              className="px-3 bg-transparent text-sm font-semibold text-gray-700 border-r border-gray-200 focus:outline-none cursor-pointer"
-                            >
-                              <option value="+234">🇳🇬 +234</option>
-                              <option value="+1">🇺🇸 +1</option>
-                              <option value="+44">🇬🇧 +44</option>
-                              <option value="+254">🇰🇪 +254</option>
-                            </select> */}
                             <input
                               type="tel"
                               name="phone"
+                              inputMode="tel"
+                              pattern="[0-9]*"
                               value={formData.phone}
                               onChange={handleInputChange}
-                              placeholder=""
+                              placeholder="08012345678"
                               className="flex-1 px-3 py-3 bg-transparent text-sm focus:outline-none text-gray-900 placeholder:text-gray-400"
                               required
                             />
@@ -343,6 +385,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
                           <input
                             type="text"
                             name="hospitalName"
+                            inputMode="text"
                             value={formData.hospitalName}
                             onChange={handleInputChange}
                             placeholder="Enter hospital/lab name"
@@ -361,13 +404,31 @@ export default function WaitlistModal({ isOpen, onClose }) {
                           <input
                             type="email"
                             name="organizationEmail"
+                            autoComplete="email"
+                            inputMode="email"
                             value={formData.organizationEmail}
+                            onFocus={() => setFocusedField("orgEmail")}
+                            onBlur={() => setTimeout(() => setFocusedField(""), 200)}
                             onChange={handleInputChange}
-                            placeholder="Enter organization mail"
+                            placeholder="name@facility.com"
                             className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                             required
                           />
                         </div>
+                        {focusedField === "orgEmail" && formData.organizationEmail && !formData.organizationEmail.includes("@") && (
+                          <div className="mt-1.5 flex gap-2 overflow-x-auto pb-1 text-xs">
+                            {["@gmail.com", "@yahoo.com", "@outlook.com"].map((d) => (
+                              <button
+                                key={d}
+                                type="button"
+                                onMouseDown={() => handleDomainSelect("organizationEmail", d)}
+                                className="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-[#3B00C5] rounded-lg font-medium text-slate-600 border border-slate-200 transition-colors"
+                              >
+                                {d}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -380,9 +441,10 @@ export default function WaitlistModal({ isOpen, onClose }) {
                             <input
                               type="text"
                               name="location"
+                              inputMode="text"
                               value={formData.location}
                               onChange={handleInputChange}
-                              placeholder="Enter location"
+                              placeholder="City, Country"
                               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                               required
                             />
@@ -391,16 +453,18 @@ export default function WaitlistModal({ isOpen, onClose }) {
 
                         <div>
                           <label className="block text-xs font-bold text-gray-700 uppercase mb-1.5">
-                            Contact
+                            Contact Number
                           </label>
                           <div className="relative">
                             <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                             <input
-                              type="text"
+                              type="tel"
                               name="phoneNumber"
+                              inputMode="tel"
+                              pattern="[0-9]*"
                               value={formData.phoneNumber}
                               onChange={handleInputChange}
-                              placeholder="Enter phone number"
+                              placeholder="Phone number"
                               className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#3B00C5]/20 focus:border-[#3B00C5] focus:outline-none transition-all bg-gray-50/50 hover:bg-white text-sm text-gray-900 placeholder:text-gray-400"
                               required
                             />
