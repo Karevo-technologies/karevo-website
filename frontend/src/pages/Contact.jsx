@@ -104,12 +104,12 @@ const Contact = () => {
                 <div className="space-y-4">
                   <div className="flex items-start gap-3 p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
                     <span className="mt-0.5 inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#3B00C5]/10">
-                      <Mail className="w-5 h-5 text-[#3B00C5]" />
+                      <Phone className="w-5 h-5 text-[#3B00C5]" />
                     </span>
                     <div className="text-sm">
-                      <div className="text-gray-500">Email</div>
+                      <div className="text-gray-500">Phone 1</div>
                       <div className="font-semibold text-gray-900">
-                        contact@karevo.health
+                        +2348076041327
                       </div>
                     </div>
                   </div>
@@ -119,9 +119,9 @@ const Contact = () => {
                       <Phone className="w-5 h-5 text-[#3B00C5]" />
                     </span>
                     <div className="text-sm">
-                      <div className="text-gray-500">Phone</div>
+                      <div className="text-gray-500">Phone 2</div>
                       <div className="font-semibold text-gray-900">
-                        +234 805-235-0516
+                        +2347070328209
                       </div>
                     </div>
                   </div>
@@ -133,7 +133,7 @@ const Contact = () => {
                     <div className="text-sm">
                       <div className="text-gray-500">Location</div>
                       <div className="font-semibold text-gray-900">
-                        Lagos, Nigeria
+                        Oyo State, Ogbomoso
                       </div>
                     </div>
                   </div>

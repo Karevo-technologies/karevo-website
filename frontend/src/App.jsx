@@ -10,6 +10,8 @@ import Features from "./pages/Features";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
+import Privacypolicy from "./pages/Privacypolicy";
+import TermsofService from "./pages/TermsofService";
 import WaitlistDashboard from "./admin/WaitlistDashboard";
 
 const App = () => {
@@ -29,6 +31,8 @@ const App = () => {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/privacy-policy" element={<Privacypolicy />} />
+        <Route path="/terms-of-service" element={<TermsofService />} />
       </Routes>
 
       <Footer

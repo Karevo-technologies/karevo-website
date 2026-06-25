@@ -20,17 +20,17 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
   ];
 
   const bottomLegalLinks = [
-    { name: "Privacy Policy", path: "#" },
-    { name: "Terms of Service", path: "#" },
+    { name: "Privacy Policy", path: "/privacy-policy" },
+    { name: "Terms of Service", path: "/terms-of-service" },
     { name: "Cookie Policy", path: "#", isCookie: true },
   ];
 
   const contactInfo = [
-    {
-      icon: Mail,
-      value: "contact@karevo.health",
-      href: "mailto:contact@karevo.health",
-    },
+    // {
+    //   icon: Mail,
+    //   value: "contact@karevo.health",
+    //   href: "mailto:contact@karevo.health",
+    // },
     {
       icon: Phone,
       value: "+234 807 604 1327",
@@ -38,43 +38,50 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
     },
     {
       icon: Phone,
-      value: "+234 805 235 0516",
-      href: "tel:+2348052350516",
+      value: "+234 707 032 8209",
+      href: "tel:+23470328209",
     },
     {
       icon: MapPin,
-      value: "Lagos, Nigeria",
+      value: "Oyo State, Ogbomoso",
       href: "#",
     },
   ];
 
-  const socialLinks = [
-    { label: "Twitter", href: "#" },
-    { label: "LinkedIn", href: "#" },
-    { label: "Instagram", href: "#" },
-    { label: "TikTok", href: "#" },
-  ];
+  // const socialLinks = [
+  //   { label: "Twitter", href: "#" },
+  //   { label: "LinkedIn", href: "#" },
+  //   { label: "Instagram", href: "#" },
+  //   { label: "TikTok", href: "#" },
+  // ];
 
   const groupLink =
     "https://chat.whatsapp.com/JXtPVDJgNI7EalIMnTmbX9?s=cl&p=i&ilr=0";
 
   return (
     <footer className="bg-[#0A0118] text-white relative overflow-hidden">
-
       {/* Subtle top border accent */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-[#3B00C5] to-transparent" />
 
       {/* Main content */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-
         {/* Upper section — brand + CTA strip */}
         <div className="pt-16 pb-12 border-b border-white/10 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="max-w-sm">
-            <NavLink to="/" aria-label="Karevo Home" className="inline-block mb-5">
-              <img src={logo} alt="Karevo" className="h-50 w-auto brightness-0 invert" />
+            <NavLink
+              to="/"
+              aria-label="Karevo Home"
+              className="inline-block mb-5"
+            >
+              <img
+                src={logo}
+                alt="Karevo"
+                className="h-50 w-auto brightness-0 invert"
+              />
             </NavLink>
             <p className="text-sm text-white/50 leading-relaxed font-raleway">
-              Secure, portable medical records that empower patients and streamline healthcare delivery across Nigeria.
+              Secure, portable medical records that empower patients and
+              streamline healthcare delivery across Nigeria.
             </p>
           </div>
 
@@ -95,7 +102,6 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
 
         {/* Link columns */}
         <div className="py-12 grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10">
-
           {/* Navigation */}
           <div>
             <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5 font-raleway">
@@ -162,14 +168,13 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
 
         {/* Bottom bar */}
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-
           {/* Copyright + socials */}
           <div className="flex flex-wrap items-center gap-5">
             <span className="text-xs text-white/30 font-raleway">
               © {currentYear} Karevo. All rights reserved.
             </span>
-            <span className="hidden sm:block h-3 w-px bg-white/15" />
-            <div className="flex items-center gap-4">
+            {/* <span className="hidden sm:block h-3 w-px bg-white/15" /> */}
+            {/* <div className="flex items-center gap-4">
               {socialLinks.map((s) => (
                 <a
                   key={s.label}
@@ -181,7 +186,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                   {s.label}
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Bottom legal links */}
