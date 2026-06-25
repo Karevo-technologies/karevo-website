@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom"; // 👈 Added router hook for redirection
+import { useNavigate } from "react-router-dom"; 
+import { LogOut } from "lucide-react"; // 👈 1. Imported the LogOut icon
 import { supabase } from "../supabaseClient";
 
 // Updated data fetching function directly querying Supabase
@@ -35,10 +36,10 @@ const Badge = ({ children, tone = "indigo" }) => {
 const ITEMS_PER_PAGE = 5;
 
 const WaitlistDashboard = () => {
-  const navigate = useNavigate(); // 👈 Initialized navigation guard
+  const navigate = useNavigate(); 
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [checkingAuth, setCheckingAuth] = useState(true); // 👈 Added verification state
+  const [checkingAuth, setCheckingAuth] = useState(true); 
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all"); 
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,6 +87,22 @@ const WaitlistDashboard = () => {
     };
   }, [checkingAuth]);
 
+  // 👈 2. Added the handleSignOut handler
+  const handleSignOut = async () => {
+    try {
+      // Clear session inside Supabase server instance
+      await supabase.auth.signOut();
+
+      // Expire and completely wipe out the Vercel Edge token cookie
+      document.cookie = "sb-access-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax; Secure";
+
+      // Direct browser hard fallback back to login
+      navigate("/admin/login", { replace: true });
+    } catch (err) {
+      console.error("Error signing out:", err);
+    }
+  };
+
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
     setCurrentPage(1);
@@ -130,8 +147,20 @@ const WaitlistDashboard = () => {
               clinical entities.
             </p>
           </div>
-          <div className="text-xs font-medium text-slate-400 bg-slate-100 px-3 py-1.5 rounded-lg self-start md:self-auto">
-            System Active • {loading ? "Loading..." : `${entries.length} total entries`}
+          
+          {/* 👈 3. Grouped Status Badge and the Log Out Button Layout */}
+          <div className="flex items-center gap-3 self-start md:self-auto">
+            <div className="text-xs font-medium text-slate-400 bg-slate-100 px-3 py-2 rounded-lg">
+              System Active • {loading ? "Loading..." : `${entries.length} total entries`}
+            </div>
+            
+            <button
+              onClick={handleSignOut}
+              className="flex items-center gap-2 px-4 py-2 bg-rose-50 hover:bg-rose-100 border border-rose-200/60 text-rose-700 text-xs font-semibold rounded-xl transition-all shadow-sm"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              Sign Out
+            </button>
           </div>
         </div>
 

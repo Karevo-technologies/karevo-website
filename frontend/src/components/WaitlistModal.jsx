@@ -124,7 +124,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto relative border border-gray-100 flex flex-col transform transition-all duration-300">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all duration-200 z-50 group"
+          className="absolute top-4 right-4 p-2 bg-[#3B00C5] backdrop-blur-md border border-white/20 rounded-full transition-all duration-200 z-50 group"
           title="Close"
         >
           <X className="h-5 w-5 text-white group-hover:scale-110 transition-transform" />
