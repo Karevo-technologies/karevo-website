@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient"; // Double check this points to your client file!
+// 1. Corrected the named import to a default import for asset reliability
+import logo from "../../assets/logo.png"; 
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -42,10 +44,15 @@ const AdminLogin = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 pt-20">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-2xl shadow-md border border-gray-100">
         <div className="text-center">
-          <div className="inline-flex p-3 rounded-xl bg-[#3B00C5]/10 text-[#3B00C5] font-bold mb-3">
-            Karevo Central
+          {/* 2. Brand Logo Container replacing the plain background block */}
+          <div className="flex justify-center">
+            <img 
+              src={logo} 
+              alt="Karevo Brand Logo" 
+              className="h-40" 
+            />
           </div>
-          <h2 className="text-3xl font-bold text-gray-900">Admin Gateway</h2>
+          <h2 className="text-3xl font-bold text-gray-900">Karevo Backoffice</h2>
           <p className="mt-2 text-sm text-gray-600">Authorized personnel only</p>
         </div>
 
@@ -58,7 +65,7 @@ const AdminLogin = () => {
 
           <div className="rounded-md space-y-4">
             <div>
-              <label className="text-sm font-semibold text-gray-700 block mb-1">Admin Email</label>
+              <label className="text-sm font-semibold text-gray-700 block mb-1">Email</label>
               <input
                 type="email"
                 required
@@ -69,7 +76,7 @@ const AdminLogin = () => {
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700 block mb-1">Secure Password</label>
+              <label className="text-sm font-semibold text-gray-700 block mb-1">Password</label>
               <input
                 type="password"
                 required
