@@ -129,7 +129,7 @@ const KarevoID = () => {
             A secure Health ID that unlocks care
           </h3>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto font-raleway">
-            Move through the steps with the buttons. Each step reveals more detail and animates in a premium way.
+            Move through the steps with the selectors below. Each step reveals more detail instantly.
           </p>
         </div>
 
@@ -145,8 +145,9 @@ const KarevoID = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-10 p-5 sm:p-8 md:p-10">
-            {/* Left: big step card */}
-            <div className="relative">
+            
+            {/* Left: big step card ── Hidden on Mobile/Tablet, Displayed on Desktop (lg) */}
+            <div className="relative hidden lg:block">
               {/* Spinner overlay for transition */}
               {!prefersReducedMotion && isAnimating && (
                 <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/30 rounded-3xl">
@@ -194,7 +195,6 @@ const KarevoID = () => {
                       {Active.subTitle}
                     </p>
 
-                    {/* Extra clarity for this step (still option A: more detail, not bullets) */}
                     <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="rounded-2xl border border-slate-200/70 bg-white/70 p-4">
                         <div className="text-sm font-semibold text-slate-900 font-raleway">What you get</div>
@@ -306,7 +306,7 @@ const KarevoID = () => {
                         >
                           <div className="p-4 flex items-start gap-3">
                             <div
-                              className="w-10 h-10 rounded-xl flex items-center justify-center"
+                              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                               style={{
                                 background: isActive
                                   ? "linear-gradient(90deg, rgba(59,0,197,0.95), rgba(30,90,122,0.95))"
@@ -328,8 +328,9 @@ const KarevoID = () => {
                                   {s.number}
                                 </div>
                               </div>
-                              <div className="mt-1 text-xs text-gray-600 font-raleway">
-                                {isActive ? s.desc : "Tap to view details"}
+                              {/* Keep descriptions clear & accessible in expanded active rows for mobile */}
+                              <div className="mt-1 text-xs text-gray-600 font-raleway leading-relaxed">
+                                {s.desc}
                               </div>
                             </div>
                           </div>
@@ -338,17 +339,13 @@ const KarevoID = () => {
                     })}
                   </div>
 
-                  <div className="mt-6 text-sm text-gray-600 font-raleway">
+                  <div className="mt-6 text-sm text-gray-600 font-raleway hidden lg:block">
                     Tip: Use keyboard arrows to navigate steps.
                   </div>
-
-                  {/* <div className="mt-3 flex items-center gap-2 text-sm text-gray-600 font-raleway">
-                    <span className="w-2 h-2 rounded-full bg-[#1e5a7a]" />
-                    Reduced-motion users get the same content without animations.
-                  </div> */}
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -357,4 +354,3 @@ const KarevoID = () => {
 };
 
 export default KarevoID;
-

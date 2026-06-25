@@ -32,7 +32,7 @@ const AboutKarevoSection = () => {
               Portable records
             </h3>
             <p className="mt-2 text-gray-600 font-raleway leading-relaxed">
-              Keep your medical history with you—so you’re never starting from
+              Keep your medical history with you so you’re never starting from
               scratch.
             </p>
           </div>
@@ -58,7 +58,7 @@ const AboutKarevoSection = () => {
               Provider-ready
             </h3>
             <p className="mt-2 text-gray-600 font-raleway leading-relaxed">
-              Enable clinicians to access what matters—when it matters.
+              Enable clinicians to access what matters when it matters.
             </p>
           </div>
 

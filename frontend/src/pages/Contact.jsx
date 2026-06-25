@@ -178,7 +178,7 @@ const Contact = () => {
                       className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all ${
                         errors.name ? "border-red-500" : "border-gray-200"
                       }`}
-                      placeholder="Your name"
+                      placeholder="Enter your full name"
                       required
                     />
                   </div>
@@ -194,7 +194,7 @@ const Contact = () => {
                       className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#3B00C5] focus:border-[#3B00C5] transition-all ${
                         errors.email ? "border-red-500" : "border-gray-200"
                       }`}
-                      placeholder="your@email.com"
+                      placeholder="Enter your email address"
                       required
                     />
                   </div>
