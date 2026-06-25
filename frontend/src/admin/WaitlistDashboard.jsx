@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-// 1. Import your established Supabase client instance
-import { supabase } from "../supabaseClient"; 
+import { useNavigate } from "react-router-dom"; // 👈 Added router hook for redirection
+import { supabase } from "../supabaseClient";
 
-// 2. Updated data fetching function directly querying Supabase
+// Updated data fetching function directly querying Supabase
 async function fetchWaitlistEntries() {
   const { data, error } = await supabase
     .from("waitlist")
@@ -35,13 +35,36 @@ const Badge = ({ children, tone = "indigo" }) => {
 const ITEMS_PER_PAGE = 5;
 
 const WaitlistDashboard = () => {
+  const navigate = useNavigate(); // 👈 Initialized navigation guard
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [checkingAuth, setCheckingAuth] = useState(true); // 👈 Added verification state
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all"); 
   const [currentPage, setCurrentPage] = useState(1);
 
+  // 🛡️ Security Check: Run authentication scan before loading anything else
   useEffect(() => {
+    const verifyAdminSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        // No session found? Evict browser back to gateway instantly
+        navigate("/admin/login", { replace: true });
+      } else {
+        // Authorized. Dissolve screen guard and allow layout mounting
+        setCheckingAuth(false);
+      }
+    };
+
+    verifyAdminSession();
+  }, [navigate]);
+
+  // Main Data Pipeline Hook
+  useEffect(() => {
+    // Only fetch data if auth verification passes
+    if (checkingAuth) return;
+
     let mounted = true;
     (async () => {
       try {
@@ -61,7 +84,7 @@ const WaitlistDashboard = () => {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [checkingAuth]);
 
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
@@ -82,6 +105,16 @@ const WaitlistDashboard = () => {
     1,
     Math.ceil(filteredEntries.length / ITEMS_PER_PAGE),
   );
+
+  // 🔒 Render Blank Shield State while checking active session token tokens
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-400 font-semibold text-sm tracking-wide">
+        <span className="h-2 w-2 rounded-full bg-[#3B00C5] animate-ping mr-2" />
+        Verifying security credentials...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50/50 text-slate-900 antialiased pt-40 pb-16">
@@ -178,7 +211,6 @@ const WaitlistDashboard = () => {
                   paginatedEntries.map((x, idx) => {
                     const isHospital = x?.role === "hospital";
                     const badgeTone = isHospital ? "emerald" : "indigo";
-                    // 3. Destructure correct column formats coming from the Supabase script
                     const createdAt = x?.created_at;
 
                     return (

@@ -12,6 +12,9 @@ import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import Privacypolicy from "./pages/Privacypolicy";
 import TermsofService from "./pages/TermsofService";
+
+// Admin Section Imports
+import AdminLogin from "./admin/login/login"; // 👈 Added your login page import
 import WaitlistDashboard from "./admin/WaitlistDashboard";
 
 const App = () => {
@@ -23,9 +26,8 @@ const App = () => {
       <Navbar />
 
       <Routes>
+        {/* Public Marketing Routes */}
         <Route path="/" element={<Home />} />
-        <Route path="/admin/waitlist" element={<WaitlistDashboard />} />
-
         <Route path="/why-karevo" element={<WhyKarevo />} />
         <Route path="/features" element={<Features />} />
         <Route path="/faq" element={<FAQ />} />
@@ -33,6 +35,10 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/privacy-policy" element={<Privacypolicy />} />
         <Route path="/terms-of-service" element={<TermsofService />} />
+
+        {/* Secure Admin Control Gateways */}
+        <Route path="/admin/login" element={<AdminLogin />} /> {/* 👈 Added login route */}
+        <Route path="/admin" element={<WaitlistDashboard />} /> {/* 👈 Changed path to /admin to match middleware */}
       </Routes>
 
       <Footer
