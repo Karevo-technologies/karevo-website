@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import Privacypolicy from "./pages/Privacypolicy";
 import TermsofService from "./pages/TermsofService";
+import NotFound from "./pages/NotFound";
 
 // Admin Section Imports
 import AdminLogin from "./admin/login/login"; // 👈 Added your login page import
@@ -39,6 +40,9 @@ const App = () => {
         {/* Secure Admin Control Gateways */}
         <Route path="/admin/login" element={<AdminLogin />} /> {/* 👈 Added login route */}
         <Route path="/admin" element={<WaitlistDashboard />} /> {/* 👈 Changed path to /admin to match middleware */}
+
+        {/* 2. Wildcard Catch-All Route (MUST BE AT THE VERY BOTTOM) */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Footer
