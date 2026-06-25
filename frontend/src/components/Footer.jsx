@@ -43,7 +43,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
     },
     {
       icon: MapPin,
-      value: "Oyo State, Ogbomoso",
+      value: "Ogbomoso, Oyo State",
       href: "#",
     },
   ];
@@ -170,7 +170,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Copyright + socials */}
           <div className="flex flex-wrap items-center gap-5">
-            <span className="text-xs text-white/30 font-raleway">
+            <span className="text-xs text-white font-raleway">
               © {currentYear} Karevo. All rights reserved.
             </span>
             {/* <span className="hidden sm:block h-3 w-px bg-white/15" /> */}
@@ -196,14 +196,14 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                 {link.isCookie ? (
                   <button
                     onClick={onCookiePolicyClick}
-                    className="text-xs text-white/35 hover:text-white transition-colors duration-200 font-raleway bg-transparent border-none cursor-pointer p-0"
+                    className="text-xs text-white transition-colors duration-200 font-raleway bg-transparent border-none cursor-pointer p-0"
                   >
                     {link.name}
                   </button>
                 ) : (
                   <a
                     href={link.path}
-                    className="text-xs text-white/35 hover:text-white transition-colors duration-200 font-raleway"
+                    className="text-xs text-white transition-colors duration-200 font-raleway"
                   >
                     {link.name}
                   </a>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ScrollTopButton from "./components/ScrollTopButton";
 import WaitlistModal from "./components/WaitlistModal";
 import CookiePolicy from "./components/CookiePolicy";
 import Home from "./pages/Home";
@@ -36,11 +37,11 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/privacy-policy" element={<Privacypolicy />} />
         <Route path="/terms-of-service" element={<TermsofService />} />
-
         {/* Secure Admin Control Gateways */}
-        <Route path="/admin/login" element={<AdminLogin />} /> {/* 👈 Added login route */}
-        <Route path="/admin" element={<WaitlistDashboard />} /> {/* 👈 Changed path to /admin to match middleware */}
-
+        <Route path="/admin/login" element={<AdminLogin />} />{" "}
+        {/* 👈 Added login route */}
+        <Route path="/admin" element={<WaitlistDashboard />} />{" "}
+        {/* 👈 Changed path to /admin to match middleware */}
         {/* 2. Wildcard Catch-All Route (MUST BE AT THE VERY BOTTOM) */}
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -59,6 +60,8 @@ const App = () => {
         isCookiePolicyOpen={isCookiePolicyOpen}
         onCookiePolicyClose={setIsCookiePolicyOpen}
       />
+
+      <ScrollTopButton />
     </BrowserRouter>
   );
 };

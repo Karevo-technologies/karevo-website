@@ -13,9 +13,15 @@ const Navbar = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    // Use a direct sync scroll on mobile; smooth scrolling can be ignored if routing re-renders.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   };
 
+  // Close mobile drawer and scroll to top after navigation.
+  const handleNavClick = () => {
+    setIsOpen(false);
+    setTimeout(() => scrollToTop(), 0);
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -44,9 +50,13 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
 
-          <div className="hidden md:flex items-center space-x-8" onClick={scrollToTop}>
+          <div
+            className="hidden md:flex items-center space-x-8"
+            onClick={scrollToTop}
+          >
             <NavLink
               to="/"
+              onClick={scrollToTop}
               className={({ isActive }) =>
                 `px-3 py-2 text-[#3B00C5] transition-colors font-medium ${
                   isActive ? "text-[#3B00C5] border-b-2 border-[#3B00C5]" : ""
@@ -153,7 +163,10 @@ const Navbar = () => {
                   isActive ? "text-[#3B00C5]" : ""
                 }`
               }
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => scrollToTop(),0);
+              }}
             >
               Home
             </NavLink>
@@ -165,7 +178,10 @@ const Navbar = () => {
                   isActive ? "text-[#3B00C5]" : ""
                 }`
               }
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => scrollToTop(), 0);
+              }}
             >
               Why Karevo
             </NavLink>

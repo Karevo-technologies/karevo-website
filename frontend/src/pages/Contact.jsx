@@ -133,7 +133,7 @@ const Contact = () => {
                     <div className="text-sm">
                       <div className="text-gray-500">Location</div>
                       <div className="font-semibold text-gray-900">
-                        Oyo State, Ogbomoso
+                        Ogbomoso, Oyo State.
                       </div>
                     </div>
                   </div>

@@ -114,7 +114,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
         organizationEmail: "",
       });
       onClose();
-    }, 10000);
+    }, 20000);
   };
 
   if (!isOpen) return null;
@@ -308,7 +308,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
                             Phone Number
                           </label>
                           <div className="flex border border-gray-200 rounded-xl bg-gray-50/50 overflow-hidden focus-within:ring-2 focus-within:ring-[#3B00C5]/20 focus-within:border-[#3B00C5] transition-all">
-                            <select
+                            {/* <select
                               name="phoneCountryCode"
                               value={formData.phoneCountryCode}
                               onChange={handleInputChange}
@@ -318,7 +318,7 @@ export default function WaitlistModal({ isOpen, onClose }) {
                               <option value="+1">🇺🇸 +1</option>
                               <option value="+44">🇬🇧 +44</option>
                               <option value="+254">🇰🇪 +254</option>
-                            </select>
+                            </select> */}
                             <input
                               type="tel"
                               name="phone"
