@@ -1,23 +1,29 @@
-import { NextResponse } from 'next/dist/compiled/edge-runtime';
+// No imports needed! We use standard Web APIs supported natively by Vercel Edge.
 
 export function middleware(request) {
-  const url = request.nextUrl.clone();
+  // 1. Parse the incoming URL
+  const url = new URL(request.url);
   const { pathname } = url;
 
-  // Protect ALL sub-paths under /admin, but let them visit the login page freely
+  // 2. Target protected paths, ignoring the login screen
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    const hasAdminToken = request.cookies.has('sb-access-token');
+    // Check if the cookie exists natively using the request headers
+    const cookieHeader = request.headers.get('cookie') || '';
+    const hasAdminToken = cookieHeader.includes('sb-access-token');
 
     if (!hasAdminToken) {
-      // Forcefully bounce them right to the login screen
-      return NextResponse.redirect(new URL('/admin/login', request.url));
+      console.log(`🔒 [Middleware Protected] Redirecting unauthorized request for ${pathname} to Login.`);
+      
+      // Construct an absolute redirection URL to /admin/login
+      url.pathname = '/admin/login';
+      return Response.redirect(url.toString(), 307);
     }
   }
 
-  return NextResponse.next();
+  // Allow the request to pass through cleanly to your static React assets
+  return; 
 }
 
 export const config = {
-  // Catch both /admin and any slash nested deep inside /admin/waitlist
   matcher: ['/admin', '/admin/:path*'],
 };
