@@ -40,12 +40,12 @@ const FAQ = () => {
       answer:
         "Creating your K-ID account is free. A small monthly fee unlocks full record sharing features. Pricing is set specifically for Nigeria and will be confirmed at launch.",
     },
-    {
-      id: "7",
-      question: "My previous hospital is not on K-ID yet. What happens to my old records?",
-      answer:
-        "K-ID captures all records going forward from the day you join. For existing paper records, we offer a manual verification service on the LAUTECH campus where a trained team member digitises your documents securely. Full historical import from hospitals is coming post-launch.",
-    },
+    // {
+    //   id: "7",
+    //   question: "My previous hospital is not on K-ID yet. What happens to my old records?",
+    //   answer:
+    //     "K-ID captures all records going forward from the day you join. For existing paper records, we offer a manual verification service on the LAUTECH campus where a trained team member digitises your documents securely. Full historical import from hospitals is coming post-launch.",
+    // },
   ];
 
   const toggleItem = (id) => {
