@@ -165,7 +165,7 @@ const Navbar = () => {
               }
               onClick={() => {
                 setIsOpen(false);
-                setTimeout(() => scrollToTop(),0);
+                setTimeout(() => scrollToTop(), 0);
               }}
             >
               Home
@@ -193,7 +193,10 @@ const Navbar = () => {
                   isActive ? "text-[#3B00C5]" : ""
                 }`
               }
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => scrollToTop(), 0);
+              }}
             >
               Features
             </NavLink>
@@ -205,7 +208,10 @@ const Navbar = () => {
                   isActive ? "text-[#3B00C5]" : ""
                 }`
               }
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => scrollToTop(), 0);
+              }}
             >
               FAQ
             </NavLink>
@@ -217,7 +223,10 @@ const Navbar = () => {
                   isActive ? "text-[#3B00C5]" : ""
                 }`
               }
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => scrollToTop(), 0);
+              }}
             >
               Contact Us
             </NavLink>

@@ -15,7 +15,10 @@ const ScrollTopButton = () => {
   }, []);
 
   const onClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Ensure it works right after a mobile navigation/rerender.
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }, 0);
   };
 
   return (
