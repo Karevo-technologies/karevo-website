@@ -1,10 +1,10 @@
 import React from "react";
-import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
+import { MapPin, Phone, ArrowUpRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
+import ThemeToggle from "./ThemeToggle";
 
-const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
-  void onWaitlistClick;
+const Footer = ({ onCookiePolicyClick }) => {
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
@@ -26,11 +26,6 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
   ];
 
   const contactInfo = [
-    // {
-    //   icon: Mail,
-    //   value: "contact@karevo.health",
-    //   href: "mailto:contact@karevo.health",
-    // },
     {
       icon: Phone,
       value: "+234 807 604 1327",
@@ -48,71 +43,74 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
     },
   ];
 
-  // const socialLinks = [
-  //   { label: "Twitter", href: "#" },
-  //   { label: "LinkedIn", href: "#" },
-  //   { label: "Instagram", href: "#" },
-  //   { label: "TikTok", href: "#" },
-  // ];
-
   const groupLink =
     "https://chat.whatsapp.com/JXtPVDJgNI7EalIMnTmbX9?s=cl&p=i&ilr=0";
 
   return (
-    <footer className="bg-[#0A0118] text-white relative overflow-hidden">
+    <footer className="bg-midnight text-white">
       {/* Subtle top border accent */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-[#3B00C5] to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-primary to-transparent" />
+
+      {/* Community band */}
+      <div className="border-b border-white/10 px-6 sm:px-8 lg:px-12 py-16 text-center">
+        <p className="text-xs uppercase tracking-widest text-white/50 font-semibold mb-3">
+          Stay in the loop
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-3">
+          Join the Karevo community
+        </h2>
+        <p className="text-white/60 max-w-md mx-auto mb-7 leading-relaxed">
+          Get early updates, behind-the-scenes progress, and a direct line
+          to the team on WhatsApp.
+        </p>
+        <a
+          href={groupLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-2 bg-primary hover:bg-primary-bright transition-colors duration-300 px-6 py-3.5 rounded-full text-sm font-semibold"
+        >
+          Join on WhatsApp
+          <ArrowUpRight
+            size={16}
+            className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200"
+          />
+        </a>
+      </div>
 
       {/* Main content */}
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        {/* Upper section — brand + CTA strip */}
-        <div className="pt-16 pb-12 border-b border-white/10 flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div className="max-w-sm">
+        {/* Link columns */}
+        <div className="py-14 grid grid-cols-2 md:grid-cols-5 gap-10 border-b border-white/10">
+          {/* Brand */}
+          <div className="col-span-2">
             <NavLink
               to="/"
               aria-label="Karevo Home"
-              className="inline-block mb-5"
+              className="block h-8 overflow-hidden mb-5"
             >
               <img
                 src={logo}
                 alt="Karevo"
-                className="h-50 w-auto brightness-0 invert"
+                className="h-20 w-auto -mt-6 brightness-0 invert"
               />
             </NavLink>
-            <p className="text-sm text-white/50 leading-relaxed font-raleway">
+            <p className="text-sm text-white/50 leading-relaxed max-w-xs">
               Secure, portable medical records that empower patients and
               streamline healthcare delivery across Nigeria.
             </p>
           </div>
 
-          {/* Community CTA */}
-          <a
-            href={groupLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-xl border border-[#3B00C5]/60 bg-[#3B00C5]/10 hover:bg-[#3B00C5] transition-all duration-300 text-sm font-semibold font-raleway text-white self-start md:self-auto"
-          >
-            Join the Karevo community
-            <ArrowUpRight
-              size={16}
-              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200"
-            />
-          </a>
-        </div>
-
-        {/* Link columns */}
-        <div className="py-12 grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-white/10">
-          {/* Navigation */}
+          {/* Product */}
           <div>
-            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5 font-raleway">
-              Navigation
+            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5">
+              Product
             </p>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <NavLink
                     to={link.path}
-                    className="text-sm text-white/60 hover:text-white transition-colors duration-200 font-raleway"
+                    className="text-sm text-white/60 hover:text-white transition-colors duration-200"
                   >
                     {link.name}
                   </NavLink>
@@ -123,7 +121,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
 
           {/* Legal */}
           <div>
-            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5 font-raleway">
+            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5">
               Legal
             </p>
             <ul className="space-y-3">
@@ -131,7 +129,7 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                 <li key={link.name}>
                   <a
                     href={link.path}
-                    className="text-sm text-white/60 hover:text-white transition-colors duration-200 font-raleway"
+                    className="text-sm text-white/60 hover:text-white transition-colors duration-200"
                   >
                     {link.name}
                   </a>
@@ -140,54 +138,46 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div className="col-span-2 md:col-span-2">
-            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5 font-raleway">
-              Contact
+          {/* Contact + waitlist */}
+          <div className="col-span-2 md:col-span-1">
+            <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5">
+              Contact us
             </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <ul className="space-y-3 mb-6">
               {contactInfo.map((info) => {
                 const Icon = info.icon;
                 return (
                   <li key={info.value}>
                     <a
                       href={info.href}
-                      className="group flex items-center gap-3 text-sm text-white/60 hover:text-white transition-colors duration-200 font-raleway"
+                      className="group flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors duration-200"
                     >
-                      <span className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-[#3B00C5]/50 group-hover:bg-[#3B00C5]/10 transition-all duration-200">
-                        <Icon size={14} className="text-[#7B5FE8]" />
-                      </span>
+                      <Icon
+                        size={14}
+                        className="text-primary-bright flex-shrink-0"
+                      />
                       {info.value}
                     </a>
                   </li>
                 );
               })}
             </ul>
+
+            <NavLink
+              to="/waitlist"
+              className="inline-flex items-center gap-2 bg-white text-midnight hover:bg-white/90 transition-colors duration-300 px-5 py-2.5 rounded-full text-sm font-semibold"
+            >
+              Join Waitlist
+              <ArrowUpRight size={14} />
+            </NavLink>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          {/* Copyright + socials */}
-          <div className="flex flex-wrap items-center gap-5">
-            <span className="text-xs text-white font-raleway">
-              © {currentYear} Karevo. All rights reserved.
-            </span>
-            {/* <span className="hidden sm:block h-3 w-px bg-white/15" /> */}
-            {/* <div className="flex items-center gap-4">
-              {socialLinks.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-white/35 hover:text-white transition-colors duration-200 font-raleway"
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div> */}
-          </div>
+          <span className="text-xs text-white">
+            © {currentYear} Karevo. All rights reserved.
+          </span>
 
           {/* Bottom legal links */}
           <div className="flex items-center gap-5">
@@ -196,14 +186,14 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
                 {link.isCookie ? (
                   <button
                     onClick={onCookiePolicyClick}
-                    className="text-xs text-white transition-colors duration-200 font-raleway bg-transparent border-none cursor-pointer p-0"
+                    className="text-xs text-white transition-colors duration-200 bg-transparent border-none cursor-pointer p-0"
                   >
                     {link.name}
                   </button>
                 ) : (
                   <a
                     href={link.path}
-                    className="text-xs text-white transition-colors duration-200 font-raleway"
+                    className="text-xs text-white transition-colors duration-200"
                   >
                     {link.name}
                   </a>
@@ -214,7 +204,19 @@ const Footer = ({ onWaitlistClick, onCookiePolicyClick }) => {
               </React.Fragment>
             ))}
           </div>
+
+          <ThemeToggle />
         </div>
+      </div>
+
+      {/* Decorative brand watermark */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none select-none h-24 sm:h-32 overflow-hidden flex justify-center"
+      >
+        <span className="text-[8rem] sm:text-[11rem] font-black text-white/5 leading-none tracking-tight">
+          KAREVO
+        </span>
       </div>
     </footer>
   );

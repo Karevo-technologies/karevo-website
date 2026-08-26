@@ -4,23 +4,23 @@ const CONTACT_EMAIL = "contact@karevo.com";
 
 const Privacypolicy = () => {
   return (
-    <main className="min-h-screen bg-white pt-35 pb-16 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-canvas pt-35 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <header className="mb-10">
-          <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#3B00C5]/10 text-[#3B00C5] font-semibold text-sm">
+          <p className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm">
             K-ID by Karevo — Privacy Policy
           </p>
-          <h1 className="mt-4 text-3xl sm:text-4xl font-extrabold text-[#0A0118]">
+          <h1 className="mt-4 text-3xl sm:text-4xl font-bold text-ink">
             Privacy Policy
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-gray-600">
+          <p className="mt-3 text-sm sm:text-base text-ink-soft">
             Last updated: <span className="font-semibold">June 2026</span>
           </p>
         </header>
 
-        <div className="prose max-w-none text-gray-700">
+        <div className="prose max-w-none text-ink-soft">
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-[#0A0118]">Who we are</h2>
+            <h2 className="text-xl font-bold text-ink">Who we are</h2>
             <p>
               K-ID is a digital health identity platform developed by the Karevo
               Team, based in Ogbomoso, Nigeria. We are currently in beta
@@ -30,7 +30,7 @@ const Privacypolicy = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-[#0A0118]">
+            <h2 className="text-xl font-bold text-ink">
               What information we collect
             </h2>
             <p>
@@ -41,7 +41,7 @@ const Privacypolicy = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-[#0A0118]">
+            <h2 className="text-xl font-bold text-ink">
               Why we collect it
             </h2>
             <p>
@@ -52,7 +52,7 @@ const Privacypolicy = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-[#0A0118]">
+            <h2 className="text-xl font-bold text-ink">
               What we do not do
             </h2>
             <ul>
@@ -66,7 +66,7 @@ const Privacypolicy = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-[#0A0118]">
+            <h2 className="text-xl font-bold text-ink">
               How we store your data
             </h2>
             <p>
@@ -78,7 +78,7 @@ const Privacypolicy = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-[#0A0118]">Your rights</h2>
+            <h2 className="text-xl font-bold text-ink">Your rights</h2>
             <ul>
               <li>You have the right to ask us what data we hold about you.</li>
               <li>
@@ -88,7 +88,7 @@ const Privacypolicy = () => {
             <p className="mt-3">
               To exercise either right, contact us at{" "}
               <a
-                className="text-[#3B00C5] font-semibold hover:underline"
+                className="text-primary font-semibold hover:underline"
                 href="/contact"
               >
                 {CONTACT_EMAIL}
@@ -98,7 +98,7 @@ const Privacypolicy = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-[#0A0118]">
+            <h2 className="text-xl font-bold text-ink">
               Changes to this policy
             </h2>
             <p>
@@ -108,11 +108,11 @@ const Privacypolicy = () => {
           </section>
 
           <section className="mb-2">
-            <h2 className="text-xl font-bold text-[#0A0118]">Contact</h2>
+            <h2 className="text-xl font-bold text-ink">Contact</h2>
             <p>
               For any privacy related questions, reach us at{" "}
               <a
-                className="text-[#3B00C5] font-semibold hover:underline"
+                className="text-primary font-semibold hover:underline"
                 href="/contact"
               >
                 {CONTACT_EMAIL}

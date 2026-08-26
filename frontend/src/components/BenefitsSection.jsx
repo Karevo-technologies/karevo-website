@@ -1,63 +1,61 @@
 import React from "react";
-import { CheckCircle } from "lucide-react";
 
-const BenefitsSection = ({ title, subtitle, benefits }) => {
+const BenefitsSection = ({ eyebrow, title, subtitle, people }) => {
   return (
-    <section className="py-28 px-4 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-r from-[#3B00C5]/5 to-transparent blur-[120px] pointer-events-none rounded-full" />
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-20">
-          <p className="inline-flex items-center gap-2 px-4 mb-5 py-2 uppercase text-center rounded-full bg-[#3B00C5]/10 text-[#3B00C5] font-semibold text-sm sm:text-base">
-            Core Architecture
+    <section className="py-28 px-4 bg-paper">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <p className="text-xs sm:text-sm uppercase tracking-widest text-ink-soft font-semibold mb-4">
+            {eyebrow}
           </p>
-          <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 tracking-tight mb-4 max-w-2xl mx-auto">
+          <h2 className="text-3xl sm:text-5xl font-bold text-ink tracking-tight mb-4 max-w-2xl mx-auto">
             {title}
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-ink-soft max-w-xl mx-auto leading-relaxed">
             {subtitle}
           </p>
         </div>
 
-        {/* Tactile Dimension Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {benefits.map((benefit, index) => (
-            <div
-              key={index}
-              className="group relative bg-white border border-gray-200/60 rounded-2xl p-7 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(59,0,197,0.08)] hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden"
-            >
-              {/* Inner ambient card lighting effect */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#3B00C5]/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {people.map((person, index) => {
+            const Icon = person.icon;
 
-              <div className="relative z-10">
-                {/* Floating Tactile Icon Badge */}
-                <div className="flex items-center justify-between mb-8">
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200/50 shadow-inner flex items-center justify-center text-sm font-bold text-gray-400 group-hover:text-[#3B00C5] group-hover:from-[#3B00C5]/10 group-hover:to-[#3B00C5]/5 group-hover:border-[#3B00C5]/20 transition-all duration-300">
-                    0{index + 1}
+            return (
+              <div
+                key={index}
+                className="bg-canvas border border-hairline rounded-2xl p-7 flex flex-col"
+              >
+                <div className="flex items-start justify-between mb-6">
+                  <div className="w-11 h-11 rounded-full bg-primary text-white flex items-center justify-center">
+                    <Icon className="h-5 w-5" />
                   </div>
+                  <span className="text-xs font-medium text-ink-soft">
+                    {person.role}
+                  </span>
                 </div>
 
-                {/* Typography with True Depth */}
-                <h3 className="text-lg font-bold text-gray-900 tracking-tight mb-5 group-hover:text-[#3B00C5] transition-colors duration-200">
-                  {benefit.title}
+                <h3 className="text-lg font-bold text-ink tracking-tight">
+                  {person.name}
                 </h3>
+                <p className="text-sm text-ink-soft mb-4">
+                  {person.subtitle}
+                </p>
 
-                {/* Soft Textured Lists */}
-                <ul className="space-y-3.5">
-                  {benefit.points.map((point, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <div className="mt-1 flex-shrink-0 flex items-center justify-center w-4 h-4 rounded-full bg-[#3B00C5]/10 text-[#3B00C5]">
-                        <CheckCircle className="h-3 w-3" strokeWidth={3} />
-                      </div>
-                      <span className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                        {point}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-sm text-ink-soft leading-relaxed mb-6">
+                  {person.bio}
+                </p>
+
+                <div className="mt-auto rounded-xl bg-primary/10 p-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-primary mb-1.5">
+                    What Karevo gives {person.pronoun}
+                  </p>
+                  <p className="text-sm text-ink leading-relaxed">
+                    {person.gift}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { HeartPulse, HeartHandshake, Stethoscope } from "lucide-react";
 
 import ChallengeSolutionSection from "../components/ChallengeSolutionSection";
 import BenefitsSection from "../components/BenefitsSection";
@@ -8,44 +10,35 @@ import SecuritySection from "../components/SecuritySection";
 import CTASection from "../components/CTASection";
 
 const WhyKarevo = () => {
-  const solutions = [];
+  const navigate = useNavigate();
 
-  const benefits = [
+  const people = [
     {
-      title: "For Patients",
-      points: [
-        "Complete control over your health data",
-        "Faster appointments and better care",
-        "Emergency access to critical information",
-        "Reduce duplicate tests and procedures",
-      ],
+      icon: HeartPulse,
+      role: "Patient",
+      name: "Chidinma, 27",
+      subtitle: "Manages a chronic condition",
+      bio: "Sees three different specialists and struggles to keep her records straight between them.",
+      pronoun: "her",
+      gift: "One profile with her full history in one place. Instant, secure sharing with any new provider. Reminders for refills and follow-ups.",
     },
     {
-      title: "For Healthcare Providers",
-      points: [
-        "Access complete patient history instantly",
-        "Better clinical decision-making",
-        "Reduced administrative burden",
-        "Improved patient outcomes",
-      ],
+      icon: HeartHandshake,
+      role: "Caregiver",
+      name: "Uche, 34",
+      subtitle: "Caring for an aging parent",
+      bio: "Coordinates his father's appointments and medications remotely, often finding out about issues after the fact.",
+      pronoun: "him",
+      gift: "Authorized visibility into his parent's care record. Real-time updates after visits or prescription changes. One dashboard instead of five phone calls.",
     },
     {
-      title: "For Healthcare Systems",
-      points: [
-        "Streamlined operations",
-        "Reduced costs through efficiency",
-        "Better patient retention",
-        "Competitive advantage",
-      ],
-    },
-    {
-      title: "For Organizations",
-      points: [
-        "Unified patient data platform",
-        "Interoperability across systems",
-        "Regulatory compliance automation",
-        "Enhanced data governance",
-      ],
+      icon: Stethoscope,
+      role: "Provider",
+      name: "Dr. Okafor",
+      subtitle: "Runs a small clinic",
+      bio: "Spends the first ten minutes of every new-patient visit re-collecting history that likely exists somewhere else.",
+      pronoun: "them",
+      gift: "Instant access to a verified, portable patient history. Fewer repeat diagnostics from missing information. A clean digital record system without a full EMR overhaul.",
     },
   ];
 
@@ -73,35 +66,21 @@ const WhyKarevo = () => {
   ];
 
   const handleCTAClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate("/waitlist");
   };
 
   return (
-    <div className="min-h-screen py-20 bg-white">
-      <ChallengeSolutionSection
-        title=""
-        subtitle=""
-        items={solutions}
-        variant="solution"
+    <div className="min-h-screen py-20 bg-canvas">
+      <ChallengeSolutionSection />
+
+      <BenefitsSection
+        eyebrow="Who it's for"
+        title="Built for three kinds of people."
+        subtitle="Different needs, same simple idea: your history should follow you. Here's what Karevo looks like for each of them."
+        people={people}
       />
 
-      {/* Desktop/tablet: keep existing grid */}
-      <div className="hidden md:block">
-        <BenefitsSection
-          title="Real Benefits for Everyone"
-          subtitle="Designed to benefit patients, providers, healthcare systems, and organizations"
-          benefits={benefits}
-        />
-      </div>
-
-      {/* Mobile: carousel (auto every 3s and loops back to start after first cycle) */}
-      <div className="md:hidden">
-        <BenefitsCarousel
-          title="Real Benefits for Everyone"
-          subtitle="Designed to benefit patients, providers, healthcare systems, and organizations"
-          benefits={benefits}
-        />
-      </div>
+      <BenefitsCarousel />
 
       <WorkflowSection
         title="How Karevo Works"

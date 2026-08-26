@@ -1,26 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+
 @import "tailwindcss";
 
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@200;400;600;700;800&display=swap");
+@custom-variant dark (&:where(.dark, .dark *));
 
-/* Typography: use a single external font across the whole app */
-body {
-  font-family:
-    "Raleway",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+@theme {
+  --color-primary: #3b00c5;
+  --color-primary-bright: #5245e3;
+  --color-primary-deep: #2f00a0;
+  --color-primary-darkest: #1e0066;
+  --color-midnight: #0a0118;
+  --color-ink: #0a0118;
+  --color-ink-soft: #4b5563;
+  --color-canvas: #ffffff;
+  --color-paper: #f9fafb;
+  --color-hairline: #e5e7eb;
+  --color-hairline-strong: #d1d5db;
+
+  --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --shadow-none: none;
 }
 
-/* Ensure all headings inherit the same font for consistency */
+/* Dark theme: only the tokens that represent real, theme-aware surfaces flip.
+   --color-midnight and the primary-* family stay fixed in both themes, since
+   they're used for permanently-dark bands (Hero, CTA, Footer) and accents
+   that sit on top of them. */
+.dark {
+  --color-ink: #f5f4fa;
+  --color-ink-soft: #a6a3c4;
+  --color-canvas: #18162e;
+  --color-paper: #0b0a1a;
+  --color-hairline: #262445;
+  --color-hairline-strong: #363262;
+}
+
+/* Typography: Inter for body/UI, Space Grotesk for headings */
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background-color: var(--color-canvas);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: inherit;
+  font-family: var(--font-display);
 }
 
 /* Hero Animations Keyframes */
@@ -49,6 +79,15 @@ h6 {
 
 .fade-in-up {
   animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 .fade-in-up-delay-1 {
