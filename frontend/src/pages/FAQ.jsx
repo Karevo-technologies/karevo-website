@@ -60,17 +60,17 @@ const FAQ = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-24 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-canvas py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16 pt-10">
-          <p className="inline-flex items-center gap-2 px-4 py-2 uppercase text-center rounded-full bg-[#3B00C5]/10 text-[#3B00C5] font-semibold text-sm sm:text-base">
+          <p className="inline-flex items-center gap-2 px-4 py-2 uppercase text-center rounded-full bg-primary/10 text-primary font-semibold text-sm sm:text-base">
             FAQ
           </p>
-          <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">
+          <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-ink tracking-tight">
             Have Questions? We’ve got Answers
           </h1>
-          <p className="mt-4 text-lg text-gray-500">
+          <p className="mt-4 text-lg text-ink-soft">
             Can't find what you're looking for? Reach out to our support team.
           </p>
         </div>
@@ -82,24 +82,24 @@ const FAQ = () => {
             return (
               <div
                 key={faq.id}
-                className={`bg-white rounded-2xl border transition-all duration-300 ease-in-out ${
+                className={`bg-canvas rounded-2xl border transition-colors duration-300 ease-in-out ${
                   isOpen
-                    ? "border-[#3B00C5] shadow-md ring-1 ring-[#3B00C5]/10"
-                    : "border-gray-200 shadow-sm hover:border-gray-300"
+                    ? "border-primary"
+                    : "border-hairline hover:border-hairline-strong"
                 }`}
               >
                 {/* Trigger Button */}
                 <button
                   onClick={() => toggleItem(faq.id)}
                   aria-expanded={isOpen}
-                  className="w-full flex justify-between items-center p-6 text-left group focus:outline-none focus:ring-[#3B00C5] focus:ring-offset-2 rounded-2xl"
+                  className="w-full flex justify-between items-center p-6 text-left group focus:outline-none focus:ring-primary focus:ring-offset-2 rounded-2xl"
                 >
-                  <span className="text-lg font-medium text-gray-900 group-hover:text-[#3B00C5] transition-colors duration-200">
+                  <span className="text-lg font-medium text-ink group-hover:text-primary transition-colors duration-200">
                     {faq.question}
                   </span>
 
                   {/* Smooth Rotating Chevron/Plus Icon */}
-                  <span className="ml-4 flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-gray-50 text-[#3B00C5] group-hover:bg-[#3B00C5]/5 transition-colors duration-200">
+                  <span className="ml-4 flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-paper text-primary group-hover:bg-primary/10 transition-colors duration-200">
                     <svg
                       className={`w-5 h-5 transition-transform duration-300 ease-in-out ${
                         isOpen ? "rotate-180" : ""
@@ -136,8 +136,8 @@ const FAQ = () => {
                 >
                   <div className="overflow-hidden">
                     {/* Divider Line */}
-                    <div className="mx-6 border-t border-gray-100" />
-                    <div className="p-6 text-base text-gray-600 leading-relaxed">
+                    <div className="mx-6 border-t border-hairline" />
+                    <div className="p-6 text-base text-ink-soft leading-relaxed">
                       {faq.answer}
                     </div>
                   </div>

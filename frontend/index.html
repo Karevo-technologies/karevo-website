@@ -6,6 +6,18 @@
   <link rel="icon" type="image/png" href="./src/assets/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Karevo - Care That Follows You Everywhere</title>
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem("karevo-theme");
+        var dark =
+          stored === "dark" ||
+          (stored !== "light" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 
 <body>

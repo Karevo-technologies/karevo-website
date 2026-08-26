@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollTopButton from "./components/ScrollTopButton";
-import WaitlistModal from "./components/WaitlistModal";
 import CookiePolicy from "./components/CookiePolicy";
 import Home from "./pages/Home";
 import WhyKarevo from "./pages/WhyKarevo";
@@ -13,19 +12,24 @@ import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import Privacypolicy from "./pages/Privacypolicy";
 import TermsofService from "./pages/TermsofService";
+import Waitlist from "./pages/Waitlist";
 import NotFound from "./pages/NotFound";
 
 // Admin Section Imports
 import AdminLogin from "./admin/login/login"; // 👈 Added your login page import
 import WaitlistDashboard from "./admin/WaitlistDashboard";
 
-const App = () => {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+// Standalone pages that shouldn't carry the site's Navbar/Footer chrome.
+const NO_CHROME_ROUTES = ["/waitlist"];
+
+const AppContent = () => {
   const [isCookiePolicyOpen, setIsCookiePolicyOpen] = useState(false);
+  const location = useLocation();
+  const hideChrome = NO_CHROME_ROUTES.includes(location.pathname);
 
   return (
-    <BrowserRouter>
-      <Navbar />
+    <>
+      {!hideChrome && <Navbar />}
 
       <Routes>
         {/* Public Marketing Routes */}
@@ -37,6 +41,7 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/privacy-policy" element={<Privacypolicy />} />
         <Route path="/terms-of-service" element={<TermsofService />} />
+        <Route path="/waitlist" element={<Waitlist />} />
         {/* Secure Admin Control Gateways */}
         <Route path="/admin/login" element={<AdminLogin />} />{" "}
         {/* 👈 Added login route */}
@@ -46,24 +51,24 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <Footer
-        onWaitlistClick={() => setIsWaitlistOpen(true)}
-        onCookiePolicyClick={() => setIsCookiePolicyOpen(true)}
-      />
-
-      <WaitlistModal
-        isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
-      />
+      {!hideChrome && (
+        <Footer onCookiePolicyClick={() => setIsCookiePolicyOpen(true)} />
+      )}
 
       <CookiePolicy
-        isCookiePolicyOpen={isCookiePolicyOpen}
-        onCookiePolicyClose={setIsCookiePolicyOpen}
+        isOpen={isCookiePolicyOpen}
+        onCookiePolicyClose={() => setIsCookiePolicyOpen(false)}
       />
 
-      <ScrollTopButton />
-    </BrowserRouter>
+      {!hideChrome && <ScrollTopButton />}
+    </>
   );
 };
+
+const App = () => (
+  <BrowserRouter>
+    <AppContent />
+  </BrowserRouter>
+);
 
 export default App;

@@ -1,141 +1,171 @@
-import React, { useMemo, useState } from "react";
-import { CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Check } from "lucide-react";
 
-const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+const views = [
+  {
+    key: "patients",
+    tab: "Patients",
+    eyebrow: "For patients",
+    title: "Complete control over your health data",
+    description:
+      "Every record, one place, always yours. Share it when you choose, and never repeat your history again.",
+    points: [
+      "Faster appointments and better care",
+      "Emergency access to critical information",
+      "Reduce duplicate tests and procedures",
+    ],
+  },
+  {
+    key: "providers",
+    tab: "Providers",
+    eyebrow: "For healthcare providers",
+    title: "Access complete patient history instantly",
+    description:
+      "See a verified, structured record the moment a patient walks in no digging through paper files or waiting on another hospital.",
+    points: [
+      "Better clinical decision making",
+      "Reduced administrative burden",
+      "Improved patient outcomes",
+    ],
+  },
+  {
+    key: "systems",
+    tab: "Systems",
+    eyebrow: "For healthcare systems",
+    title: "Streamlined operations, lower costs",
+    description:
+      "Karevo cuts the friction between departments and facilities, so your system runs on shared, reliable data instead of guesswork.",
+    points: [
+      "Reduced costs through efficiency",
+      "Better patient retention",
+      "Competitive advantage",
+    ],
+  },
+  {
+    key: "organizations",
+    tab: "Organizations",
+    eyebrow: "For organizations",
+    title: "One platform, every patient record",
+    description:
+      "A single, interoperable data layer that keeps your organization compliant and your governance airtight without extra headcount.",
+    points: [
+      "Interoperability across systems",
+      "Regulatory compliance automation",
+      "Enhanced data governance",
+    ],
+  },
+];
 
-const BenefitsCarousel = ({ title, subtitle, benefits }) => {
-  const safeBenefits = Array.isArray(benefits) ? benefits : [];
-  const [containerWidth, setContainerWidth] = useState(0);
+const MockPanel = () => (
+  <div className="relative bg-canvas rounded-3xl p-6 sm:p-8">
+    <div className="flex items-center gap-1.5 mb-6">
+      <span className="w-2 h-2 rounded-full bg-hairline" />
+      <span className="w-2 h-2 rounded-full bg-hairline" />
+      <span className="w-2 h-2 rounded-full bg-hairline" />
+      <span className="ml-3 h-2.5 rounded-full bg-paper w-32" />
+    </div>
 
-  const visibleCount = useMemo(() => {
-    if (!containerWidth) return 1;
-    if (containerWidth < 640) return 1;
-    if (containerWidth < 1024) return 2;
-    return 4;
-  }, [containerWidth]);
+    <div className="space-y-3">
+      {[0, 1, 2, 3].map((i) => (
+        <div
+          key={i}
+          className="flex items-center gap-4 rounded-2xl bg-paper p-4"
+        >
+          <span className="w-9 h-9 rounded-full bg-canvas shrink-0" />
+          <div className="flex-1 space-y-2">
+            <span className="block h-2.5 rounded-full bg-canvas w-2/3" />
+            <span className="block h-2 rounded-full bg-canvas w-1/3" />
+          </div>
+          <span className="h-6 w-14 rounded-full bg-canvas shrink-0" />
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
-  const totalPages = Math.max(1, Math.ceil(safeBenefits.length / visibleCount));
-  const [page, setPage] = useState(0);
+const ViewContent = ({ view }) => {
+  const [entered, setEntered] = useState(false);
 
-  React.useEffect(() => {
-    setPage((p) => clamp(p, 0, totalPages - 1));
-  }, [totalPages]);
-
-  // Auto-advance logic
-  React.useEffect(() => {
-    if (safeBenefits.length <= visibleCount) return;
-    const id = window.setInterval(() => {
-      setPage((p) => {
-        const next = p + 1;
-        if (visibleCount === 1 && next > totalPages - 1) return 0;
-        return clamp(next, 0, totalPages - 1);
-      });
-    }, 5000);
-    return () => window.clearInterval(id);
-  }, [safeBenefits.length, visibleCount, totalPages]);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setEntered(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
-    <section className="py-28 px-4 bg-gray-50/50 relative overflow-hidden">
-      {/* Background Atmospheric Glow */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3B00C5]/5 blur-[150px] rounded-full pointer-events-none" />
+    <div
+      className={`grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center transition-all duration-300 ease-out ${
+        entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+      }`}
+    >
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-4">
+          {view.eyebrow}
+        </p>
+        <h3 className="text-2xl sm:text-3xl font-bold text-ink tracking-tight mb-4">
+          {view.title}
+        </h3>
+        <p className="text-ink-soft leading-relaxed mb-6">
+          {view.description}
+        </p>
+        <ul className="space-y-3">
+          {view.points.map((point, i) => (
+            <li key={i} className="flex items-center gap-3">
+              <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <Check className="h-3 w-3" strokeWidth={3} />
+              </span>
+              <span className="text-ink text-sm sm:text-base">{point}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#3B00C5] mb-3 block">
-            Capabilities
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter mb-4">
-            {title}
+      <MockPanel />
+    </div>
+  );
+};
+
+const BenefitsCarousel = () => {
+  const [active, setActive] = useState(0);
+  const view = views[active];
+
+  return (
+    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-paper">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-10">
+          <p className="text-xs sm:text-sm uppercase tracking-widest text-ink-soft font-semibold mb-4">
+            A closer look
+          </p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-5 max-w-2xl mx-auto">
+            <span className="text-ink">One Karevo, </span>
+            <span className="text-ink-soft">four views.</span>
           </h2>
-          <p className="text-gray-500 font-medium max-w-lg mx-auto leading-relaxed">
-            {subtitle}
+          <p className="text-base sm:text-lg text-ink-soft max-w-xl mx-auto leading-relaxed">
+            Pick the view that matches you. Each one is built around what
+            you actually need from your health record.
           </p>
         </div>
 
-        <div className="relative" aria-roledescription="carousel">
-          {/* Main Viewport Container */}
-          <div
-            className="overflow-hidden"
-            ref={(el) => {
-              if (!el) return;
-              setContainerWidth(el.getBoundingClientRect().width);
-            }}
-          >
-            <div
-              className="flex transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
-              style={{
-                transform: `translateX(-${page * (100 / visibleCount)}%)`,
-                width: `${(safeBenefits.length / visibleCount) * 100}%`,
-              }}
-            >
-              {safeBenefits.map((benefit, index) => (
-                <div
-                  key={index}
-                  className="px-3"
-                  style={{ flex: `0 0 ${100 / visibleCount}%` }}
-                >
-                  {/* Sculpted Glass Card */}
-                  <div className="h-full bg-white/70 backdrop-blur-md border border-white/80 shadow-[0_8px_30px_rgba(0,0,0,0.04)] rounded-3xl p-8 hover:shadow-[0_20px_50px_rgba(59,0,197,0.08)] transition-all duration-300 group">
-                    <div className="mb-8 w-12 h-12 rounded-2xl bg-gradient-to-br from-[#3B00C5]/10 to-[#3B00C5]/5 flex items-center justify-center font-black text-[#3B00C5] text-sm shadow-inner border border-[#3B00C5]/10">
-                      0{index + 1}
-                    </div>
-                    
-                    <h3 className="text-lg font-bold text-gray-900 mb-6 tracking-tight group-hover:text-[#3B00C5] transition-colors">
-                      {benefit.title}
-                    </h3>
-                    
-                    <ul className="space-y-4">
-                      {Array.isArray(benefit.points) &&
-                        benefit.points.map((point, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <CheckCircle className="h-4 w-4 text-[#3B00C5] flex-shrink-0 mt-1" strokeWidth={2.5} />
-                            <span className="text-gray-600 text-sm font-medium leading-relaxed">
-                              {point}
-                            </span>
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Nav Controls - Positioned elegantly */}
-          <div className="flex items-center justify-center gap-6 mt-12">
-            <button
-              type="button"
-              onClick={() => setPage((p) => clamp(p - 1, 0, totalPages - 1))}
-              className="w-12 h-12 rounded-full border border-gray-200 bg-white shadow-sm flex items-center justify-center hover:scale-105 hover:border-[#3B00C5] hover:text-[#3B00C5] transition-all"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            {/* Dots */}
-            <div className="flex items-center gap-2">
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setPage(i)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === page
-                      ? "w-8 bg-[#3B00C5]"
-                      : "w-2 bg-gray-300 hover:bg-gray-400"
-                  }`}
-                />
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setPage((p) => clamp(p + 1, 0, totalPages - 1))}
-              className="w-12 h-12 rounded-full border border-gray-200 bg-white shadow-sm flex items-center justify-center hover:scale-105 hover:border-[#3B00C5] hover:text-[#3B00C5] transition-all"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
+        <div className="flex justify-center mb-10">
+          <div className="inline-flex flex-wrap items-center justify-center gap-1 bg-canvas border border-hairline rounded-full p-1">
+            {views.map((v, i) => (
+              <button
+                key={v.key}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-pressed={i === active}
+                className={`text-sm font-semibold rounded-full px-4 sm:px-5 h-10 cursor-pointer transition-colors duration-300 ${
+                  i === active
+                    ? "bg-ink text-canvas"
+                    : "text-ink-soft hover:text-ink"
+                }`}
+              >
+                {v.tab}
+              </button>
+            ))}
           </div>
         </div>
+
+        <ViewContent key={view.key} view={view} />
       </div>
     </section>
   );

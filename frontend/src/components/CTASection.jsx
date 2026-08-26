@@ -1,29 +1,68 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 
-const CTASection = ({ title, subtitle, onCTAClick }) => {
+const arcStyle = (corner) => ({
+  backgroundImage: `repeating-radial-gradient(circle at ${corner}, transparent 0, transparent 16px, rgba(255,255,255,0.10) 16px, rgba(255,255,255,0.10) 18px)`,
+});
+
+const CTASection = ({ title, subtitle, onCTAClick, roles, onRoleClick }) => {
   return (
-    <section className="py-20 sm:py-16 md:py-20 px-4 bg-gradient-to-br from-[#3B00C5] to-[#2f00a0] text-white">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 sm:mb-6 font-raleway leading-snug">
-          {title}
-        </h2>
-        <p className="text-base sm:text-lg md:text-xl font-raleway mb-6 sm:mb-8 md:mb-10 text-blue-100 leading-relaxed">
-          {subtitle}
-        </p>
-        <button
-          onClick={onCTAClick}
-          className="group relative overflow-hidden inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white text-[#3B00C5] rounded-lg font-bold font-raleway hover:shadow-lg transform hover:scale-105 transition-all duration-300"
-        >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute left-0 top-0 h-full w-1/2 -translate-x-full skew-x-[-20deg] bg-[#3B00C5]/20 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-[200%]"
-          />
-          <span className="relative inline-flex items-center gap-2">
-            Join the Waitlist
-            <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
-          </span>
-        </button>
+    <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-canvas">
+      <div className="relative overflow-hidden max-w-6xl mx-auto rounded-4xl py-20 sm:py-24 md:py-28 px-4 bg-gradient-to-br from-primary to-primary-deep text-white">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-16 -left-16 w-72 h-72"
+          style={arcStyle("0% 0%")}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-16 -right-16 w-72 h-72"
+          style={arcStyle("100% 100%")}
+        />
+
+        <div className="relative max-w-2xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-white" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/80">
+              Join the waitlist
+            </span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight">
+            {title}
+          </h2>
+          <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-9 max-w-lg mx-auto">
+            {subtitle}
+          </p>
+
+          <button
+            onClick={onCTAClick}
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-midnight text-white rounded-full font-semibold hover:bg-midnight/90 transition-colors duration-300"
+          >
+            Join Waitlist
+            <ArrowRight className="h-4 w-4" />
+          </button>
+
+          {roles && roles.length > 0 && (
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+              {roles.map((role, i) => (
+                <React.Fragment key={role.key}>
+                  <button
+                    type="button"
+                    onClick={() => onRoleClick?.(role.key)}
+                    className="inline-flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors"
+                  >
+                    {role.label}
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
+                  {i < roles.length - 1 && (
+                    <span className="text-white/30 text-sm">·</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
