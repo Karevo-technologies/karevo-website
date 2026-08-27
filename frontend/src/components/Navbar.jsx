@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 import { NavLink, useLocation } from "react-router-dom";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Menu01Icon, Cancel01Icon, ArrowRight02Icon } from "@hugeicons/core-free-icons";
 
 import logo from "../assets/logo.png";
+
+const links = [
+  { label: "Home", to: "/" },
+  { label: "Why Karevo", to: "/why-karevo" },
+  { label: "Features", to: "/features" },
+  { label: "FAQ", to: "/faq" },
+  { label: "Contact Us", to: "/contact" },
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +29,14 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock page scroll while the full-screen mobile menu is open.
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const overlay = isHome && !scrolled && !isOpen;
 
   const scrollToTop = () => {
@@ -27,6 +45,11 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+    setTimeout(() => scrollToTop(), 0);
   };
 
   const desktopLinkClass = ({ isActive }) =>
@@ -41,7 +64,7 @@ const Navbar = () => {
     }`;
 
   const mobileLinkClass = ({ isActive }) =>
-    `block px-3 py-2 text-2xl font-medium rounded-md hover:bg-paper ${
+    `text-3xl font-semibold py-3 transition-colors ${
       isActive ? "text-primary" : "text-ink"
     }`;
 
@@ -65,7 +88,7 @@ const Navbar = () => {
               <img
                 src={logo}
                 alt="Karevo"
-                className={`h-55 w-auto pt-5 md:h-50 transition-[filter] duration-300 ${
+                className={`h-55 w-auto pt-5 md:h-50 transition-[filter] duration-300 dark:brightness-0 dark:invert ${
                   overlay ? "brightness-0 invert" : ""
                 }`}
               />
@@ -78,25 +101,16 @@ const Navbar = () => {
             className="hidden md:flex items-center space-x-8"
             onClick={scrollToTop}
           >
-            <NavLink to="/" onClick={scrollToTop} className={desktopLinkClass}>
-              Home
-            </NavLink>
-
-            <NavLink to="/why-karevo" className={desktopLinkClass}>
-              Why Karevo
-            </NavLink>
-
-            <NavLink to="/features" className={desktopLinkClass}>
-              Features
-            </NavLink>
-
-            <NavLink to="/faq" className={desktopLinkClass}>
-              FAQ
-            </NavLink>
-
-            <NavLink to="/contact" className={desktopLinkClass}>
-              Contact Us
-            </NavLink>
+            {links.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={scrollToTop}
+                className={desktopLinkClass}
+              >
+                {link.label}
+              </NavLink>
+            ))}
           </div>
 
           {/* Desktop Waitlist Button */}
@@ -119,102 +133,51 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className={`p-1 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-inset ${
+              aria-label="Toggle menu"
+              className={`relative z-50 w-11 h-11 grid place-items-center rounded-full transition-colors duration-300 ${
                 overlay
-                  ? "text-white hover:bg-white/10 focus:ring-white/60"
-                  : "text-primary hover:bg-paper focus:ring-primary"
+                  ? "bg-white/10 text-white hover:bg-white/20"
+                  : "bg-paper text-ink dark:text-white hover:bg-hairline"
               }`}
             >
-              <svg
-                className={`h-6 w-6 transition-transform ${isOpen ? "rotate-180" : ""}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              <HugeiconsIcon icon={isOpen ? Cancel01Icon : Menu01Icon} size={20} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-
-      {isOpen && (
-        <div className="md:hidden bg-canvas border-t border-hairline">
-          <div className="px-2 pt-7 pb-3 space-y-1 sm:px-3">
+      {/* Full-screen mobile menu */}
+      <div
+        className={`md:hidden fixed inset-0 z-40 bg-canvas flex flex-col transition-all duration-300 ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="flex-1 flex flex-col justify-center px-8 gap-1">
+          {links.map((link) => (
             <NavLink
-              to="/"
+              key={link.to}
+              to={link.to}
               className={mobileLinkClass}
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => scrollToTop(), 0);
-              }}
+              onClick={closeMenu}
             >
-              Home
+              {link.label}
             </NavLink>
-
-            <NavLink
-              to="/why-karevo"
-              className={mobileLinkClass}
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => scrollToTop(), 0);
-              }}
-            >
-              Why Karevo
-            </NavLink>
-
-            <NavLink
-              to="/features"
-              className={mobileLinkClass}
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => scrollToTop(), 0);
-              }}
-            >
-              Features
-            </NavLink>
-
-            <NavLink
-              to="/faq"
-              className={mobileLinkClass}
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => scrollToTop(), 0);
-              }}
-            >
-              FAQ
-            </NavLink>
-
-            <NavLink
-              to="/contact"
-              className={mobileLinkClass}
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => scrollToTop(), 0);
-              }}
-            >
-              Contact Us
-            </NavLink>
-
-            <div className="pt-4 pb-2 border-t border-hairline">
-              <NavLink
-                to="/waitlist"
-                onClick={() => setIsOpen(false)}
-                className="block w-full text-center px-4 py-2 text-base font-semibold text-white bg-primary rounded-full hover:bg-primary-bright transition-colors"
-              >
-                Join Waitlist
-              </NavLink>
-            </div>
-          </div>
+          ))}
         </div>
-      )}
+
+        <div className="px-8 pb-12">
+          <NavLink
+            to="/waitlist"
+            onClick={() => setIsOpen(false)}
+            className="inline-flex items-center justify-center gap-2 w-full bg-primary text-white text-base font-semibold rounded-full px-6 h-[52px] hover:bg-primary-bright transition-colors duration-300"
+          >
+            Join Waitlist
+            <HugeiconsIcon icon={ArrowRight02Icon} size={18} />
+          </NavLink>
+        </div>
+      </div>
     </nav>
   );
 };
