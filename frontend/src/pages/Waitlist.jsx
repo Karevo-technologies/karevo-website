@@ -139,7 +139,7 @@ const Waitlist = () => {
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
       {/* Left: static brand panel */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary to-primary-deep text-white p-8 sm:p-12 lg:p-14 flex flex-col min-h-64 lg:min-h-screen">
+      <div className="hidden lg:flex relative overflow-hidden bg-gradient-to-br from-primary to-primary-deep text-white p-8 sm:p-12 lg:p-14 flex-col min-h-64 lg:min-h-screen">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-70"
