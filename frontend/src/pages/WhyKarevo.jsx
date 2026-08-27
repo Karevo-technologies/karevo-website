@@ -5,7 +5,6 @@ import { HeartPulse, HeartHandshake, Stethoscope } from "lucide-react";
 import ChallengeSolutionSection from "../components/ChallengeSolutionSection";
 import BenefitsSection from "../components/BenefitsSection";
 import BenefitsCarousel from "../components/BenefitsCarousel";
-import WorkflowSection from "../components/WorkflowSection";
 import SecuritySection from "../components/SecuritySection";
 import CTASection from "../components/CTASection";
 
@@ -42,29 +41,6 @@ const WhyKarevo = () => {
     },
   ];
 
-  const workflow = [
-    {
-      step: "1",
-      title: "Sign Up",
-      description: "Create your secure Karevo account in minutes",
-    },
-    {
-      step: "2",
-      title: "Upload Records",
-      description: "Add your existing medical records from any provider",
-    },
-    {
-      step: "3",
-      title: "Share Access",
-      description: "Give doctors permission to view your records securely",
-    },
-    {
-      step: "4",
-      title: "Monitor Health",
-      description: "Track your health journey all in one place",
-    },
-  ];
-
   const handleCTAClick = () => {
     navigate("/waitlist");
   };
@@ -81,12 +57,6 @@ const WhyKarevo = () => {
       />
 
       <BenefitsCarousel />
-
-      <WorkflowSection
-        title="How Karevo Works"
-        subtitle="Simple, intuitive process to get started in minutes"
-        workflow={workflow}
-      />
 
       <CTASection
         title="Ready to Take Control of Your Health Data?"
