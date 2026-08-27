@@ -147,8 +147,7 @@ h6 {
     line-height: 1.4;
   }
 
-  /* Smaller buttons and interactive elements */
-  button,
+  /* Smaller buttons and interactive elements (icon-only buttons keep their own sizing) */
   [class*="rounded"][class*="px-"] {
     padding: 0.625rem 1rem !important;
     font-size: 0.875rem !important;

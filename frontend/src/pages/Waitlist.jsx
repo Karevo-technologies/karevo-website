@@ -311,7 +311,7 @@ const Waitlist = () => {
                         Full Name
                       </label>
                       <div className="relative">
-                        <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-soft" />
                         <input
                           type="text"
                           name="name"
@@ -329,7 +329,7 @@ const Waitlist = () => {
                         Email Address
                       </label>
                       <div className="relative">
-                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-soft" />
                         <input
                           type="email"
                           name="email"
@@ -348,7 +348,7 @@ const Waitlist = () => {
                           Location
                         </label>
                         <div className="relative">
-                          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-soft" />
                           <input
                             type="text"
                             name="location"
@@ -386,7 +386,7 @@ const Waitlist = () => {
                         Hospital / Lab Title
                       </label>
                       <div className="relative">
-                        <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-soft" />
                         <input
                           type="text"
                           name="hospitalName"
@@ -404,7 +404,7 @@ const Waitlist = () => {
                         Official Email
                       </label>
                       <div className="relative">
-                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-soft" />
                         <input
                           type="email"
                           name="organizationEmail"
@@ -423,7 +423,7 @@ const Waitlist = () => {
                           Facility Location
                         </label>
                         <div className="relative">
-                          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-soft" />
                           <input
                             type="text"
                             name="location"
@@ -441,7 +441,7 @@ const Waitlist = () => {
                           Contact
                         </label>
                         <div className="relative">
-                          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-ink-soft" />
                           <input
                             type="tel"
                             inputMode="tel"
