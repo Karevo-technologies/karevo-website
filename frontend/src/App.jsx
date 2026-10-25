@@ -12,15 +12,16 @@ import Contact from "./pages/Contact";
 import AboutUs from "./pages/AboutUs";
 import Privacypolicy from "./pages/Privacypolicy";
 import TermsofService from "./pages/TermsofService";
-import Waitlist from "./pages/Waitlist";
+// Waitlist disabled — to be removed later.
+// import Waitlist from "./pages/Waitlist";
 import NotFound from "./pages/NotFound";
 
-// Admin Section Imports
-import AdminLogin from "./admin/login/login"; // 👈 Added your login page import
-import WaitlistDashboard from "./admin/WaitlistDashboard";
+// Admin Section Imports (waitlist dashboard disabled — to be removed later)
+// import AdminLogin from "./admin/login/login"; // 👈 Added your login page import
+// import WaitlistDashboard from "./admin/WaitlistDashboard";
 
 // Standalone pages that shouldn't carry the site's Navbar/Footer chrome.
-const NO_CHROME_ROUTES = ["/waitlist"];
+const NO_CHROME_ROUTES = [/* "/waitlist" */];
 
 const AppContent = () => {
   const [isCookiePolicyOpen, setIsCookiePolicyOpen] = useState(false);
@@ -41,12 +42,11 @@ const AppContent = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/privacy-policy" element={<Privacypolicy />} />
         <Route path="/terms-of-service" element={<TermsofService />} />
-        <Route path="/waitlist" element={<Waitlist />} />
-        {/* Secure Admin Control Gateways */}
-        <Route path="/admin/login" element={<AdminLogin />} />{" "}
-        {/* 👈 Added login route */}
-        <Route path="/admin" element={<WaitlistDashboard />} />{" "}
-        {/* 👈 Changed path to /admin to match middleware */}
+        {/* Waitlist disabled — to be removed later */}
+        {/* <Route path="/waitlist" element={<Waitlist />} /> */}
+        {/* Secure Admin Control Gateways (waitlist dashboard disabled — to be removed later) */}
+        {/* <Route path="/admin/login" element={<AdminLogin />} /> */}
+        {/* <Route path="/admin" element={<WaitlistDashboard />} /> */}
         {/* 2. Wildcard Catch-All Route (MUST BE AT THE VERY BOTTOM) */}
         <Route path="*" element={<NotFound />} />
       </Routes>
