@@ -5,6 +5,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Menu01Icon, Cancel01Icon, ArrowRight02Icon } from "@hugeicons/core-free-icons";
 
 import logo from "../assets/logo.png";
+import { SIGNUP_URL, LOGIN_URL } from "../config/links";
 
 const links = [
   { label: "Home", to: "/" },
@@ -113,19 +114,29 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop Waitlist Button */}
+          {/* Desktop Auth Buttons */}
 
-          <div className="hidden md:flex items-center">
-            <NavLink
-              to="/waitlist"
+          <div className="hidden md:flex items-center gap-2">
+            <a
+              href={LOGIN_URL}
+              className={`h-12 px-5 flex items-center text-sm font-semibold rounded-full transition-colors duration-300 ${
+                overlay
+                  ? "text-white hover:bg-white/10"
+                  : "text-ink hover:text-primary"
+              }`}
+            >
+              Log in
+            </a>
+            <a
+              href={SIGNUP_URL}
               className={`h-12 px-8 py-3 flex items-center text-sm font-semibold rounded-full transition-colors duration-300 ${
                 overlay
                   ? "text-white bg-midnight hover:bg-midnight/90"
                   : "text-white bg-primary hover:bg-primary-bright"
               }`}
             >
-              Join Waitlist
-            </NavLink>
+              Sign up
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -167,15 +178,22 @@ const Navbar = () => {
           ))}
         </div>
 
-        <div className="px-8 pb-12">
-          <NavLink
-            to="/waitlist"
+        <div className="px-8 pb-12 flex flex-col gap-3">
+          <a
+            href={SIGNUP_URL}
             onClick={() => setIsOpen(false)}
             className="inline-flex items-center justify-center gap-2 w-full bg-primary text-white text-base font-semibold rounded-full px-6 h-[52px] hover:bg-primary-bright transition-colors duration-300"
           >
-            Join Waitlist
+            Sign up
             <HugeiconsIcon icon={ArrowRight02Icon} size={18} />
-          </NavLink>
+          </a>
+          <a
+            href={LOGIN_URL}
+            onClick={() => setIsOpen(false)}
+            className="inline-flex items-center justify-center w-full border border-hairline text-ink text-base font-semibold rounded-full px-6 h-[52px] hover:bg-paper transition-colors duration-300"
+          >
+            Log in
+          </a>
         </div>
       </div>
     </nav>

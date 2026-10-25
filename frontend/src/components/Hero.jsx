@@ -1,11 +1,12 @@
 import React from "react";
 import { ArrowRight, Info } from "lucide-react";
+import { SIGNUP_URL } from "../config/links";
 
 const arcStyle = (corner) => ({
   backgroundImage: `repeating-radial-gradient(circle at ${corner}, transparent 0, transparent 18px, rgba(255,255,255,0.08) 18px, rgba(255,255,255,0.08) 20px)`,
 });
 
-const Hero = ({ onOpenWaitlist }) => {
+const Hero = () => {
   return (
     <section className="hero-section relative overflow-hidden bg-gradient-to-br from-primary to-primary-deep pt-36 sm:pt-40 md:pt-44 pb-20 sm:pb-24 px-4 sm:px-6 lg:px-8">
       {/* Decorative arcs */}
@@ -39,13 +40,13 @@ const Hero = ({ onOpenWaitlist }) => {
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            onClick={onOpenWaitlist}
+          <a
+            href={SIGNUP_URL}
             className="group flex items-center justify-center gap-2 px-7 sm:px-8 py-4 bg-midnight text-white text-base sm:text-lg font-semibold rounded-full hover:bg-midnight/90 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
           >
-            <span className="inline-flex items-center">Join Waitlist</span>
+            <span className="inline-flex items-center">Get Started</span>
             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </a>
 
           <button
             className="group flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-full text-base sm:text-lg font-semibold bg-white text-midnight hover:bg-white/90 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"

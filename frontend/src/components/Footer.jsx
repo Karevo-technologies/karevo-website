@@ -3,6 +3,7 @@ import { MapPin, Phone, ArrowUpRight } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import ThemeToggle from "./ThemeToggle";
+import { SIGNUP_URL } from "../config/links";
 
 const Footer = ({ onCookiePolicyClick }) => {
   const currentYear = new Date().getFullYear();
@@ -138,7 +139,7 @@ const Footer = ({ onCookiePolicyClick }) => {
             </ul>
           </div>
 
-          {/* Contact + waitlist */}
+          {/* Contact + sign up */}
           <div className="col-span-2 md:col-span-1">
             <p className="text-[10px] tracking-widest uppercase text-white/35 font-semibold mb-5">
               Contact us
@@ -163,13 +164,13 @@ const Footer = ({ onCookiePolicyClick }) => {
               })}
             </ul>
 
-            <NavLink
-              to="/waitlist"
+            <a
+              href={SIGNUP_URL}
               className="inline-flex items-center gap-2 bg-white text-midnight hover:bg-white/90 transition-colors duration-300 px-5 py-2.5 rounded-full text-sm font-semibold"
             >
-              Join Waitlist
+              Sign up
               <ArrowUpRight size={14} />
-            </NavLink>
+            </a>
           </div>
         </div>
 
